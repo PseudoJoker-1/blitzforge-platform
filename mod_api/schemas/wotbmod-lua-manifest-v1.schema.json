@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wotbmod.dev/schemas/wotbmod-lua-manifest-v1.schema.json",
+  "title": "WotbMod Lua mod manifest (mods/lua/<id>/manifest.json)",
+  "description": "The manifest of an installed Lua mod. The host reads exactly id, entrypoint and permissions; name, version, developer and description are metadata for people and catalogs and are ignored by the host.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["id", "permissions"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable mod id with an author prefix, such as author.mod_name. The folder under mods/lua must have the same name.",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,125}[A-Za-z0-9]$",
+      "not": { "pattern": "\\.\\." }
+    },
+    "entrypoint": {
+      "type": "string",
+      "description": "The single Lua file the host runs, in the mod folder root. Default main.lua.",
+      "pattern": "^[A-Za-z0-9_.-]+\\.lua$",
+      "default": "main.lua"
+    },
+    "permissions": {
+      "type": "array",
+      "description": "Permission names the mod asks for. The host grants the intersection with its own ceiling; an unknown name grants nothing.",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9_.]*$" },
+      "uniqueItems": true
+    },
+    "name": { "type": "string", "maxLength": 127 },
+    "version": {
+      "type": "string",
+      "description": "Semantic version; read by catalogs and the launcher, not by the host.",
+      "pattern": "^(0|[1-9][0-9]*)(\\.(0|[1-9][0-9]*)){0,2}(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$"
+    },
+    "developer": { "type": "string", "maxLength": 127 },
+    "description": { "type": "string", "maxLength": 1024 }
+  }
+}

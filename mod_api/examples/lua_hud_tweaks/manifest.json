@@ -1,0 +1,17 @@
+{
+  "id": "example.lua_hud_tweaks",
+  "name": "Lua HUD Tweaks",
+  "version": "1.0.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "battle.ui",
+    "gameplay.tweak.hud",
+    "camera.battle.read",
+    "camera.hangar",
+    "camera.replay",
+    "gameplay.tweak.camera",
+    "gameplay.tweak.freecam"
+  ]
+}

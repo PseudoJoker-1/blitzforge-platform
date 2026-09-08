@@ -1,0 +1,14 @@
+{
+  "id": "example.lua_battle_telemetry",
+  "name": "Lua Battle Telemetry",
+  "version": "1.0.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "ui.create",
+    "ui.modify.own",
+    "ui.modify.game",
+    "battle.ui"
+  ]
+}

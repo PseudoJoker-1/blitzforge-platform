@@ -1,0 +1,15 @@
+id: new-gameplay-events-test
+name: New Gameplay Events Test
+version: 1.0.0
+author: BlitzForge SDK
+description: Live-проверка шести новых native gameplay/input events ABI 2.9
+type: native
+long: |
+  Подписывается только на UI_INPUT, SHELL_HIT, AMMO_CHANGED,
+  AIM_TARGET_CHANGED, VEHICLE_SPOTTED и VEHICLE_UNSPOTTED.
+  Проверяет main-thread delivery, монотонную sequence, размер и конечность
+  typed payload, а также callback-scoped vehicle handle: get_info,
+  запрет release, clone и release owned clone.
+  Итог пишет в live_host.log как new-events:SUMMARY. Для полного PASS нужно
+  открыть UI, зайти в бой, сменить снаряд, навестись на танк, выстрелить/
+  получить попадание и дождаться spotted/unspotted.

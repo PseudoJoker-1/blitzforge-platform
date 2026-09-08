@@ -1,0 +1,120 @@
+{
+  "WotbMod Lua mod skeleton": {
+    "prefix": "wotbmod",
+    "scope": "lua",
+    "body": [
+      "-- ${1:mod id}",
+      "local log = wotb.log",
+      "log.set_category(\"${2:category}\")",
+      "",
+      "function on_enable()",
+      "  $0",
+      "end",
+      "",
+      "function on_disable()",
+      "  wotb.battle.off_all()",
+      "  wotb.keys.unbind_all()",
+      "  wotb.timer.cancel_all()",
+      "end"
+    ],
+    "description": "A Lua mod with on_enable/on_disable that gives everything back"
+  },
+  "wotb.battle handler": {
+    "prefix": "wotb.battle.on",
+    "scope": "lua",
+    "body": [
+      "wotb.battle.on_${1|shot,hit,reload,ammo,damage,death,vehicle_destroyed,start,end,enter,leave,spotted,unspotted,camera_changed,sniper_entered,sniper_exited|}(function(data, event)",
+      "  $0",
+      "end)"
+    ],
+    "description": "Subscribe to a battle event by its short name"
+  },
+  "wotb.keys binding": {
+    "prefix": "wotb.keys.bind",
+    "scope": "lua",
+    "body": [
+      "wotb.keys.bind(\"${1:action}\", { key = \"${2:F7}\" })",
+      "wotb.keys.on_pressed(\"${1:action}\", function()",
+      "  $0",
+      "end)"
+    ],
+    "description": "Bind a key under the mod's own namespace and react to it"
+  },
+  "wotb.panel with rows and a button": {
+    "prefix": "wotb.panel",
+    "scope": "lua",
+    "body": [
+      "local panel = wotb.panel.new({",
+      "  id = \"${1:panel}\", width = ${2:320}, height = ${3:160},",
+      "  anchor = \"${4|top-left,top-center,top-right,center,bottom-left,bottom-center,bottom-right|}\", margin = 24,",
+      "})",
+      "panel:label({ text = \"${5:TITLE}\", size = 20 })",
+      "local row = panel:label({ text = \"...\" })",
+      "panel:button({ id = \"close\", text = \"close\", x = 20, y = ${3:160} - 40, width = 80, height = 28,",
+      "  on_click = function() panel:hide() end })",
+      "",
+      "function on_frame(frame_index)",
+      "  panel:update(frame_index)",
+      "end"
+    ],
+    "description": "A panel gated to battle contexts, updated once per frame"
+  },
+  "wotb.hud tweak": {
+    "prefix": "wotb.hud",
+    "scope": "lua",
+    "body": [
+      "if wotb.hud.mode() == \"native\" then",
+      "  local ok, err = wotb.hud.${1|reticle.set_color,reticle.set_size,minimap.set_size,minimap.set_opacity,damage_log.set_position,session_stats.set_fields,hit_indicator.set_color_hit|}(${2:{ r = 1, g = 0.5, b = 0 \\}})",
+      "  if not ok then wotb.log.warn(\"hud: %s\", err) end",
+      "end"
+    ],
+    "description": "Change a stock HUD control through wotb.hud (only when the HUD exists)"
+  },
+  "wotb.players roster": {
+    "prefix": "wotb.players.each_visible",
+    "scope": "lua",
+    "body": [
+      "wotb.players.each_visible(function(record)",
+      "  local d = wotb.players.details(record)",
+      "  wotb.log.info(\"%s [%s] kills=%s\", record.display_name, d and d.clan_tag or \"?\", d and tostring(d.kills) or \"?\")",
+      "end)"
+    ],
+    "description": "Walk the visible roster with the clan tag and kills of each vehicle"
+  },
+  "wotb.store round trip": {
+    "prefix": "wotb.store",
+    "scope": "lua",
+    "body": [
+      "local ${1:value}, origin = wotb.store.get(\"${2:key}\", ${3:{\\}})",
+      "-- origin == \"stored\" or \"default\"",
+      "wotb.store.set(\"${2:key}\", ${1:value})"
+    ],
+    "description": "Read a stored table with a default, then write it back"
+  },
+  "wotb.files read JSON": {
+    "prefix": "wotb.files.read_json",
+    "scope": "lua",
+    "body": [
+      "local ${1:data}, err = wotb.files.read_json(\"mod://self/${2:file}.json\")",
+      "if ${1:data} == nil then wotb.log.warn(\"%s\", err) end"
+    ],
+    "description": "Read a JSON file shipped with the mod"
+  },
+  "Lua mod manifest": {
+    "prefix": "wotbmod-manifest",
+    "scope": "json",
+    "body": [
+      "{",
+      "  \"id\": \"${1:author.mod_name}\",",
+      "  \"name\": \"${2:My Mod}\",",
+      "  \"version\": \"${3:1.0.0}\",",
+      "  \"entrypoint\": \"main.lua\",",
+      "  \"permissions\": [",
+      "    \"core\",",
+      "    \"events.public\"$0",
+      "  ]",
+      "}"
+    ],
+    "description": "manifest.json of a Lua mod under mods/lua/<id>/"
+  }
+}

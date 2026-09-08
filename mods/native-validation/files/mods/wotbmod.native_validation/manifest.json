@@ -1,0 +1,77 @@
+{
+  "manifest_version": 1,
+  "type": "native",
+  "id": "wotbmod.native_validation",
+  "name": "WotbMod Native Validation",
+  "version": "1.1.1",
+  "developer": "BlitzForge SDK",
+  "api": {
+    "wotbmod.core": ">=1 <2",
+    "wotbmod.handles": ">=1 <2",
+    "wotbmod.lifecycle": ">=1 <2",
+    "wotbmod.input": ">=1 <2",
+    "wotbmod.events": ">=1 <2",
+    "wotbmod.vfs": ">=1 <2",
+    "wotbmod.resources": ">=1 <2",
+    "wotbmod.async": ">=1 <2",
+    "wotbmod.data.yaml": ">=1 <2",
+    "wotbmod.archive": ">=1 <2",
+    "wotbmod.loaders": ">=1 <2",
+    "wotbmod.render": ">=1 <2",
+    "wotbmod.render.native": ">=1 <2",
+    "wotbmod.camera": ">=1 <2",
+    "wotbmod.audio": ">=2 <3",
+    "wotbmod.entity.public": ">=1 <2",
+    "wotbmod.bigworld.rpc": ">=1 <2",
+    "wotbmod.projectile": ">=2 <3",
+    "wotbmod.ui": ">=3 <4",
+    "wotbmod.client": ">=1 <2",
+    "wotbmod.client.device": ">=1 <2",
+    "wotbmod.diagnostics": ">=2 <3",
+    "wotbmod.devtools": ">=3 <4",
+    "wotbmod.hooks": ">=1 <2",
+    "wotbmod.gameplay.hud": ">=1 <2",
+    "wotbmod.session.cluster": ">=1 <2"
+  },
+  "client": {
+    "builds": [
+      "11.20.0.887"
+    ],
+    "executable_hashes": [
+      "4813544d3d6b9f45a357e87f5a14d065bd108c4acd324ac1506cb6d1ad6ff0af"
+    ]
+  },
+  "entrypoints": {
+    "windows-x86": "bin/windows-x86/native_validation_mod.dll"
+  },
+  "permissions": [
+    "core",
+    "storage",
+    "input.actions",
+    "events.public",
+    "resources.mod",
+    "audio.custom",
+    "audio.events",
+    "render.callbacks",
+    "battle.render.overlay",
+    "render.native",
+    "camera.battle.read",
+    "entity.public.visible",
+    "game.entity.public",
+    "bigworld.observe",
+    "bigworld.rpc.metadata",
+    "visible.projectile.events",
+    "gameplay.tweak.projectile_visual",
+    "gameplay.tweak.camera",
+    "camera.hangar",
+    "gameplay.tweak.hud",
+    "ui.modify.game",
+    "ui.modify.own",
+    "client.leave_to_hangar",
+    "hooks.symbol",
+    "ges.observe",
+    "ges.publish",
+    "session.cluster.read",
+    "session.cluster.change"
+  ]
+}

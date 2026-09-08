@@ -1,0 +1,17 @@
+LIBRARY VERSION
+EXPORTS
+    GetFileVersionInfoA           = vorig.GetFileVersionInfoA
+    GetFileVersionInfoByHandle    = vorig.GetFileVersionInfoByHandle
+    GetFileVersionInfoExA         = vorig.GetFileVersionInfoExA
+    GetFileVersionInfoExW         = vorig.GetFileVersionInfoExW
+    GetFileVersionInfoSizeA       = vorig.GetFileVersionInfoSizeA
+    GetFileVersionInfoSizeExA     = vorig.GetFileVersionInfoSizeExA
+    GetFileVersionInfoSizeExW     = vorig.GetFileVersionInfoSizeExW
+    GetFileVersionInfoSizeW       = vorig.GetFileVersionInfoSizeW
+    GetFileVersionInfoW           = vorig.GetFileVersionInfoW
+    VerFindFileA                  = vorig.VerFindFileA
+    VerFindFileW                  = vorig.VerFindFileW
+    VerInstallFileA               = vorig.VerInstallFileA
+    VerInstallFileW               = vorig.VerInstallFileW
+    VerQueryValueA                = vorig.VerQueryValueA
+    VerQueryValueW                = vorig.VerQueryValueW

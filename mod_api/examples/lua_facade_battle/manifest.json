@@ -1,0 +1,13 @@
+{
+  "id": "example.lua_facade_battle",
+  "name": "Lua Facade Battle",
+  "version": "1.0.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "storage",
+    "entity.public.visible",
+    "game.entity.public"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "example.lua_dava_workshop",
+  "name": "Lua DAVA Workshop",
+  "version": "1.0.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "input",
+    "ui.create",
+    "ui.modify.own",
+    "ui.modify.game",
+    "battle.ui",
+    "resources.mod",
+    "gameplay.tweak.cosmetic",
+    "camera.battle.read",
+    "camera.hangar",
+    "camera.replay",
+    "gameplay.tweak.camera"
+  ]
+}

@@ -1,0 +1,16 @@
+id: api-23-selftest
+name: API 2.9 Self-Test
+version: 2.9.0
+author: BlitzForge SDK
+description: Безопасная самопроверка всех 76 функций Host API
+type: native
+long: |
+  Вызывает все 76 функций WotbModHostApi без изменения игрового кода.
+  Проверяет ABI surface, пути, module/RVA/export/pattern lookup, config,
+  mod registry, resource mounts/resolution, custom audio, native sound events,
+  main-thread queue, UIControl/Scene surface, direct UIControl/Entity creation,
+  active screen/scene acquisition, existing UI traversal/state, vehicle
+  snapshots, resource/vehicle clone, all-event subscription, vehicle skin
+  registration/lifecycle и argument validation.
+  Реальный hook на игровую функцию намеренно не ставится: hook API проверяется
+  неинвазивными invalid-input сценариями, а backend полностью покрыт host suite.

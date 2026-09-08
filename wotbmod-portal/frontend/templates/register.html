@@ -1,0 +1,11 @@
+<section class="auth rise">
+  <h1>Создать аккаунт</h1>
+  <form method="post" action="/register">
+    <label class="field hp" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0"><span>Сайт</span><input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+    <label class="field"><span>Почта</span><input type="email" name="email" required autocomplete="email"></label>
+    <label class="field"><span>Имя, которое увидят другие</span><input type="text" name="display_name" required maxlength="40" autocomplete="nickname"></label>
+    <label class="field"><span>Пароль, не короче 8 символов</span><input type="password" name="password" required minlength="8" autocomplete="new-password"></label>
+    <button class="btn btn-primary" type="submit">Создать аккаунт</button>
+  </form>
+  <p class="after">Уже есть аккаунт? <a href="/login">Войти</a></p>
+</section>

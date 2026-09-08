@@ -1,0 +1,68 @@
+<article>
+<header class="mod-head">
+  <div class="mark lg" aria-hidden="true">{{initials}}</div>
+  <div>
+    <h1>{{name}} {{{badges}}}</h1>
+    <div class="by">
+      <a href="/developers/{{owner_id}}">{{developer}}</a>
+      <span>{{type_label}}</span>
+      <span>{{{rating_html}}}</span>
+      <span>{{downloads}} загрузок</span>
+      <code>{{id}}</code>
+    </div>
+  </div>
+</header>
+
+<div class="mod-layout">
+  <div>
+    <p class="prose">{{description}}</p>
+
+    <section class="section">
+      <h2>Права</h2>
+      {{{permissions}}}
+    </section>
+
+    <section class="section">
+      <h2>Проверка кода</h2>
+      {{{scan}}}
+    </section>
+
+    <section class="section">
+      <h2>Версии</h2>
+      <ol class="versions">
+      {{{changelog}}}
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2>Оценки и отзывы</h2>
+      {{{rating_form}}}
+      <ul class="comments">
+      {{{comments}}}
+      </ul>
+      {{{comment_form}}}
+      {{{report_form}}}
+    </section>
+  </div>
+
+  <aside class="panel" aria-label="Установка">
+    <div class="ver">Версия {{version}} от {{published_at}}</div>
+    <a class="btn btn-primary install" href="/install/{{id}}@{{version}}"><span>Установить в игру</span></a>
+    <div class="alt">
+      <a href="/api/v1/releases/{{id}}/{{version}}/artifact">Скачать .wotbmod</a>
+      {{{signature_link}}}
+    </div>
+    <ul class="facts">
+      <li><b>SHA-256</b><span><code>{{sha256}}</code><button type="button" class="copy" data-copy="{{sha256}}">копировать</button></span></li>
+      <li><b>Размер</b><span>{{size}}</span></li>
+      <li><b>Подпись</b><span>{{signature}}</span></li>
+      <li><b>Клиент</b><span>{{client_builds}}</span></li>
+      <li><b>Требует</b><span class="deps">{{{dependencies}}}</span></li>
+      <li><b>Рекомендует</b><span class="deps">{{{optional}}}</span></li>
+      <li><b>Несовместим с</b><span class="deps">{{{incompatibilities}}}</span></li>
+      <li><b>Совместимость</b><span>{{{compat}}}</span></li>
+    </ul>
+    {{{compat_form}}}
+  </aside>
+</div>
+</article>

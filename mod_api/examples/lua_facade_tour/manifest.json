@@ -1,0 +1,25 @@
+{
+  "id": "example.lua_facade_tour",
+  "name": "Lua Facade Tour",
+  "version": "1.0.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "storage",
+    "entity.public.visible",
+    "game.entity.public",
+    "battle.ui",
+    "ui.create",
+    "ui.modify.own",
+    "ui.modify.game",
+    "gameplay.tweak.hud",
+    "ges.observe",
+    "input.actions",
+    "camera.battle.read",
+    "camera.hangar",
+    "camera.replay",
+    "gameplay.tweak.camera",
+    "gameplay.tweak.freecam"
+  ]
+}

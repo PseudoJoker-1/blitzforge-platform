@@ -1,0 +1,5 @@
+Header:
+    version: "1"
+Controls:
+    -   class: "UIControl"
+        name: "ExampleRoot"

@@ -1,0 +1,14 @@
+id: vehicle-skin-api-test
+name: Vehicle Skin API Test
+version: 1.0.0
+author: BlitzForge SDK
+description: Проверка полного ABI 2.9 lifecycle шкурки на Т-34-85
+type: native
+long: |
+  Монтирует собственные assets и проверяет vehicle_skin_register,
+  vehicle_skin_get_info, vehicle_skin_set_enabled и vehicle_skin_release,
+  включая stale handle, три asset kinds и приоритет двух skins.
+  Активная test skin перенаправляет штатные mesh и diffuse texture Т-34-85
+  на файлы из mount мода; texture становится яркой cyan/magenta DDS. Изменение чисто
+  клиентское и исчезает после отключения мода. Уже закэшированный танк нужно
+  пересоздать: сменить танк/ангар либо перезайти в бой.

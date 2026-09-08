@@ -1,0 +1,10 @@
+id: resource-overlay-test
+name: Resource Overlay Test
+version: 1.2.0
+author: BlitzForge SDK
+description: Проверка priority mounts и запрета path traversal
+type: native
+long: |
+  Создаёт собственные low/high fixtures, проверяет отклонение ../escape и
+  монтирует одинаковый virtual root с приоритетами 10 и 20.
+  При disable оба mount снимаются.

@@ -1,0 +1,6 @@
+{
+  "schema": "wotbmod.sample-vehicle-skin/v1",
+  "vehicle": "R110_Object_260",
+  "donor": "T-34-85",
+  "note": "RC1 staging copies the current client DVPL mesh and textures. Every replacement is an exact stock path with explicit LOD metadata. The standalone material path is an experimental path-overlay example, not a claim of live NMaterial mutation."
+}

@@ -1,0 +1,19 @@
+id: native-validation
+name: Native API Validation
+version: 1.1.0
+author: BlitzForge SDK
+description: Ручная live-валидация 92 capability WotbMod API V3 и проба каждого из 42 опубликованных hook-символов по отдельности
+downloads: 0
+updated: 09.08.2026
+type: native
+loader_id: wotbmod.native_validation
+loader_enabled: true
+loader_permission_tier: 3
+long: |
+  Внутренний validation-мод с экранной панелью, PASS/FAIL/SKIP/RESET,
+  exact-fingerprint результатами, privacy-safe JSONL trace и crash recovery.
+  Native capability не получает SUPPORTED до ручного PASS на точном SHA клиента.
+  Секция Hooks содержит по одной строке на каждый из 42 опубликованных
+  hook-символов: проба вызывает create_symbol в режиме OBSERVE без флагов,
+  поэтому detour никогда не устанавливается, и по коду возврата видно,
+  разрешается ли символ на этом клиенте. Клавиша H прогоняет все пробы разом.

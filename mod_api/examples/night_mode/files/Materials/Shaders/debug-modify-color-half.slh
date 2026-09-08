@@ -1,0 +1,54 @@
+#if !defined(COMMON_INCLUDED)
+#error "Include common.slh"
+#endif
+
+// This footer is shared by material families which do not always publish the
+// highlight switches. Use DAVA's directive so later expressions see zero.
+#ensuredefined HIGHLIGHT_COLOR 0
+#ensuredefined HIGHLIGHT_WAVE_ANIM 0
+
+#if (VIEW_MODE_OVERDRAW_HEAT || DEBUG_UNLIT) && !DRAW_DEPTH_ONLY
+    output.color *= half4(0.0, 0.0, 0.0, 0.0);
+    
+    #if DEBUG_UNLIT
+        output.color += half4(debugFlatColor);
+    #elif VIEW_MODE_OVERDRAW_HEAT
+        #if ALPHABLEND
+            output.color.r += half(0.1);
+        #endif
+        #if ALPHATEST
+            output.color.g += half(0.1);
+        #endif
+    #endif
+#endif
+
+// MOD: night mode, half-precision path.
+//
+// This is the copy the PBR shader uses, which is what draws tanks once tank
+// quality is ULTRA. Without it the world grades but vehicles keep full
+// daylight brightness, which would make them stand out far more than they do
+// in vanilla -- so the two files have to agree.
+//
+// The maths runs in float and is cast back at the end so this stays identical
+// to debug-modify-color.slh. Keep the two in sync.
+// Keep stock gameplay overlays ungraded. DEBUG_UNLIT is the armour colour
+// pass used by the sniper view; HIGHLIGHT_* carries target highlighting.
+#if !DRAW_DEPTH_ONLY && !VIEW_MODE_OVERDRAW_HEAT && !DEBUG_UNLIT && !HIGHLIGHT_COLOR && !HIGHLIGHT_WAVE_ANIM
+    {
+        float3 nightSrc  = float3(output.color.rgb);
+        float  nightLuma = dot(nightSrc, float3(0.2126f, 0.7152f, 0.0722f));
+
+        float  nightSat = lerp(0.10f, 0.62f, saturate(nightLuma * 2.5f));
+        float3 nightRgb = lerp(float3(nightLuma, nightLuma, nightLuma), nightSrc, nightSat);
+
+        float  nightCurve = nightLuma * nightLuma * (3.0f - 2.0f * nightLuma);
+
+        float3 nightShadowTint = float3(0.090f, 0.130f, 0.260f);
+        float3 nightHighTint   = float3(0.340f, 0.400f, 0.520f);
+        nightRgb *= lerp(nightShadowTint, nightHighTint, saturate(nightCurve * 1.30f));
+
+        nightRgb += float3(0.004f, 0.006f, 0.013f);
+
+        output.color.rgb = half3(nightRgb);
+    }
+#endif

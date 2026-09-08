@@ -1,0 +1,16 @@
+{
+  "id": "example.lua_ally_tracker",
+  "name": "Lua Ally Tracker",
+  "version": "1.0.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "entity.public.visible",
+    "game.entity.public",
+    "ui.create",
+    "ui.modify.own",
+    "ui.modify.game",
+    "battle.ui"
+  ]
+}

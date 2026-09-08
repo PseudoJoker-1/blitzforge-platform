@@ -1,0 +1,22 @@
+{
+  "manifest_version": 1,
+  "type": "native",
+  "id": "sample.ui_transaction",
+  "name": "RC1 UI Transaction Sample",
+  "version": "1.0.0-rc1",
+  "developer": "WotbMod SDK",
+  "api": {
+    "wotbmod.core": ">=1 <2",
+    "wotbmod.handles": ">=1 <2",
+    "wotbmod.ui": ">=3 <4"
+  },
+  "entrypoints": {
+    "windows-x86": "bin/windows-x86/sample_ui_transaction.dll"
+  },
+  "permissions": [
+    "core",
+    "ui.create",
+    "ui.modify.own",
+    "ui.modify.game"
+  ]
+}

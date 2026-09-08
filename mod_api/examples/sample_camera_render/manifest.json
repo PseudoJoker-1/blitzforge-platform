@@ -1,0 +1,27 @@
+{
+  "manifest_version": 1,
+  "type": "native",
+  "id": "sample.camera_render",
+  "name": "RC1 Camera Render Sample",
+  "version": "1.0.0-rc1",
+  "developer": "WotbMod SDK",
+  "api": {
+    "wotbmod.core": ">=1 <2",
+    "wotbmod.handles": ">=1 <2",
+    "wotbmod.events": ">=1 <2",
+    "wotbmod.render": ">=1 <2",
+    "wotbmod.camera": ">=1 <2"
+  },
+  "entrypoints": {
+    "windows-x86": "bin/windows-x86/sample_camera_render.dll"
+  },
+  "permissions": [
+    "core",
+    "events.public",
+    "render.callbacks",
+    "battle.render.overlay",
+    "camera.battle.read",
+    "camera.hangar",
+    "camera.replay"
+  ]
+}

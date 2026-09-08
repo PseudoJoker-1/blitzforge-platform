@@ -1,0 +1,11 @@
+id: fault-isolation-test
+name: Fault Isolation Test
+version: 1.2.0
+author: BlitzForge SDK
+description: Намеренный SEH fault для проверки изоляции мода
+type: native
+long: |
+  ВНИМАНИЕ: намеренно вызывает access violation на первом on_frame.
+  Нужен только в тестовой среде, чтобы подтвердить, что runtime переводит
+  один мод в FAULTED, освобождает его объекты и не роняет остальные моды.
+  Не предназначен для обычной установки пользователями.

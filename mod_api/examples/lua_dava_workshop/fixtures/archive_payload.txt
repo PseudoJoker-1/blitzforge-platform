@@ -1,0 +1,1 @@
+This text was read through the native DAVA ResourceArchive adapter.

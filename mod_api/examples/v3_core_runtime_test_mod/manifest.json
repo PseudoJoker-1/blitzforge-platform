@@ -1,0 +1,47 @@
+{
+  "manifest_version": 1,
+  "type": "native",
+  "id": "examples.v3.core_runtime",
+  "name": "V3 Core Runtime Data Probe",
+  "version": "1.0.0",
+  "developer": "WotbMod SDK",
+  "api": {
+    "wotbmod.core": ">=1 <2",
+    "wotbmod.capabilities": ">=1 <2",
+    "wotbmod.permissions": ">=1 <2",
+    "wotbmod.handles": ">=1 <2",
+    "wotbmod.lifecycle": ">=1 <2",
+    "wotbmod.hooks": ">=1 <2",
+    "wotbmod.unsafe.native": ">=1 <2",
+    "wotbmod.events": ">=1 <2",
+    "wotbmod.settings": ">=1 <2",
+    "wotbmod.storage": ">=1 <2",
+    "wotbmod.input": ">=1 <2",
+    "wotbmod.vfs": ">=1 <2",
+    "wotbmod.async": ">=1 <2",
+    "wotbmod.http": ">=1 <2",
+    "wotbmod.intermod": ">=1 <2",
+    "wotbmod.data.yaml": ">=1 <2",
+    "wotbmod.archive": ">=1 <2",
+    "wotbmod.loaders": ">=1 <2",
+    "wotbmod.diagnostics": ">=1 <2",
+    "wotbmod.devtools": ">=1 <2",
+    "wotbmod.manifest": ">=1 <2",
+    "wotbmod.catalog": ">=1 <2",
+    "wotbmod.content": ">=1 <2"
+  },
+  "entrypoints": {
+    "windows-x86": "bin/windows-x86/v3_core_runtime_test_mod.dll"
+  },
+  "permissions": [
+    "core",
+    "events.public",
+    "settings",
+    "filesystem.mod_data",
+    "input.actions",
+    "resources",
+    "network.http",
+    "hooks.symbol",
+    "native.hooks"
+  ]
+}

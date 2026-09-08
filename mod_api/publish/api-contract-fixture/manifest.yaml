@@ -1,0 +1,10 @@
+id: api-contract-fixture
+name: Full API Contract Fixture
+version: 2.9.0
+author: BlitzForge SDK
+description: Fixture для внешнего full-contract host harness
+type: native
+long: |
+  Экспортирует host/mod handles, lifecycle counters и последний frame payload
+  для api_full_host.exe. Сам по себе не меняет игру; предназначен для
+  автоматизированной проверки ownership, limits, errors и lifecycle.

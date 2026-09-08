@@ -1,0 +1,16 @@
+{
+  "id": "example.lua_facade_panel",
+  "name": "Lua Facade Panel",
+  "version": "1.0.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "storage",
+    "ui.create",
+    "ui.modify.own",
+    "ui.modify.game",
+    "battle.ui",
+    "input.actions"
+  ]
+}

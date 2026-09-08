@@ -1,0 +1,40 @@
+<article>
+<header class="mod-head">
+  <div class="mark lg" aria-hidden="true">{{initials}}</div>
+  <div>
+    <h1>Установить {{name}}</h1>
+    <div class="by"><span>версия {{version}}</span><span>{{developer}}</span></div>
+  </div>
+</header>
+<div class="mod-layout">
+  <div class="prose">
+    <p>Кнопка справа передаёт ссылку установщику BlitzForge на вашем компьютере. Он ещё раз покажет права, зависимости и хеш и спросит подтверждение. Сайт ничего не запускает и не пишет в папку игры.</p>
+    <section class="section">
+      <h2>Что получит мод</h2>
+      {{{permissions}}}
+    </section>
+    <section class="section">
+      <h2>Зависимости</h2>
+      <p class="deps">{{{dependencies}}}</p>
+      <p class="muted small">Установщик поставит их первыми, если их ещё нет.</p>
+    </section>
+    <section class="section">
+      <details id="manual">
+        <summary>Установщика нет? Ручной путь</summary>
+        <ol>
+          <li>Поставьте <a href="/download">набор BlitzForge</a> с включённой кнопкой «Установить в игру». После этого кнопка справа заработает.</li>
+          <li>Или из терминала: <code>wotbmod install {{id}} --catalog {{catalog_url}}</code>; либо скачайте <a href="/api/v1/releases/{{id}}/{{version}}/artifact">{{artifact_name}}</a>{{{signature_step}}} и выполните<br><code>wotbmod install {{artifact_name}} --catalog {{catalog_url}}</code></li>
+          <li>Сверьте SHA-256 из вывода команды с указанным справа.</li>
+        </ol>
+      </details>
+    </section>
+  </div>
+  <aside class="panel" aria-label="Установка">
+    <div class="ver">Клиент {{client_builds}}</div>
+    <a class="btn btn-primary install" href="{{scheme_url}}" data-scheme="1"><span>Установить в игру</span></a>
+    <ul class="facts">
+      <li><b>SHA-256</b><span><code>{{sha256}}</code><button type="button" class="copy" data-copy="{{sha256}}">копировать</button></span></li>
+    </ul>
+  </aside>
+</div>
+</article>

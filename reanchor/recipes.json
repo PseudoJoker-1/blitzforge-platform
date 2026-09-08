@@ -1,0 +1,1357 @@
+{
+  "schema": "wotbmod.reanchor-recipes/v1",
+  "reference_sha256": "4813544d3d6b9f45a357e87f5a14d065bd108c4acd324ac1506cb6d1ad6ff0af",
+  "reference_image_base": "0x00400000",
+  "anchor_count": 115,
+  "resolvable": 114,
+  "recipes": [
+    {
+      "anchor_id": "AimTargetClear",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x012900D0",
+      "pattern": "558bec578bf983bfc8050000000f84b0",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "note": "16/16 bytes fixed"
+    },
+    {
+      "anchor_id": "AimTargetSet",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0128F920",
+      "pattern": "558bec51538bd95657895dfc8bb3300200008dbbc80500008b36807e0d007555",
+      "mask": "xxxxxxxxxxxx????xxxxxxxxxxxxxxxx",
+      "note": "28/32 bytes fixed"
+    },
+    {
+      "anchor_id": "CamouflagesVisibilityMask",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0334F0E4",
+      "pattern": "35e4f074038b388d55b4ff75b08b8d40",
+      "mask": "x????xxxxxxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x016059D2; 12/16 bytes fixed"
+    },
+    {
+      "anchor_id": "CamouflageLockedState",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x01605290",
+      "pattern": "558bec6aff6854fd300364a1000000005081ec18010000535657a140a9040433c5508d45f464a3000000008bf9c745f0000000008d550c8b4f7c528b01ff5028",
+      "mask": "xxxxxx???????xxxx????xxxxxx????xxxxx????xxxxx????xxxxxxxx????xxx",
+      "note": "37/64 bytes fixed"
+    },
+    {
+      "anchor_id": "CamouflagesStateFilter",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x01606290",
+      "pattern": "558bec6aff6886ff300364a1000000005083ec40a140a9040433c58945f05657508d45f464a3000000008bc18945d8c7",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxx????xxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "AmmoChanged",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x01226C90",
+      "pattern": "558bec6aff688cbd260364a1000000005081ec18010000535657a140a9040433c5508d45f464a3000000008bd98d4508",
+      "mask": "xxxxxx???????xxxx????xxxxxx????xxxxx????xxxxxxxx",
+      "note": "29/48 bytes fixed"
+    },
+    {
+      "anchor_id": "BwEntityCtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0235A470",
+      "pattern": "558bec6aff68591f470364a1000000005083ec0c5657a140a9040433c5508d45f464a3000000008bf9897df0c707ac5d",
+      "mask": "xxxxxx???????xxxxxxxxxx????xxxxx????xxxxxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "BwEntityDtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0235A640",
+      "pattern": "558bec6aff68f91f470364a1000000005083ec08535657a140a9040433c5508d45f464a3000000008bf9897df0c707b85d8e03c74704205e8e03c745fc030000008d772c8975ecc645fc038b0e85c9741383c10483c8fff00fc141044875058b01ff5004c70600000000c645fc028d5f14895decc645fc028b0b8b4104c700000000008b0185c074180f1f80000000008b3050e8f870f4fd83c4048bc685f675efff33e8e870f4fd83c404c645fc018d4f0ce8590cf4fdc645fc00c7470488af6e03c745fcffffffffc707ac5d8e038b4df464890d00000000595f5e5b8be55d",
+      "mask": "xxxxxx???????xxxxxxxxxxx????xxxxx????xxxxxxxxxx???????????????xxxxxxxxx????xxxxxxxxxxxxx????x???????xxxxxx????xxxxxx????x??????xx????xxxx????xxxxxxx????xxxxxxxxxxxx????xxx????xxxx???????????????xxxxxxxxx????xxxxxxxxxxxxxxxxx",
+      "note": "126/224 bytes fixed"
+    },
+    {
+      "anchor_id": "CameraControllerSwitchState",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x011E0750",
+      "pattern": "558bec6aff68fab2190364a1000000005081ec0c010000535657a140a9040433c5508d45f464a3000000008bf1c745f0000000008b465c8b7d083bf80f848601",
+      "mask": "xxxxxx???????xxxx????xxxxxx????xxxxx????xxxxx????xxxxxxxxxxx????",
+      "note": "37/64 bytes fixed"
+    },
+    {
+      "anchor_id": "CameraModeChanged",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x011A86E0",
+      "pattern": "558bec8b45088338000f94c08841605d",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "note": "16/16 bytes fixed"
+    },
+    {
+      "anchor_id": "ClientInitialize",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0118FB90",
+      "pattern": "558bec6aff683177250364a1000000005081ec54010000a140a9040433c58945f05657508d45f464a3000000008bf989bdacfeffffc785c0feffff000000008d",
+      "mask": "xxxxxx???????xxxx????xxx????xxxxxxxxxx????xxxxxxxxxxxxxx????xxxx",
+      "note": "41/64 bytes fixed"
+    },
+    {
+      "anchor_id": "DavaFileCreate",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x006C7A90",
+      "pattern": "558bec6aff6850710a0364a1000000005081ec3c020000a140a9040433c58945f05657508d45f464a300000000ff35982267038b750c8d8dd4fdffff8b7d086a",
+      "mask": "xxxxxx???????xxxx????xxx????xxxxxxxxxx????xxxxx????xxxxxxxxxxxxx",
+      "note": "41/64 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultEntityCtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0084CC90",
+      "pattern": "558bec6aff680d000e0364a1000000005083ec0856a140a9040433c5508d45f464a3000000008bf18975f08d4dece84d",
+      "mask": "xxxxxx???????xxxxxxxxx????xxxxx????xxxxxxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultEntityVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x032848F8",
+      "pattern": "07f8486803c7470800000000c7470c00000000c7471000000000c645fc038d77",
+      "mask": "x????xxxxxxxxxxxxxxxxxxxxx????xx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x0084CAF6; 24/32 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultFastNameCtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x005107A0",
+      "pattern": "558bec53568bf157c70600000000e81d",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "note": "16/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultYamlParseFileWrapper",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x005B9030",
+      "pattern": "558bec6aff68d9e5070364a100000000505156a140a9040433c5508d45f464a300000000c745f0000000008b7508c60600c7460400000000c745fc010000008bceff7510ff750ce814e500008806c745fc00000000c745f0010000008bc68b4df464890d00000000595e8be55dc3ccccb8c4150104c3cccccccccccccccccccc",
+      "mask": "xxxxxx???????xxxxxxx????xxxxx????xxx????xxxxxxxx????xxxx????xxxxxxxxxxx?????xx????xxx????xxxxxxxxxxxxxxxxxxxxxxx?????xxxxxxxxxxx",
+      "note": "83/128 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultResourceArchiveCtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0059E810",
+      "pattern": "558bec6aff688cb4070364a1000000005081ec94000000a140a9040433c58945f0535657508d45f464a3000000008bf9897d808b750833db89bd74ffffff899d",
+      "mask": "xxxxxx???????xxxx????xxx????xxxxxxxxxxx????xxxxxxxxxxxxxxxxxxxxx",
+      "note": "45/64 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultResourceArchiveDtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x004C52D0",
+      "pattern": "558bec6aff68dd4d050364a1000000005051a140a9040433c5508d45f464a300000000894df0c745fcffffffff8b0985",
+      "mask": "xxxxxx???????xxxxxx????xxxxx????xxxxxxxxxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultPackArchiveVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x032607A0",
+      "pattern": "07a0076603e88c0e1200c645fc028b4508894720c7450800000000c645fc038d",
+      "mask": "x????x????????xxxxxxxxxxxxx????x",
+      "operand_offset": 1,
+      "note": "global referenced from 0x0059DD3B; 16/32 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultZipArchiveVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x03261B84",
+      "pattern": "06841b660389a5a4efffffc702000000",
+      "mask": "x????xxxx????xxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x0059F424; 8/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialCtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x008E3C70",
+      "pattern": "558bec6aff686d940f0364a1000000005051535657a140a9040433c5508d45f464a3000000008bf9897df0e870000000c745fc000000008bcf8b7508ff776cc7",
+      "mask": "xxxxxx???????xxxxxxxxx????xxxxx????xxxxxxx??????????xxxxxxxxxxxx",
+      "note": "39/64 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0328CA34",
+      "pattern": "0734ca6803c7472050ca68038b36e8ad",
+      "mask": "x????xxx????xxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x008E3CB1; 8/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialSetFx",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x009283A0",
+      "pattern": "558bec53568b7508578bf98b36ff776ce8bbb1fdff8bcf897004e84191fcffc687a2000000018b5f648b77603bf3740e8b0ee8e910feff83c6043bf375f25f5e5b5dc20400cccccccccccccccccccccc558bec6aff68e01e100364a100000000",
+      "mask": "xxxxxxxxxxxxxxxxx????x????x???????????xxxxxxxxxxxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx???????xxx",
+      "note": "66/96 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialSetQuality",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00929B80",
+      "pattern": "558bec8b45088b008941285dc20400cc",
+      "mask": "xxxx????xxxxxxxx",
+      "note": "12/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialHasProperty",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00907640",
+      "pattern": "558bec6aff680d30010364a1000000005053a140a9040433c5508d45f464a30000000069416ca8000000ff750883c028",
+      "mask": "xxxxx????????xxxxxx????xxxxx????xxxx????xxxxxxxx",
+      "note": "28/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialAddProperty",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x008EE6F0",
+      "pattern": "558bec6aff689d58000364a1000000005083ec0c535657a140a9040433c5508d45f464a3000000008bd9ff736ce84e4e",
+      "mask": "xxxxx????????xxxxxxxxxxx????xxxxx????xxxxxxxxxxx",
+      "note": "32/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialSetProperty",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x009299F0",
+      "pattern": "558bec6aff68dd70040364a100000000505657a140a9040433c5508d45f464a30000000069516ca8000000ff75088b41",
+      "mask": "xxxxx????????xxxxxxx????xxxxx????xxxx????xxxxxxx",
+      "note": "28/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialRemoveProperty",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x009221C0",
+      "pattern": "558bec6aff686ddc0c0364a1000000005051535657a140a9040433c5508d45f464a3000000008bd9ff736ce88013feff",
+      "mask": "xxxxxx???????xxxxxxxxx????xxxxx????xxxxxxxxx????",
+      "note": "29/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialHasFlag",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00907600",
+      "pattern": "558bec83ec085657ff716ce860bfffff",
+      "mask": "xxxxxxxxxxxx????",
+      "note": "12/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialSetFlag",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00929440",
+      "pattern": "558bec83ec0853568bf157ff766ce81da1fdff8bf88b4508ff308d5f68508d45",
+      "mask": "xxxxxxxxxxxxxxx????xxxxxxxxxxxxx",
+      "note": "28/32 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialRemoveFlag",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x009220F0",
+      "pattern": "558bec568bf157ff766ce87114feffff75088d4868e8d61201008bcee8eff3fc",
+      "mask": "xxxxxxxxxxx????xxxxxx?????xxxxxx",
+      "note": "23/32 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialHasTexture",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x009076C0",
+      "pattern": "558bec8b450883ec085669716ca800000057ff305003712c8d45f8508d4e48e8",
+      "mask": "xxxxxxxxxxx????xxx????xxxxxxxxxx",
+      "note": "24/32 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialSetTexture",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x009295A0",
+      "pattern": "558bec6aff688520100364a1000000005083ec34a140a9040433c58945f0535657508d45f464a3000000008bd969436c",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxxx????xxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultNMaterialRemoveTexture",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00922610",
+      "pattern": "558bec6aff682b15100364a1000000005083ec14535657a140a9040433c5508d45f464a3000000008bc18945f0ff706c",
+      "mask": "xxxxxx???????xxxxxxxxxxx????xxxxx????xxxxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultTextureCreateFromFile",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x007424F0",
+      "pattern": "558bec6aff68917c0b0364a1000000005081ec6c010000a140a9040433c58945f05657508d45f464a3000000008b45088945a08b450cc745a4000000008b3dc0",
+      "mask": "xxxxxx???????xxxx????xxx????xxxxxxxxxx????xxxxxxxxxxxx????xxxxxx",
+      "note": "41/64 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultEntityGetRenderObject",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00ABC160",
+      "pattern": "558bec8b4d0885c974136a00e81f79d8",
+      "mask": "xxxxxxxx????xxxx",
+      "note": "12/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultRenderObjectGetRenderBatch",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x002B0BA0",
+      "pattern": "558bec6aff685083ff0264a1000000005083ec08535657a140a9040433c5508d45f464a3000000008965f08bc18945ecc745fc00000000c745fcffffffffeb10b8e60b6b00c3c745fcffffffff8b45ec8b4d0803c98b403c8b44c8048b4df464",
+      "mask": "xxxxxx???????xxxxxxxxxxx????xxxxx????xxxxxxxxxxx????xxxxxxxxxxxxx????xxxxxxxxxxx????xxxxxxxxxxxx",
+      "note": "69/96 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultRenderBatchVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0329C818",
+      "pattern": "0618c86903c7460c00000000c7461000000000c7461400000000c74618000000",
+      "mask": "x????xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x00A28FDC; 28/32 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultRenderBatchSetMaterial",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00A7A6F0",
+      "pattern": "558bec538bd9568b7508578b7b4485f6",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "note": "16/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultRenderBatchSetPolygonGroup",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00A7B040",
+      "pattern": "558bec568bf1578b7d088b4e4085c974",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "note": "16/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultGetEngineContext",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x006CE3A0",
+      "pattern": "a10c8e5904c3cccccccccccccccccccc558bec6aff683f820a0364a1000000005083ec28a140a9040433c58945f05657508d45f464a3000000008b7d088d45d8",
+      "mask": "x????xxxxxxxxxxxxxxxxx???????xxxxxxxx????xxxxxxxxxx????xxxxxxxxx",
+      "note": "45/64 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultHybridEventVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0349A17C",
+      "pattern": "067ca18903894624c7450c00000000c6",
+      "mask": "x????xxxxxxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x0213F36D; 12/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultOperatorDelete",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x02128F61",
+      "pattern": "558becff7508e825020000595dc3558b",
+      "mask": "xxxxx??????xxxxx",
+      "note": "10/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultOperatorNew",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x02128CDE",
+      "pattern": "558beceb0dff7508e86d4e00005985c0740fff7508e87a4c00005985c074e65d",
+      "mask": "xxxxxxxx?????xxxxxxxx?????xxxxxx",
+      "note": "22/32 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultRefCountedRelease",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0051D1B0",
+      "pattern": "568d410483cefff00fc1304e750a85c9",
+      "mask": "????xxxxxxxxxxxx",
+      "note": "12/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultRefCountedRetain",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0051D6C0",
+      "pattern": "f0ff4104c3cccccccccccccccccccccc33c0c60010c3cccccccccccccccccccc33c0c6000cc3cccccccccccccccccccc",
+      "mask": "????xxxxxxxxxxxx????xxxxxxxxxxxx????xxxxxxxxxxxx",
+      "note": "36/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultSceneActivate",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x008534A0",
+      "pattern": "538bd956578b7b588b73543bf7740f908b0ee83923e7ff83c6043bf775f25f5ec68300010000015bc3cccccccccccccc558bec56578b7d088bf185ff74348bcf",
+      "mask": "xxxxxxxxxxxxxxxxxxx????xxxxxxxx????????xxxxxxxxxxxxxxxxxxxxxxxxx",
+      "note": "52/64 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultSceneCtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0084CF50",
+      "pattern": "558bec6aff68e5010e0364a1000000005083ec5c535657a140a9040433c5508d45f464a3000000008bd9895df08d4de8",
+      "mask": "xxxx?????????xxxxxxxxxxx????xxxxx????xxxxxxxxxxx",
+      "note": "31/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultSceneDeactivate",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00867AB0",
+      "pattern": "538bd956578b7b588b73543bf7740f908b0ee8e924e6ff83c6043bf775f25f5ec68300010000005bc3cccccccccccccc",
+      "mask": "xxxxxxxxxxxxxxxxxxx????xxxxxxxx?????xxxxxxxxxxxx",
+      "note": "39/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultSceneDraw",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0086B0B0",
+      "pattern": "558bec6aff68fd2a000364a1000000005083ec0856a140a9040433c5508d45f464a3000000008bf1ff35982267038d4dec6a00ff35a0290304e81211e8ffc745fc00000000e846e1edff8bc8e88fcf2000e83ae1edfff30f1086140100008d8e",
+      "mask": "xxxxxx???????xxxxxxxxx????xxxxx????xxxxxxx????x????x?????x????????xxxx????xxx????x????xx????xxxx",
+      "note": "44/96 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultSceneLoadEntity",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x008799D0",
+      "pattern": "558bec6aff6809940e0364a1000000005081ec14010000535657a140a9040433c5508d45f464a3000000008965f0c745ec01000000c745e420000000c745e800",
+      "mask": "xxxxxx???????xxxx????xxxxxx????xxxxx????xxxxxx????xxxxxxxxxx????",
+      "note": "37/64 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultSceneLoadFromFile",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00879BC0",
+      "pattern": "558bec6aff68557f0e0364a1000000005083ec08a140a9040433c5508d45f464a300000000e8b647e5ff83ec288965f08b88a80000008bc48945ecc7402400000000c745fc00000000c70014716803c740047095c800894024c745fc01000000ff750cff7508c745fcffffffffe8fe1d00008b4df464890d00000000598be55dc3cccccccccccccccccccccccccccccc558bec6aff68c4940e0364a1000000005083ec60a140a9040433c58945f05657508d45f464a300000000894dc88b750833ff897dc40f57c066a14c4a68030f1145d8897de8f30f7e05444a6803897dec",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxx????xxxx????xxxxxx????xxxxxxxxxxxxxx????x???????????????xxx????xxxxxxxxxxxxxxxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx???????xxxxxxxx????xxxxxxxxxx????xxxxxxxxxxxxxxxxxxx????xxxxxxx????????xxx",
+      "note": "147/224 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultSceneVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x03284AC4",
+      "pattern": "03c44a6803c74350304b6803c7435400000000c7435800000000c7435c000000",
+      "mask": "x????xxx????????xxx????xxx????xx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x0084CFAE; 12/32 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultSoundGroup",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0416A4D4",
+      "pattern": "b9d4a45604e8e1c85000c3558bec518d45fcc745fc1f00000050683ca55604e8f7fa28000f1005101063038b4dfca33c",
+      "mask": "x????x????xxxxxxxxxxxxxxxxx????x????xxx????xxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x00003EB6; 28/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultSoundSystemProxyVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x03275300",
+      "pattern": "060053670385c0753b6a1ce83f22a201",
+      "mask": "x????xxxxxxx????",
+      "operand_offset": 1,
+      "note": "global referenced from 0x00706A90; 8/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultSoundSystemSingleton",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0416CDE4",
+      "pattern": "35e4cd56048d4d90686ce66303e85c0d",
+      "mask": "x????xxxx????xxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x0036FA33; 8/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultSoundSystemVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x034994C0",
+      "pattern": "07c094890389471c89750cc706000000",
+      "mask": "x????xxxxxxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x02131CE9; 12/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultTransformSetLocalTransform",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00885660",
+      "pattern": "558bec8b5508568bf1f30f7e02660fd646108b4208894618f30f7e420c660fd6461c8b42148946248b42188946288b42",
+      "mask": "xxxxxxxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "note": "44/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiControlCtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00784BD0",
+      "pattern": "558bec6aff6885190c0364a100000000505156a140a9040433c5508d45f464a3000000008bf18975f0e8a297f4ff8bce8b403c8b407cff70286a01e870faffffc745fc000000008bce6a00c70678a86703ff3524bb5904e834360200ff869400",
+      "mask": "xxxxxx???????xxxxxxx????xxxxx????xxxxxxxxx????xxxxxxxxx????x????????xxx????xx????xx?????????????",
+      "note": "44/96 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiControlSetVisibilityFlag",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x007CEDB0",
+      "pattern": "558bec8a5508568bf18a4e4c8ac1d0e8",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "note": "16/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiControlSystemGetScreen",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x007A8C80",
+      "pattern": "8b81dc000000c3cccccccccccccccccc558bec83ec088d45085657ff75088bf1508d45f8508d4e04e8f3d7afff8b400485c075038b46083b46085f5e74098b40",
+      "mask": "????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx????x???????????xxxxxxxxxxxx",
+      "note": "45/64 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiControlVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0327A878",
+      "pattern": "0678a86703c745fcffffffff8bc68b4df464890d00000000595e8be55dc20400cccccccccccccccc558bec6aff68a518",
+      "mask": "x????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x00784569; 44/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiTextComponentVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0329AAA8",
+      "pattern": "06a8aa6903c74610010000000f1005b4",
+      "mask": "x????????xxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x009EE4B5; 8/16 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiDynamicAtlasTextComponentVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x032B6D58",
+      "pattern": "06586d6b03c745fc070000008d8e90000000e8fe795cffc645fc068d7e788b47",
+      "mask": "x????xxxxxxx????xxx????xxxxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x00CDB4BC; 20/32 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiExtractControl",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x007A38F0",
+      "pattern": "558bec6aff68aed5000364a100000000505157a140a9040433c5508d45f464a3000000008bf9c745f0000000008b450c8bd08378140f76028b10ff70108d4d0c",
+      "mask": "xxxxx????????xxxxxxx????xxxxx????xxxxx????xxxxxxxxxx????xxxxxxxx",
+      "note": "40/64 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiLoadPackage",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x007B25E0",
+      "pattern": "558bec6aff681db50c0364a1000000005081ec98010000a140a9040433c58945f05657508d45f464a3000000008bf98b45088b4d0c898d74ffffff8d4dd45089",
+      "mask": "xxxxxx???????xxxx????xxx????xxxxxxxxxx????xxxxxxxxxxxxxxxxxxxxxx",
+      "note": "45/64 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiPackageBuilderCtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x008A7220",
+      "pattern": "558bec6aff68fdde0e0364a100000000505156a140a9040433c5508d45f464a3000000008bf18975f0e85271e2ffff75",
+      "mask": "xxxxxx???????xxxxxxx????xxxxx????xxxxxxxxx????xx",
+      "note": "29/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiPackageBuilderDtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x008ADB40",
+      "pattern": "558bec6aff6858fc0e0364a1000000005083ec085657a140a9040433c5508d45f464a3000000008bf9897df0c707b080",
+      "mask": "xxxxxx???????xxxxxxxxxx????xxxxx????xxxxxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiPackageLoaderCtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00787FF0",
+      "pattern": "558bec6aff68c32d0c0364a1000000005083ec70a140a9040433c58945f05657508d45f464a3000000008bf9897d9889",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxx????xxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiPackageLoaderDtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0078C670",
+      "pattern": "558bec6aff6815400c0364a1000000005083ec14535657a140a9040433c5508d45f464a3000000008bf9897df0c7072c",
+      "mask": "xxxxxx???????xxxxxxxxxxx????xxxxx????xxxxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiPackageLoaderVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0327B32C",
+      "pattern": "072cb36703884704c7470800000000c7470c00000000c7471000000000c645fc018d7718c74714000000008975846a40",
+      "mask": "x???????xxxxxxxxxxxxxxxxxxxxx????xxxxxxxxxxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x00788037; 37/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultUiPackageVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0327B234",
+      "pattern": "0634b26703e8cf6cf3ffc645fc03c7462400000000c7462800000000c7462c00000000c645fc04c7463000000000c746",
+      "mask": "x????x????????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x00787F88; 36/48 bytes fixed"
+    },
+    {
+      "anchor_id": "DefaultWwiseEventVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x03499FD4",
+      "pattern": "06d49f89038946288b451089462cc7450c00000000c7451000000000c645fc04",
+      "mask": "x????xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x0213E591; 28/32 bytes fixed"
+    },
+    {
+      "anchor_id": "EngineUpdateAndDrawWindows",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x006E06B0",
+      "pattern": "558bec6aff68fdac0a0364a1000000005083ec34535657a140a9040433c5508d45f464a3000000008bf18975ecff3598",
+      "mask": "xxxxxx???????xxxxxxxxxxx????xxxxx????xxxxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "GameCameraCtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x011D0670",
+      "pattern": "558bec6aff689804260364a1000000005051535657a140a9040433c5508d45f464a3000000008bf9897df0e8f0faedffc745fc00000000c7876c02000050d76b",
+      "mask": "xxxx?????????xxxxxxxxx????xxxxx????xxxxxxxxx????????xxx????xxxxx",
+      "note": "35/64 bytes fixed"
+    },
+    {
+      "anchor_id": "GameCameraDtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x011DD0F0",
+      "pattern": "558bec568bf1e885cdfffff6450801740e68bc05000056e855bef40083c4088b",
+      "mask": "xxxxxxx????????xxxxxxxxx????xxxx",
+      "note": "20/32 bytes fixed"
+    },
+    {
+      "anchor_id": "GameCameraSetFov",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x01103060",
+      "pattern": "558becf30f108168020000f30f104d08",
+      "mask": "xxxxx????xxxxxxx",
+      "note": "12/16 bytes fixed"
+    },
+    {
+      "anchor_id": "GameCameraVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0330AAFC",
+      "pattern": "07fcaa7003c7875402000024ab7003c7876c0200002cab7003c787700200003cab7003c7877802000050ab7003c7877c0200005cab7003e894d0c8ff8d8fac020000e889d0c8ff8d8fd8020000e87ed0c8ffc7870403000000000000c7870803",
+      "mask": "x????????xx????????xx????????xx????????xx????????xx????x????????xxx????????xxx????????xxxxxx????",
+      "operand_offset": 1,
+      "note": "global referenced from 0x011D06D1; 24/96 bytes fixed"
+    },
+    {
+      "anchor_id": "LeaveToHangar",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x011AA910",
+      "pattern": "578bf9b808f25d0433c98b9788010000",
+      "mask": "xxxx????xx????xx",
+      "note": "8/16 bytes fixed"
+    },
+    {
+      "anchor_id": "ObservedPayloadGetter",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x01BF1E40",
+      "pattern": "a14cb15e0485c0750ae8f2160000a14cb15e04c3cccccccccccccccccccccccca118b15e0485c0750ae8d2160000a118",
+      "mask": "x????xxxxx????x????xxxxxxxxxxxxxx????xxxxx????xx",
+      "note": "28/48 bytes fixed"
+    },
+    {
+      "anchor_id": "ObservedStatus",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0122D820",
+      "pattern": "558bec6aff687db2240364a1000000005083ec40a140a9040433c58945f0535657508d45f464a3000000008bf18b4508",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxxx????xxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "OnEnterWorld",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x012A1480",
+      "pattern": "558bec6aff68421f280364a1000000005081ec5c010000a140a9040433c58945f0535657508d45f464a3000000008bf9897da8c745b8000000008d4d88ff3598",
+      "mask": "xxxxxx???????xxxx????xxx????xxxxxxxxxxx????xxxxxxxx????xxxxxxxxx",
+      "note": "41/64 bytes fixed"
+    },
+    {
+      "anchor_id": "OnLeaveWorld",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x012A2850",
+      "pattern": "558bec6aff680a22280364a1000000005081ec64010000a140a9040433c58945f0535657508d45f464a3000000008bf9c7459c00000000e8a4b30b01e84f1a26",
+      "mask": "xxxxxx???????xxxx????xxx????xxxxxxxxxxx????xxxxx????xxxx????xxxx",
+      "note": "37/64 bytes fixed"
+    },
+    {
+      "anchor_id": "ReloadSetState",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x01201290",
+      "pattern": "558bec6aff68a776260364a1000000005083ec58a140a9040433c58945f05657508d45f464a3000000008bf18b4e486a",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxx????xxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "ResolveAvatarVehicle",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00309800",
+      "pattern": "8b4110c3cccccccccccccccccccccccc",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "note": "16/16 bytes fixed"
+    },
+    {
+      "anchor_id": "SetHealth",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x012A73C0",
+      "pattern": "558bec6aff68dd5b080364a1000000005083ec14535657a140a9040433c5508d45f464a3000000008bf9897df0ff35982267038d4de06a586838607103e8fe4d",
+      "mask": "xxxxxx???????xxxxxxxxxxx????xxxxx????xxxxxxxxxx????xxxxxx????xxx",
+      "note": "41/64 bytes fixed"
+    },
+    {
+      "anchor_id": "ShowShooting",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x012AA790",
+      "pattern": "558bec6aff68fd2a000364a1000000005083ec0856a140a9040433c5508d45f464a3000000008bf1ff35982267038d4dec6a5868ec5e7103e8331a44ffc745fc00000000807e7900744d837e740074478b45088bce6a000fb6008945088d4508",
+      "mask": "xxxxxx???????xxxxxxxxx????xxxxx????xxxxxxx????xxxxxx????x????????xxx????xx????xxxxx???????xxxxxx",
+      "note": "50/96 bytes fixed"
+    },
+    {
+      "anchor_id": "SoundEventStubFactory",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x006FBE50",
+      "pattern": "558bec6aff6834de0a0364a100000000505156a140a9040433c5508d45f464a3000000006a24e863cea2018bf083c4048975f0c745fc0000000085f6744a8bce",
+      "mask": "xxxxxx???????xxxxxxx????xxxxx????xxxxxx????xxxxxxxx????xxxxxxxxx",
+      "note": "41/64 bytes fixed"
+    },
+    {
+      "anchor_id": "SoundEventStubVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x03275258",
+      "pattern": "0658526703c645fc00c745fcffffffff8bc68b4df464890d00000000595e8be55dc3c745fcffffffff33c08b4df464890d00000000595e8be55dc3cccccccccccccccccccccccccccccc558bec6aff68cbde0a0364a1000000005083ec2c5657",
+      "mask": "x????????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx???????xxxxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x006FBEB7; 81/96 bytes fixed"
+    },
+    {
+      "anchor_id": "SoundSystemHybridCreateEvent",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x021321D0",
+      "pattern": "558bec6aff68b5d6450364a1000000005083ec0c535657a140a9040433c5508d45f464a3000000008bd933f68975ec89",
+      "mask": "xxxxxx???????xxxxxxxxxxx????xxxxx????xxxxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "SoundSystemProxyCreateEvent",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0070EEC0",
+      "pattern": "558bec8b49208b015dff600ccccccccce87bcffeffc21000cccccccccccccccc",
+      "mask": "xxxx????xxxxxxxxx????xxxxxxxxxxx",
+      "note": "24/32 bytes fixed"
+    },
+    {
+      "anchor_id": "TracerManagerCtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x011D3470",
+      "pattern": "558bec6aff688611260364a1000000005083ec6ca140a9040433c58945f05657508d45f464a3000000008bf9897d9489",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxx????xxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "TracerManagerDtor",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x011DD8E0",
+      "pattern": "558bec568bf1e825cbfffff6450801740e68a000000056e865b6f40083c4088bc65e5dc20400cccccccccccccccccccc558bec6aff68772b260364a1000000005083ec0c535657a140a9040433c5508d45f464a3000000008bf18975f0c70644",
+      "mask": "xxxxxxx????????x????xxxx????xxxxxxxxxxxxxxxxxxxxxxxxxx???????xxxxxxxxxxx????xxxxx????xxxxxxxxxxx",
+      "note": "65/96 bytes fixed"
+    },
+    {
+      "anchor_id": "TracerManagerVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0330AA8C",
+      "pattern": "078caa7003c74708a0aa7003c7470cc0aa7003c7471000000000c7471400000000c7471800000000c645fc018b450889",
+      "mask": "x????xxx????xxx????xxxxxxxxxxxxxxxxxxxxx????xxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x011D34BB; 32/48 bytes fixed"
+    },
+    {
+      "anchor_id": "TracerManagerShowTracer",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x012030C0",
+      "pattern": "558bec6aff684e78260364a1000000005081ec7c010000535657a140a9040433c5508d45f464a3000000008bf18b4614",
+      "mask": "xxxxxx???????xxxx????xxxxxx????xxxxx????xxxxxxxx",
+      "note": "29/48 bytes fixed"
+    },
+    {
+      "anchor_id": "TracerShellStyleTable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x03C38F80",
+      "pattern": "85808f03048bca8d71018a014184c075f92bce51528d4dc0e8bdff0affc745fc",
+      "mask": "?????x??????xxxxxxxxxxxxx????xxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x011E3557; 17/32 bytes fixed"
+    },
+    {
+      "anchor_id": "UiControlSystemInput",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x007CF9A0",
+      "pattern": "558bec6aff6841e50c0364a1000000005083ec60a140a9040433c58945f05657508d45f464a3000000008bd18955d880",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxx????xxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "UpdateVehicleHealth",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x012AC1E0",
+      "pattern": "558bec6aff681d33280364a1000000005083ec38a140a9040433c58945f0535657508d45f464a3000000008bf183be14",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxxx????xxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "VehicleHitDamage",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x01326660",
+      "pattern": "558bec6aff684751290364a1000000005081ec98010000a140a9040433c58945f05657508d45f464a3000000008bf9897d988b45108b4f108945948b45148945",
+      "mask": "xxxxxx???????xxxx????xxx????xxxxxxxxxx????xxxxxxxxxxxxxxxxxxxxxx",
+      "note": "45/64 bytes fixed"
+    },
+    {
+      "anchor_id": "PlayerControllerPoseUpdate",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x011B8C10",
+      "pattern": "558bec6aff6825df250364a1000000005081ecd80000005657a140a9040433c5508d45f464a3000000008bf9897dbc8b",
+      "mask": "xxxxxx???????xxxx????xxxxx????xxxxx????xxxxxxxxx",
+      "note": "29/48 bytes fixed"
+    },
+    {
+      "anchor_id": "ArenaAddVehicleInfo",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x01235E10",
+      "pattern": "558bec6aff6887e1260364a1000000005083ec60a140a9040433c58945f0535657508d45f464a3000000008bf18975b4",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxxx????xxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "ArenaApplyVehicleStatistics",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x01238420",
+      "pattern": "558bec6aff680d0e090364a1000000005083ec30a140a9040433c58945f05657508d45f464a3000000008bf18b55088b",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxx????xxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "ArenaOnVehicleKilled",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0122DF30",
+      "pattern": "558bec6aff680dc9260364a1000000005083ec5ca140a9040433c58945f0535657508d45f464a3000000008bf18b45088378140675058b400ceb05e8f03f9c00",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxxx????xxxxxxxxxxxxxxxxxxxx????",
+      "note": "45/64 bytes fixed"
+    },
+    {
+      "anchor_id": "ArenaOnPlayerName",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0122B9A0",
+      "pattern": "558bec6aff689bc5260364a1000000005083ec6ca140a9040433c58945f05657508d45f464a3000000008bf18b450883",
+      "mask": "xxxxxx???????xxxxxxxx????xxxxxxxxxx????xxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "LocalizationInstance",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x0421653C",
+      "pattern": "0d3c656104ff7508e8eb7e32008b4508",
+      "mask": "x????xxxx????xxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x002947B9; 8/16 bytes fixed"
+    },
+    {
+      "anchor_id": "GesGetListeners",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x002DBC30",
+      "pattern": "558bec8b450883ec0883c0045657508b",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "note": "16/16 bytes fixed"
+    },
+    {
+      "anchor_id": "GesGetOrCreateList",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x002DBF80",
+      "pattern": "558bec6aff689d4f000364a1000000005083ec145657a140a9040433c5508d45f464a3000000008bf98b450883c00450",
+      "mask": "xxxxx????????xxxxxxxxxx????xxxxx????xxxxxxxxxxxx",
+      "note": "32/48 bytes fixed"
+    },
+    {
+      "anchor_id": "GesListenerListFactory",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00D2F0B0",
+      "pattern": "558bec6aff68f81b190364a1000000005083ec0856a140a9040433c5508d45f464a3000000006a10c745f000000000e8fa9b3f018bf083c4048975ecc745fc0100000085f67436c706840c6c036a50c7460400000000c7460800000000e8cc9b",
+      "mask": "xxxxxx???????xxxxxxxxx????xxxxx????xxxxx????xxxx????xxxxxxxx????xxxxxxxxx????x????xxxxxxxxxxxxxx",
+      "note": "61/96 bytes fixed"
+    },
+    {
+      "anchor_id": "GesListenerListAdd",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x00D260E0",
+      "pattern": "558bec6aff68be0d190364a1000000005083ec7ca140a9040433c58945f0535657508d45f464a3000000008bf98b5d088b450c538945a4e8547457ff0f57c0c745a8000000008d45c0660f1345b083c404c745b8000000008945a0c745e400000000c745fc01000000c745e800000000c745fc0200000033f689759cc645fc038b45a4397024740e50e832c600008bf083c40489759cc645fc048b4de485c974178b018b50108d45c03bc80f95c050ffd2c745e40000000085f674378d8578ffffff3bf075258b068d4dc0518bceff50048945e48bce8b068b50108d8578ffff",
+      "mask": "xxxxxx????xxxxxxxxxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx????xxx????xxxxxxxxxxxxxx????xxxxxx????xxx????xxx????xxx????xxxxxxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "note": "hand-written: 13 byte-identical ListenerList::Add instantiations exist (0x011259A0..0x0117D7D0); they differ only in the std::function copy helper they call, so the rel32 of that call (offset 0x8A) is left fixed to pick the copy the engine uses for SubscribeFunction<CameraModeChanged>. Any sibling would behave identically; see spec 2026-09-03-ges-event-bus-design.md"
+    },
+    {
+      "anchor_id": "GesListenerListErase",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x003B0380",
+      "pattern": "558bec6aff686895020364a1000000005083ec08535657a140a9040433c5508d45f464a3000000008bd98b7d0c8b0f8b4148c1e802a801752e8b491885c974188d450c895d0c83c10450e8d1c6eeff8b07c74018000000008b07c74008000000008b07834848048b37f64648018b0e75598b4604894d0c89088b0e8b46048941048d4608ff4b088945f0c745fcffffffff8d7818897decc745fcffffffff8b4f2485c974158b113bcf0f95c00fb6c050ff5210c74724000000006a5056e81f8bd7018b4d0c83c408eb02890f8b450889088b4df464890d00000000595f5e5b8be55dc20800cccccccccccccccccccccc558bec8a450888412184c07405e83ee3ffff5dc20400cccccccccccccccccccc558bec83ec08568bf18b4d08e82f46ff",
+      "mask": "xxxxx????????xxxxxxxxxxx????xxxxx????xxxxxxxxxxx???????xxxxxxxxxxxxxxxxxxxx????xxxxxxxxxxxxxxxxxxxx????xx????xxx????xxxxxx???????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx????xxxx????xxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "note": "226/288 bytes fixed"
+    },
+    {
+      "anchor_id": "GesSubscribeImpl",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x002DD830",
+      "pattern": "558bec6aff681455000364a1000000005081ec28010000535657a140a9040433c5508d45f464a3000000008b45088945",
+      "mask": "xxxxx????????xxxx????xxxxxx????xxxxx????xxxxxxxx",
+      "note": "28/48 bytes fixed"
+    },
+    {
+      "anchor_id": "LoginManagerOnHostChosen",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x01908FF0",
+      "pattern": "558bec6aff68cfbe390364a1000000005081ec7c010000a140a9040433c58945f05657508d45f464a300000000898d7cffffff8b7d1085ff0f8593010000e8ad",
+      "mask": "xxxxxx???????xxxx????xxx????xxxxxxxxxx????xxxxxxxxxxxxxx??????xx",
+      "note": "39/64 bytes fixed"
+    },
+    {
+      "anchor_id": "LoginManagerChangeCluster",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x018F1C40",
+      "pattern": "558bec6aff68c0502f0364a1000000005081ec1c010000a140a9040433c58945f05657508d45f464a3000000008bf9e86c26c1fe6a0068000001008bc88b108b5228ffd284c00f8423010000c745cc00000000c745d000000000c745d400000000c745fc00000000c745e4cd040000c745e8f06a7703c745ec04677703e81e26",
+      "mask": "xxxxxx???????xxxx????xxx????xxxxxxxxxx????xxxxxx??????????xxxxxxxxxxxx??????????xxx????xxx????xxx????xxxxxxxxxxxxx????xxx????xxx",
+      "note": "69/128 bytes fixed"
+    },
+    {
+      "anchor_id": "ConnectionManagerDisconnect",
+      "kind": "code_signature",
+      "section": ".text",
+      "source_rva": "0x0101F140",
+      "pattern": "558bec6aff689af7200364a1000000005083ec08535657a140a9040433c5508d45f464a3000000008bd9f30f10450c0f",
+      "mask": "xxxxxx???????xxxxxxxxxxx????xxxxx????xxxxxxxxxxx",
+      "note": "33/48 bytes fixed"
+    },
+    {
+      "anchor_id": "VehiclePrimaryVtable",
+      "kind": "data_xref",
+      "section": ".data",
+      "source_rva": "0x033056A4",
+      "pattern": "07a4567003c747040c577003e82f3028ff33c0c6477c006689477e0f57c08d87",
+      "mask": "x???????????x????xx????xxxxxxxxx",
+      "operand_offset": 1,
+      "note": "global referenced from 0x01189911; 13/32 bytes fixed"
+    }
+  ],
+  "struct_offsets": [
+    {
+      "id": "VehicleEntityIdOffset",
+      "constant": "kVehicleEntityIdOffset",
+      "source": "mod_api/loader/wotb_mod_loader.cpp",
+      "line": 130,
+      "value": "0x1C"
+    },
+    {
+      "id": "VehicleHealthOffset",
+      "constant": "kVehicleHealthOffset",
+      "source": "mod_api/loader/wotb_mod_loader.cpp",
+      "line": 131,
+      "value": "0xB8"
+    },
+    {
+      "id": "VehicleMaxHealthOffset",
+      "constant": "kVehicleMaxHealthOffset",
+      "source": "mod_api/loader/wotb_mod_loader.cpp",
+      "line": 132,
+      "value": "0x11C"
+    },
+    {
+      "id": "VehicleObjectEntityIdOffset",
+      "constant": "kVehicleObjectEntityIdOffset",
+      "source": "mod_api/loader/wotb_mod_loader.cpp",
+      "line": 134,
+      "value": "0x1C"
+    },
+    {
+      "id": "VehicleObjectTeamOffset",
+      "constant": "kVehicleObjectTeamOffset",
+      "source": "mod_api/loader/wotb_mod_loader.cpp",
+      "line": 135,
+      "value": "0xB0"
+    },
+    {
+      "id": "PoseBlockOffset",
+      "constant": "kPoseBlockOffset",
+      "source": "mod_api/loader/wotb_mod_loader.cpp",
+      "line": 2050,
+      "value": "0x5C"
+    },
+    {
+      "id": "CameraControllerStateOffset",
+      "constant": "kCameraControllerStateOffset",
+      "source": "mod_api/loader/v3_native_bindings.cpp",
+      "line": 1958,
+      "value": "0x5C"
+    },
+    {
+      "id": "CameraControllerGameCameraOffset",
+      "constant": "kCameraControllerGameCameraOffset",
+      "source": "mod_api/loader/v3_native_bindings.cpp",
+      "line": 1960,
+      "value": "0x28"
+    },
+    {
+      "id": "GameCameraViewModeOffset",
+      "constant": "kGameCameraViewModeOffset",
+      "source": "mod_api/loader/v3_native_bindings.cpp",
+      "line": 1961,
+      "value": "0x320"
+    },
+    {
+      "id": "EntityChildrenBeginOffset",
+      "constant": "kEntityChildrenBeginOffset",
+      "source": "mod_api/loader/v3_native_client_services.cpp",
+      "line": 4062,
+      "value": "0x8"
+    },
+    {
+      "id": "EntityChildrenEndOffset",
+      "constant": "kEntityChildrenEndOffset",
+      "source": "mod_api/loader/v3_native_client_services.cpp",
+      "line": 4064,
+      "value": "0xC"
+    },
+    {
+      "id": "EntityNameOffset",
+      "constant": "kEntityNameOffset",
+      "source": "mod_api/loader/v3_native_client_services.cpp",
+      "line": 4065,
+      "value": "0x1C"
+    },
+    {
+      "id": "EntityTransformOffset",
+      "constant": "kEntityTransformOffset",
+      "source": "mod_api/loader/v3_native_client_services.cpp",
+      "line": 4066,
+      "value": "0x3C"
+    },
+    {
+      "id": "TransformWorldMatrixOffset",
+      "constant": "kTransformWorldMatrixOffset",
+      "source": "mod_api/loader/v3_native_client_services.cpp",
+      "line": 4067,
+      "value": "0x60"
+    },
+    {
+      "id": "DefaultUiControlSystemOffset",
+      "constant": "kDefaultUiControlSystemOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 20,
+      "value": "0x3C"
+    },
+    {
+      "id": "UiPackageErrorOffset",
+      "constant": "kUiPackageErrorOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 28,
+      "value": "0x8"
+    },
+    {
+      "id": "UiPackageControlsBeginOffset",
+      "constant": "kUiPackageControlsBeginOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 29,
+      "value": "0x24"
+    },
+    {
+      "id": "UiPackageControlsEndOffset",
+      "constant": "kUiPackageControlsEndOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 30,
+      "value": "0x28"
+    },
+    {
+      "id": "UiPackageBuilderPackageOffset",
+      "constant": "kUiPackageBuilderPackageOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 31,
+      "value": "0x5C"
+    },
+    {
+      "id": "EntityTransformComponentOffset",
+      "constant": "kEntityTransformComponentOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 33,
+      "value": "0x3C"
+    },
+    {
+      "id": "RenderObjectBatchesBeginOffset",
+      "constant": "kRenderObjectBatchesBeginOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 36,
+      "value": "0x3C"
+    },
+    {
+      "id": "RenderObjectBatchesEndOffset",
+      "constant": "kRenderObjectBatchesEndOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 37,
+      "value": "0x40"
+    },
+    {
+      "id": "RenderBatchPolygonGroupOffset",
+      "constant": "kRenderBatchPolygonGroupOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 38,
+      "value": "0x40"
+    },
+    {
+      "id": "RenderBatchMaterialOffset",
+      "constant": "kRenderBatchMaterialOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 46,
+      "value": "0x44"
+    },
+    {
+      "id": "SceneActiveOffset",
+      "constant": "kSceneActiveOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 82,
+      "value": "0x100"
+    },
+    {
+      "id": "UiNameOffset",
+      "constant": "kUiNameOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 88,
+      "value": "0x30"
+    },
+    {
+      "id": "UiParentOffset",
+      "constant": "kUiParentOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 90,
+      "value": "0x38"
+    },
+    {
+      "id": "UiChildrenOffset",
+      "constant": "kUiChildrenOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 91,
+      "value": "0x44"
+    },
+    {
+      "id": "UiFlagsOffset",
+      "constant": "kUiFlagsOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 92,
+      "value": "0x4C"
+    },
+    {
+      "id": "UiDirtyFlagsOffset",
+      "constant": "kUiDirtyFlagsOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 93,
+      "value": "0x4D"
+    },
+    {
+      "id": "UiPositionOffset",
+      "constant": "kUiPositionOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 94,
+      "value": "0x6C"
+    },
+    {
+      "id": "UiSizeOffset",
+      "constant": "kUiSizeOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 95,
+      "value": "0x74"
+    },
+    {
+      "id": "UiInputProcessorsCountOffset",
+      "constant": "kUiInputProcessorsCountOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 96,
+      "value": "0x94"
+    },
+    {
+      "id": "UiControlStateOffset",
+      "constant": "kUiControlStateOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 97,
+      "value": "0xA0"
+    },
+    {
+      "id": "UiTextComponentTextOffset",
+      "constant": "kUiTextComponentTextOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 105,
+      "value": "0x44"
+    },
+    {
+      "id": "UiDynamicAtlasTextComponentTextOffset",
+      "constant": "kUiDynamicAtlasTextComponentTextOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 106,
+      "value": "0x60"
+    },
+    {
+      "id": "UiComponentControlOffset",
+      "constant": "kUiComponentControlOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 107,
+      "value": "0x8"
+    },
+    {
+      "id": "UiComponentsOuterOffset",
+      "constant": "kUiComponentsOuterOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 2793,
+      "value": "0xE4"
+    },
+    {
+      "id": "UiStaticTextComponentOffset",
+      "constant": "kUiStaticTextComponentOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 2885,
+      "value": "0x140"
+    },
+    {
+      "id": "UiControlBackgroundColorOffset",
+      "constant": "kUiControlBackgroundColorOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 3136,
+      "value": "0x60"
+    },
+    {
+      "id": "UiDynamicAtlasImageColorOffset",
+      "constant": "kUiDynamicAtlasImageColorOffset",
+      "source": "mod_api/src/wotb_mod_dava_resources.cpp",
+      "line": 3143,
+      "value": "0x3C"
+    }
+  ]
+}

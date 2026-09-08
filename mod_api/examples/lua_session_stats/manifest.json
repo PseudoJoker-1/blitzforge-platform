@@ -1,0 +1,16 @@
+{
+  "id": "example.lua_session_stats",
+  "name": "Blitz Session Statistics",
+  "version": "1.0.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "entity.public.visible",
+    "game.entity.public",
+    "ui.create",
+    "ui.modify.own",
+    "ui.modify.game",
+    "battle.ui"
+  ]
+}

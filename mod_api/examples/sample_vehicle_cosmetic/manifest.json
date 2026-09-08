@@ -1,0 +1,25 @@
+{
+  "manifest_version": 1,
+  "type": "native",
+  "id": "sample.vehicle_cosmetic",
+  "name": "RC1 Vehicle Cosmetic Sample",
+  "version": "1.0.0-rc1",
+  "developer": "WotbMod SDK",
+  "api": {
+    "wotbmod.core": ">=1 <2",
+    "wotbmod.handles": ">=1 <2",
+    "wotbmod.events": ">=1 <2",
+    "wotbmod.resources": ">=1 <2",
+    "wotbmod.vehicle.visual": ">=2 <3"
+  },
+  "entrypoints": {
+    "windows-x86": "bin/windows-x86/sample_vehicle_cosmetic.dll"
+  },
+  "permissions": [
+    "core",
+    "events.public",
+    "resources.mod",
+    "resources.overlay.game",
+    "vehicle.local.cosmetic"
+  ]
+}

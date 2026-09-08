@@ -1,0 +1,53 @@
+# Справочник raw-таблиц
+
+Все 620 Lua-функции в 47 интерфейсах, из тех же заголовков `include/wotbmod/*.h`, из которых генерируются биндинги. Аргументы даны так, как их принимает Lua-функция (скрытый `mod` и `user_data` опущены, буферы приходят строкой, callback — функцией); при отказе любая функция отвечает `nil, err`.
+
+| Таблица | Заголовок | Фасад |
+| --- | --- | --- |
+| [`wotb.core`](core.md) | `core_v1.h` | [`wotb.context`](../facades/wotb-context.md) |
+| [`wotb.capabilities`](capabilities.md) | `capabilities_v1.h` | [`wotb.mod`](../facades/wotb-mod.md) |
+| [`wotb.permissions`](permissions.md) | `permissions_v1.h` | [`wotb.mod`](../facades/wotb-mod.md) |
+| [`wotb.handles`](handles.md) | `handles_v1.h` | [`wotb.screen`](../facades/wotb-screen.md) |
+| [`wotb.lifecycle`](lifecycle.md) | `lifecycle_v1.h` | [`wotb.mod`](../facades/wotb-mod.md) |
+| [`wotb.hooks`](hooks.md) | `hooks_v1.h` | — |
+| [`wotb.unsafe_native`](unsafe_native.md) | `unsafe_native_v1.h` | — |
+| [`wotb.events`](events.md) | `events_v1.h` | [`wotb.battle`](../facades/wotb-battle.md) |
+| [`wotb.ui`](ui.md) | `ui_v3.h` | [`wotb.screen`](../facades/wotb-screen.md) |
+| [`wotb.settings`](settings.md) | `settings_v1.h` | — |
+| [`wotb.storage`](storage.md) | `storage_v1.h` | [`wotb.store`](../facades/wotb-store.md) |
+| [`wotb.input`](input.md) | `input_v1.h` | [`wotb.keys`](../facades/wotb-keys.md) |
+| [`wotb.vfs`](vfs.md) | `vfs_v2.h` | [`wotb.files`](../facades/wotb-files.md) |
+| [`wotb.resources`](resources.md) | `resources_v1.h` | [`wotb.files`](../facades/wotb-files.md) |
+| [`wotb.async`](async.md) | `async_v1.h` | — |
+| [`wotb.http`](http.md) | `http_v1.h` | — |
+| [`wotb.intermod`](intermod.md) | `intermod_v1.h` | — |
+| [`wotb.render`](render.md) | `render_v1.h` | — |
+| [`wotb.render_native`](render_native.md) | `render_v1.h` | — |
+| [`wotb.camera`](camera.md) | `camera_v1.h` | [`wotb.view`](../facades/wotb-view.md) |
+| [`wotb.scene`](scene.md) | `scene_v1.h` | — |
+| [`wotb.audio`](audio.md) | `audio_v2.h` | [`wotb.sound`](../facades/wotb-sound.md) |
+| [`wotb.vehicle_visual`](vehicle_visual.md) | `vehicle_visual_v2.h` | [`wotb.vehicle`](../facades/wotb-vehicle.md) |
+| [`wotb.gameplay_camera`](gameplay_camera.md) | `gameplay_camera_v1.h` | [`wotb.view`](../facades/wotb-view.md) |
+| [`wotb.gameplay_hud`](gameplay_hud.md) | `gameplay_hud_v1.h` | [`wotb.hud`](../facades/wotb-hud.md) |
+| [`wotb.gameplay_hangar`](gameplay_hangar.md) | `gameplay_hangar_v1.h` | — |
+| [`wotb.gameplay_replay`](gameplay_replay.md) | `gameplay_replay_v1.h` | — |
+| [`wotb.entity_public`](entity_public.md) | `entity_public_v1.h` | [`wotb.players`](../facades/wotb-players.md) |
+| [`wotb.bigworld_rpc`](bigworld_rpc.md) | `bigworld_rpc_v1.h` | — |
+| [`wotb.projectile`](projectile.md) | `projectile_v2.h` | [`wotb.shells`](../facades/wotb-shells.md) |
+| [`wotb.yaml`](yaml.md) | `yaml_v1.h` | [`wotb.files`](../facades/wotb-files.md) |
+| [`wotb.archive`](archive.md) | `archive_v1.h` | — |
+| [`wotb.loaders`](loaders.md) | `loaders_v1.h` | [`wotb.files`](../facades/wotb-files.md) |
+| [`wotb.client`](client.md) | `client_v1.h` | — |
+| [`wotb.device`](device.md) | `device_v1.h` | — |
+| [`wotb.diagnostics`](diagnostics.md) | `diagnostics_v2.h` | — |
+| [`wotb.devtools`](devtools.md) | `devtools_v3.h` | — |
+| [`wotb.manifest`](manifest.md) | `manifest_v1.h` | — |
+| [`wotb.catalog`](catalog.md) | `catalog_v1.h` | — |
+| [`wotb.content`](content.md) | `content_v1.h` | — |
+| [`wotb.ui_read`](ui_read.md) | `ui_v4.h` | [`wotb.screen`](../facades/wotb-screen.md) |
+| [`wotb.camera_state`](camera_state.md) | `camera_v2.h` | [`wotb.view`](../facades/wotb-view.md) |
+| [`wotb.audio_intercept`](audio_intercept.md) | `audio_v3.h` | — |
+| [`wotb.scene_enumerate`](scene_enumerate.md) | `scene_v2.h` | — |
+| [`wotb.tracer`](tracer.md) | `tracer_v1.h` | — |
+| [`wotb.ges`](ges.md) | `ges_v1.h` | [`wotb.ges`](../facades/wotb-ges.md) |
+| [`wotb.session_cluster`](session_cluster.md) | `session_cluster_v1.h` | [`wotb.session`](../facades/wotb-session.md) |

@@ -1,0 +1,10 @@
+{
+  "id": "example.lua_hello",
+  "name": "Lua Hello Example",
+  "version": "1.0.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "storage"
+  ]
+}

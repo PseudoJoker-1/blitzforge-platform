@@ -1,0 +1,18 @@
+id: native-client-api-test
+name: Native Client API Live Test
+version: 1.6.0
+author: BlitzForge SDK
+description: Live-тест API 2.9, gameplay events, skins, DAVA sound и UIControl/Scene
+type: native
+long: |
+  Предназначен для текущего 32-bit клиента Blitz и live loader ABI 2.9.
+  Проверяет реальные hook lifecycle, host/config API, resource mounts,
+  UI/scene/texture file requests, UIControl/Scene object operations, direct
+  UIControl/Entity creation, active screen/scene lookup, attach/detach
+  загруженной custom SC2 на 180 кадров, UI/Scene client events с borrowed
+  handle clone, existing UI/vehicle API, основные battle/vehicle/shot/health/
+  reload/ammo/aim/spotting/hit events, skin mapping lifecycle, custom WAV и
+  native DAVA sound event.
+  Результаты пишет как PASS/SKIP/FAIL в live_host.log. Клиентские anchors
+  привязаны к актуальной сборке из re_anchors.md; после обновления игры их
+  необходимо перепроверить.

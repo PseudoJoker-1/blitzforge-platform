@@ -1,0 +1,21 @@
+# systemd unit for the portal on a Linux host.
+#   sudo cp deploy/wotbmod-portal.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now wotbmod-portal
+[Unit]
+Description=WotbMod mod portal
+After=network.target
+
+[Service]
+Type=simple
+User=wotbmod
+WorkingDirectory=/opt/wotbmod-portal
+ExecStart=/usr/bin/python3 /opt/wotbmod-portal/backend/portal_server.py serve --quiet
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/wotbmod-portal/data
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

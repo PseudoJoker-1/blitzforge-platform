@@ -1,0 +1,15 @@
+{
+  "id": "example.lua_ui_framework",
+  "name": "Lua Runtime UI Lab",
+  "version": "2.1.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "input",
+    "ui.create",
+    "ui.modify.own",
+    "ui.modify.game",
+    "battle.ui"
+  ]
+}

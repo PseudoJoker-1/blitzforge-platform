@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wotbmod.local/schemas/wotbmod-manifest-v1.schema.json",
+  "title": "WotbMod API V3 RC1 package manifest",
+  "type": "object",
+  "required": [
+    "manifest_version",
+    "id",
+    "name",
+    "version",
+    "developer",
+    "permissions"
+  ],
+  "properties": {
+    "manifest_version": { "const": 1 },
+    "type": { "enum": ["native", "content"], "default": "native" },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 95,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "name": { "type": "string", "minLength": 1, "maxLength": 127 },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 47,
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "developer": { "type": "string", "minLength": 1, "maxLength": 127 },
+    "api": {
+      "type": "object",
+      "maxProperties": 256,
+      "additionalProperties": { "type": "string", "minLength": 1, "maxLength": 47 }
+    },
+    "dependencies": { "$ref": "#/$defs/dependencies" },
+    "optional_dependencies": { "$ref": "#/$defs/dependencies" },
+    "incompatibilities": { "$ref": "#/$defs/dependencies" },
+    "permissions": {
+      "type": "array",
+      "maxItems": 256,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 127 }
+    },
+    "resources": { "$ref": "#/$defs/pathList" },
+    "locales": {
+      "oneOf": [
+        { "type": "string", "minLength": 1, "maxLength": 1023 },
+        { "$ref": "#/$defs/pathList" }
+      ]
+    },
+    "settings": { "type": "string", "maxLength": 1023 },
+    "content": { "type": "string", "maxLength": 1023 },
+    "entrypoints": {
+      "type": "object",
+      "maxProperties": 32,
+      "additionalProperties": { "type": "string", "minLength": 1, "maxLength": 1023 }
+    },
+    "client": {
+      "type": "object",
+      "properties": {
+        "builds": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 127 }
+        },
+        "executable_hashes": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[0-9A-Fa-f]{64}$" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "signature": {
+      "type": "object",
+      "required": ["algorithm", "key_id", "value"],
+      "properties": {
+        "algorithm": { "type": "string", "minLength": 1 },
+        "key_id": { "type": "string", "minLength": 1 },
+        "value": { "type": "string", "minLength": 1, "maxLength": 4096 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true,
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "content" } }, "required": ["type"] },
+      "then": { "properties": { "entrypoints": { "maxProperties": 0 } } }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "native" } }
+      },
+      "then": {
+        "required": ["entrypoints"],
+        "properties": {
+          "entrypoints": {
+            "required": ["windows-x86"],
+            "properties": {
+              "windows-x86": { "type": "string", "pattern": "\\.[dD][lL][lL]$" }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "dependencies": {
+      "type": "object",
+      "maxProperties": 128,
+      "additionalProperties": { "type": "string", "minLength": 1, "maxLength": 47 }
+    },
+    "pathList": {
+      "type": "array",
+      "maxItems": 4096,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 1023 }
+    }
+  },
+  "x-wotbmod-rc1": {
+    "contract": "V3-RC1",
+    "canonicalEncoding": "UTF-8 without BOM; duplicate JSON keys rejected",
+    "pathPolicy": "relative POSIX package paths; no traversal, absolute paths, drive paths or case-fold duplicates",
+    "permissionPolicy": "registered names or network:https://host grants only"
+  }
+}

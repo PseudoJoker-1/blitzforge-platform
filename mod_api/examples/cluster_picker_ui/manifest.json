@@ -1,0 +1,25 @@
+{
+  "client": {
+    "builds": [
+      "11.20.0.887"
+    ]
+  },
+  "description": "Строка выбора кластера в штатных настройках: AUTO и C0..C4 (скрыта без Lua-пакета blitzforge.cluster_picker).",
+  "developer": "pseud",
+  "files": [
+    {
+      "sha256": "1f9b620297e6fda228472e3163f9ad9c96b519225158da82f14052f4019402f4",
+      "source": "files/UI/Screens/Common/Settings/PrimaryTab/PrimaryOptionsPage.yaml",
+      "stock_sha256": "960a843f09604b4b8e27516e13b57542e767bfa11b2aa9c13dad66f12faf16d9",
+      "target": "UI/Screens/Common/Settings/PrimaryTab/PrimaryOptionsPage.yaml"
+    }
+  ],
+  "id": "blitzforge.cluster_picker.ui",
+  "manifest_version": 1,
+  "name": "Выбор кластера: строка в настройках",
+  "permissions": [
+    "resources.overlay.game"
+  ],
+  "type": "resource",
+  "version": "1.0.1"
+}

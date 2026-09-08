@@ -1,0 +1,20 @@
+{
+  "id": "blitzforge.cluster_picker",
+  "name": "Выбор кластера в настройках",
+  "version": "1.0.1",
+  "developer": "pseud",
+  "description": "Строка «Кластер: AUTO | EU_C0 | EU_C3 | EU_C4» в штатных настройках: переподключение к другому кластеру региона без перезапуска клиента. На текущую сессию; после перезапуска клиент снова выбирает сам. Нужен ресурсный пакет blitzforge.cluster_picker.ui.",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "storage",
+    "ui",
+    "ui.create",
+    "ui.modify.own",
+    "battle.ui",
+    "ui.modify.game",
+    "session.cluster.read",
+    "session.cluster.change"
+  ]
+}

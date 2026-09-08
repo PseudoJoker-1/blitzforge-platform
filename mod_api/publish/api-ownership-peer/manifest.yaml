@@ -1,0 +1,12 @@
+id: api-ownership-peer
+name: API Ownership Peer
+version: 1.2.0
+author: BlitzForge SDK
+description: Второй владелец handles для ownership-тестов
+type: native
+long: |
+  Минимальный второй мод для проверки, что hooks, mounts, resources и audio
+  handles одного мода недоступны другому. В ABI 2.4 сюда входят и native
+  sound event handles; ABI 2.5 проверяет изоляцию UIControl/Scene handles и
+  owner-aware main-thread callbacks, а ABI 2.6 — созданных и полученных
+  active-root handles. Используется вместе с contract host.

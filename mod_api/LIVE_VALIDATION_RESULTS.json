@@ -1,0 +1,13 @@
+{
+  "schema": "wotbmod.live-validation-results/v1",
+  "template": true,
+  "client_version": null,
+  "client_build": null,
+  "executable_sha256": null,
+  "loader_version": null,
+  "validation_mod_version": "1.1.0",
+  "validated_at": null,
+  "fingerprint_key": "UNBOUND_TEMPLATE",
+  "load_cycle_count": 0,
+  "results": []
+}

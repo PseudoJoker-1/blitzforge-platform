@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wotbmod.dev/schemas/wotbmod-config-schema-v1.schema.json",
+  "title": "wotb.config schema (settings a Lua mod declares)",
+  "description": "The `schema` table a Lua mod passes to wotb.config.new, written as JSON so editors can validate it and catalogs can show the settings a mod exposes. Every field needs a type and a default; the default never overwrites a stored value.",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "required": ["type", "default"],
+    "additionalProperties": false,
+    "properties": {
+      "type": { "type": "string", "enum": ["boolean", "integer", "number", "string"] },
+      "default": { "type": ["boolean", "integer", "number", "string"] },
+      "min": { "type": "number" },
+      "max": { "type": "number" },
+      "max_length": { "type": "integer", "minimum": 0 },
+      "values": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+      "title": { "type": "string", "maxLength": 127 },
+      "description": { "type": "string", "maxLength": 1024 }
+    }
+  },
+  "propertyNames": { "pattern": "^[A-Za-z0-9_.-]{1,95}$" }
+}

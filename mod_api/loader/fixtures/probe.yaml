@@ -1,0 +1,5 @@
+Header:
+  version: "1"
+Controls:
+  - name: "ProbeControl"
+    class: "UIControl"

@@ -1,0 +1,18 @@
+{
+  "id": "example.lua_skin_switcher",
+  "name": "Lua Skin Switcher",
+  "version": "1.0.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "storage",
+    "resources.mod",
+    "resources.overlay.game",
+    "gameplay.tweak.vehicle",
+    "vehicle.local.cosmetic",
+    "game.entity.public",
+    "entity.public.visible",
+    "input.actions"
+  ]
+}

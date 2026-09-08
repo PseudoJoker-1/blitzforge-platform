@@ -1,0 +1,1700 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens/Common/StyledButton.yaml"
+- "~res:/UI/Screens/Common/Settings/PrimaryTab/Common/SocialNetworks.yaml"
+- "~res:/UI/Screens/Common/ScrollBar.yaml"
+- "~res:/UI/Screens/Common/Settings/PrimaryTab/LinkRow.yaml"
+- "~res:/UI/Screens/Common/Settings/PrimaryTab/PrimaryOptionsPagePrototypes.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "PrimaryOptionsPage"
+    size: [1311.000000, 1125.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "bShowReportPlayerButton", "false", "true"]
+            - ["bool", "isAccountDeletionSupported", "false", "false"]
+            - ["bool", "migrationVisible", "false", "true"]
+            - ["bool", "isNeteasePersonalInfoAvailable", "false", "true"]
+            - ["AppDataModel", "app", "null", "{ \"constants\" = { \"nsb\" = false; }; }"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["AccountDataModel", "account", "null", "{ }"]
+            - ["PrimaryOptionsView", "primaryOptions", "null", "{ }"]
+            - ["PlayerOptionsView", "playerOptions", "null", "{ }"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "isWotBlitzPortal", "app.constants.appWotBlitz"]
+            - ["bool", "isWgc", "app.constants.wgc"]
+            - ["bool", "isEmailVisible", "not isWgc and not app.netease.neteaseAvailable and Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalEmail)"]
+            - ["bool", "isSocialNetworksVisible", "not app.netease.neteaseAvailable and not isWgc and not isWotBlitzPortal"]
+            - ["string", "serverPlayers", "when primaryOptions.regionCCU != primaryOptions.clusterCCU -> format(\"%(c) / %(r)\", { \"c\" = str1000Separated(primaryOptions.clusterCCU); \"r\" = str1000Separated(primaryOptions.regionCCU); }), str1000Separated(primaryOptions.regionCCU)"]
+            - ["bool", "phoneIsEnabled", "app.netease.neteaseAvailable and not account.tutorialData.isTutorialActive"]
+            - ["bool", "phoneIsVisible", "playerOptions.phoneBindingIsAllowed and not playerOptions.phoneIsBound"]
+            - ["bool", "isDemoAccount", "not (Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalEmail) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalGamecenter) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalGoogle) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalFacebook) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalLive) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalSteam) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalNetease) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalAppleLogin) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalNSwitch))"]
+            - ["bool", "isAccountManagementVisible", "not isWgc and (Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalEmail) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalGamecenter) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalFacebook) or (isDemoAccount and isAccountDeletionSupported))"]
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIScrollView"
+            name: "ScrollArea"
+            autoUpdate: true
+            centerContent: true
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "min (parent - 32, 1100)"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIScrollViewContainer"
+                name: "scrollContainerControl"
+                components:
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "Formula"
+                        verticalFormula: "maxChild + 16"
+                children:
+                -   class: "UIControl"
+                    name: "SafeAreaInsetLeft"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "safeAreaInsets.left"
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "Left"
+                    input: false
+                    components:
+                        Background: {}
+                        LinearLayout:
+                            orientation: "TopDown"
+                            spacing: 8.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            horizontalValue: 200.000000
+                            verticalPolicy: "PercentOfChildrenSum"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/PrimaryOptionsPageStyles.yaml"
+                    bindings:
+                    - ["classes", "when not primaryOptions.isProfileScreenVisible -> \"locked\", \"\""]
+                    children:
+                    -   class: "UIControl"
+                        name: "Spacer"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 8.000000
+                    -   class: "UIControl"
+                        name: "ProfileLockedInfo"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 48.000000
+                        bindings:
+                        - ["visible", "not primaryOptions.isProfileScreenVisible or account.tutorialData.isTutorialActive"]
+                        children:
+                        -   class: "UIControl"
+                            name: "Bg"
+                            input: false
+                            classes: "pane-bg"
+                            components:
+                                Background: {}
+                                IgnoreLayout: {}
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfParent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Styles/BackgroundStyles.yaml"
+                        -   class: "UIControl"
+                            name: "Content"
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                    vCenterAnchorEnabled: true
+                                LinearLayout:
+                                    spacing: 4.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfChildrenSum"
+                                    verticalPolicy: "PercentOfMaxChild"
+                            children:
+                            -   class: "UIControl"
+                                name: "IconLock"
+                                input: false
+                                components:
+                                    Background:
+                                        drawType: "DRAW_SCALE_PROPORTIONAL"
+                                        sprite: "~res:/Gfx/UI/LobbyCommon/lock_small.psd"
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 24.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                            -   class: "UIControl"
+                                name: "Value"
+                                input: false
+                                classes: "text2-small text-color-blue"
+                                components:
+                                    UITextComponent:
+                                        text: "#account:Blocks/EditingUnavailable"
+                                        colorInheritType: "COLOR_IGNORE_PARENT"
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        verticalPolicy: "PercentOfContent"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens/Fonts.yaml"
+                    -   class: "UIControl"
+                        name: "PlayerData"
+                        input: false
+                        components:
+                            LinearLayout:
+                                orientation: "TopDown"
+                                spacing: 1.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfChildrenSum"
+                        children:
+                        -   prototype: "PrimaryOptionsPagePrototypes/PlayerDataItem"
+                            name: "SkipTutorial"
+                            bindings:
+                            - ["visible", "account.tutorialData.isTutorialActive"]
+                            children:
+                            -   path: "PlayerInfo/Value"
+                                components:
+                                    UITextComponent:
+                                        text: "#account:Blocks/Tutorial"
+                            -   path: "Button"
+                                components:
+                                    UIInputEventComponent:
+                                        onTouchUpInside: "SKIP_TUTORIAL_PRESSED"
+                                children: []
+                            -   path: "Button/Caption"
+                                components:
+                                    UITextComponent:
+                                        text: "#account:Blocks/Tutorial/SkipButton"
+                        -   prototype: "PrimaryOptionsPagePrototypes/PlayerDataItem"
+                            name: "Email"
+                            bindings:
+                            - ["visible", "isEmailVisible"]
+                            children:
+                            -   path: "PlayerInfo"
+                                position: [18.000000, 14.000000]
+                                bindings:
+                                - ["visible", "not isWgc"]
+                                children:
+                                -   class: "UIControl"
+                                    name: "Loading"
+                                    input: false
+                                    classes: "header3 text-color-white-50"
+                                    components:
+                                        UITextComponent:
+                                            text: "Loading..."
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfContent"
+                                            verticalPolicy: "PercentOfContent"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens/Fonts.yaml"
+                                    bindings:
+                                    - ["visible", "empty(session.email)"]
+                            -   path: "PlayerInfo/Label"
+                                components:
+                                    UITextComponent:
+                                        text: "settings/general/email"
+                            -   path: "PlayerInfo/Value"
+                                components:
+                                    UITextComponent: {}
+                                bindings:
+                                - ["visible", "not empty(session.email)"]
+                                - ["UITextComponent.text", "session.email"]
+                            -   path: "Button"
+                                visible: false
+                                enabled: false
+                                components:
+                                    UIInputEventComponent: {}
+                                children: []
+                            -   path: "Button/Caption"
+                                components:
+                                    UITextComponent:
+                                        fitting: "FITTING_REDUCE"
+                        -   class: "UIControl"
+                            name: "CompleteAccount"
+                            input: false
+                            components:
+                                LinearLayout:
+                                    padding: "20"
+                                    dynamicSpacing: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 80.000000
+                            bindings:
+                            - ["visible", "not account.isAccountComplete and not account.tutorialData.isTutorialActive and not app.netease.neteaseAvailable and not account.isKorea"]
+                            children:
+                            -   class: "UIControl"
+                                name: "Bg"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                classes: "pane-bg"
+                                components:
+                                    Background:
+                                        colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                    IgnoreLayout: {}
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "PercentOfParent"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Styles/BackgroundStyles.yaml"
+                            -   class: "UIControl"
+                                name: "Highlight"
+                                input: false
+                                components:
+                                    IgnoreLayout: {}
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "PercentOfParent"
+                                children:
+                                -   class: "UIControl"
+                                    name: "Left"
+                                    size: [32.000000, 32.000000]
+                                    input: false
+                                    classes: "color-orange"
+                                    components:
+                                        Background:
+                                            drawType: "DRAW_FILL"
+                                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                        Anchor:
+                                            leftAnchorEnabled: true
+                                            topAnchorEnabled: true
+                                            topAnchor: 3.000000
+                                            bottomAnchorEnabled: true
+                                            bottomAnchor: 3.000000
+                                        SizePolicy:
+                                            horizontalPolicy: "FixedSize"
+                                            horizontalValue: 3.000000
+                                        StyleSheet:
+                                            styles: "~res:/UI/Styles/ColorStyles.yaml"
+                                -   class: "UIControl"
+                                    name: "Right"
+                                    size: [32.000000, 32.000000]
+                                    input: false
+                                    classes: "color-orange"
+                                    components:
+                                        Background:
+                                            drawType: "DRAW_FILL"
+                                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                        Anchor:
+                                            rightAnchorEnabled: true
+                                            topAnchorEnabled: true
+                                            topAnchor: 3.000000
+                                            bottomAnchorEnabled: true
+                                            bottomAnchor: 3.000000
+                                        SizePolicy:
+                                            horizontalPolicy: "FixedSize"
+                                            horizontalValue: 3.000000
+                                        StyleSheet:
+                                            styles: "~res:/UI/Styles/ColorStyles.yaml"
+                                -   class: "UIControl"
+                                    name: "Top"
+                                    size: [32.000000, 32.000000]
+                                    input: false
+                                    classes: "color-orange"
+                                    components:
+                                        Background:
+                                            drawType: "DRAW_FILL"
+                                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                        Anchor:
+                                            leftAnchorEnabled: true
+                                            rightAnchorEnabled: true
+                                            topAnchorEnabled: true
+                                        SizePolicy:
+                                            verticalPolicy: "FixedSize"
+                                            verticalValue: 3.000000
+                                        StyleSheet:
+                                            styles: "~res:/UI/Styles/ColorStyles.yaml"
+                                -   class: "UIControl"
+                                    name: "Bottom"
+                                    size: [32.000000, 32.000000]
+                                    input: false
+                                    classes: "color-orange"
+                                    components:
+                                        Background:
+                                            drawType: "DRAW_FILL"
+                                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                        Anchor:
+                                            leftAnchorEnabled: true
+                                            rightAnchorEnabled: true
+                                            bottomAnchorEnabled: true
+                                        SizePolicy:
+                                            verticalPolicy: "FixedSize"
+                                            verticalValue: 3.000000
+                                        StyleSheet:
+                                            styles: "~res:/UI/Styles/ColorStyles.yaml"
+                            -   class: "UIControl"
+                                name: "Content"
+                                position: [20.000000, 19.000000]
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                                        vCenterAnchor: 2.000000
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "PercentOfMaxChild"
+                                children:
+                                -   class: "UIControl"
+                                    name: "TextReward"
+                                    input: false
+                                    components:
+                                        RichContent:
+                                            text: "#account:Blocks/Wargaming/Title"
+                                            baseClasses: "text2 text-color-blue"
+                                            classesInheritance: true
+                                        RichContentAliases0:
+                                            aliases:
+                                            - ["price", "<object class=\"gold\" name=\"Reward\" path=\"~res:/UI/Screens/Common/Settings/PrimaryTab/Common/GoldRewardPrototype.yaml\" prototype=\"Reward\" />"]
+                                        Anchor:
+                                            leftAnchorEnabled: true
+                                            rightAnchorEnabled: true
+                                            rightAnchor: 48.000000
+                                        SizePolicy:
+                                            verticalPolicy: "PercentOfChildrenSum"
+                                        FlowLayout:
+                                            hSpacing: 5.000000
+                                            vPadding: "8.000000"
+                                            vSpacing: 4.000000
+                                            useRtl: true
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens/Fonts.yaml"
+                            -   class: "UIControl"
+                                name: "ButtonWrapper"
+                                position: [484.000000, 0.000000]
+                                size: [224.000000, 65.000000]
+                                input: false
+                                components:
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfMaxChild"
+                                        verticalPolicy: "PercentOfMaxChild"
+                                children:
+                                -   prototype: "StyledButton/StyledButton"
+                                    name: "CompleteAccountButton"
+                                    classes: "button button-color-green button-open-sound"
+                                    components:
+                                        Background:
+                                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                        SizePolicy:
+                                            horizontalPolicy: "FixedSize"
+                                            horizontalValue: 192.000000
+                                            verticalPolicy: "FixedSize"
+                                            verticalValue: 50.000000
+                                        UIInputEventComponent:
+                                            onTouchUpInside: "ON_COMPLETE_ACCOUNT"
+                                    children:
+                                    -   path: "Caption"
+                                        classes: "header5 text-color-white"
+                                        components:
+                                            UITextComponent:
+                                                text: "#account:Blocks/Wargaming/Button/Complete"
+                                                fitting: "FITTING_REDUCE"
+                                            StyleSheet:
+                                                inheritsStylesFromParent: false
+                                                styles: "~res:/UI/Screens/Fonts.yaml"
+                                -   class: "UIControl"
+                                    name: "Badge"
+                                    position: [192.000000, 0.000000]
+                                    size: [32.000000, 32.000000]
+                                    input: false
+                                    components:
+                                        Anchor:
+                                            rightAnchorEnabled: true
+                                            rightAnchor: -8.000000
+                                            topAnchorEnabled: true
+                                            topAnchor: -8.000000
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfMaxChild"
+                                            verticalPolicy: "PercentOfMaxChild"
+                                        UIChildComponent0:
+                                            prototypePath: "~res:/UI/Screens3/Lobby/Common/Badge.yaml"
+                                            args:
+                                                "type": "eBadgeType.Camouflage"
+                        -   prototype: "PrimaryOptionsPagePrototypes/PlayerDataItem"
+                            name: "Phone"
+                            bindings:
+                            - ["visible", "app.netease.neteaseAvailable"]
+                            - ["enabled", "phoneIsEnabled"]
+                            children:
+                            -   path: "PlayerInfo/Label"
+                                components:
+                                    UITextComponent:
+                                        text: "settings/general/phoneNumber"
+                            -   path: "PlayerInfo/Value"
+                                components:
+                                    UITextComponent: {}
+                                bindings:
+                                - ["UITextComponent.text", "primaryOptions.phoneNumber"]
+                            -   path: "Button"
+                                components:
+                                    UIInputEventComponent:
+                                        onTouchUpInside: "ON_CHANGE_PHONE"
+                                bindings:
+                                - ["visible", "phoneIsVisible"]
+                                - ["enabled", "phoneIsEnabled"]
+                                children:
+                                -   class: "UIControl"
+                                    name: "Badge"
+                                    input: false
+                                    classes: "unread-icon-bg"
+                                    components:
+                                        Background:
+                                            drawType: "DRAW_SCALE_PROPORTIONAL"
+                                            sprite: "~res:/Gfx/UI/CommonUIElements/WhiteCircle.psd"
+                                        Anchor:
+                                            rightAnchorEnabled: true
+                                            rightAnchor: -4.000000
+                                            topAnchorEnabled: true
+                                            topAnchor: -4.000000
+                                        SizePolicy:
+                                            horizontalPolicy: "FixedSize"
+                                            horizontalValue: 12.000000
+                                            verticalPolicy: "FixedSize"
+                                            verticalValue: 12.000000
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens/Common/UnreadIcon.yaml"
+                                    bindings:
+                                    - ["visible", "phoneIsEnabled"]
+                            -   path: "Button/Caption"
+                                components:
+                                    UITextComponent:
+                                        text: "#account:Blocks/MobilePhone/Link/Button"
+                                        fitting: "FITTING_REDUCE"
+                        -   prototype: "PrimaryOptionsPagePrototypes/PlayerDataItem"
+                            name: "UserId"
+                            children:
+                            -   path: "PlayerInfo/Label"
+                                components:
+                                    UITextComponent:
+                                        text: "settings/general/userId"
+                            -   path: "PlayerInfo/Value"
+                                components:
+                                    UITextComponent: {}
+                                bindings:
+                                - ["UITextComponent.text", "str(session.dbid)"]
+                            -   path: "Button"
+                                visible: false
+                                components:
+                                    UIInputEventComponent:
+                                        onTouchUpInside: "ON_CHANGE_PHONE"
+                                children: []
+                            -   path: "Button/Caption"
+                                classes: "header5 text-color-white"
+                    -   class: "UIControl"
+                        name: "SocialNetwork"
+                        input: false
+                        components:
+                            LinearLayout:
+                                orientation: "TopDown"
+                                spacing: 1.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfChildrenSum"
+                        bindings:
+                        - ["visible", "isSocialNetworksVisible"]
+                        children:
+                        -   class: "UIControl"
+                            name: "Header"
+                            input: false
+                            classes: "section-header1"
+                            components:
+                                Background:
+                                    colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                LinearLayout:
+                                    padding: "20"
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 48.000000
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Lobby/Common/Styles/SectionHeader1.style.yaml"
+                            children:
+                            -   class: "UIControl"
+                                name: "Label"
+                                input: false
+                                classes: "header5 text-color-white"
+                                components:
+                                    UITextComponent:
+                                        text: "#account:Blocks/Externals/Header"
+                                        colorInheritType: "COLOR_IGNORE_PARENT"
+                                        align: ["LEFT", "VCENTER"]
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        verticalPolicy: "PercentOfContent"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens/Fonts.yaml"
+                                bindings:
+                                - ["visible", "not app.constants.nsb"]
+                        -   class: "UIControl"
+                            name: "List"
+                            input: false
+                            components:
+                                LinearLayout:
+                                    spacing: 1.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfMaxChild"
+                            children:
+                            -   class: "UIControl"
+                                name: "Left"
+                                input: false
+                                components:
+                                    LinearLayout:
+                                        orientation: "TopDown"
+                                        spacing: 1.000000
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "PercentOfChildrenSum"
+                                children:
+                                -   prototype: "SocialNetworks/SocialNetworkCell"
+                                    name: "Nsb"
+                                    bindings:
+                                    - ["visible", "not app.constants.ruby"]
+                                    - ["classes", "when primaryOptions.socialNetworks[6].enabled -> \"social-item\", \"social-item disabled\""]
+                                    children:
+                                    -   path: "Content/icon"
+                                        components:
+                                            Background:
+                                                sprite: "~res:/Gfx/Lobby/icons/icon_switch_m"
+                                        bindings:
+                                        - ["visible", "not app.constants.nsb"]
+                                    -   path: "Content/serviceName"
+                                        components:
+                                            UITextComponent: {}
+                                        bindings:
+                                        - ["UITextComponent.text", "localize(primaryOptions.socialNetworks[6].name)"]
+                                    -   path: "switch"
+                                        components:
+                                            UIInputEventComponent:
+                                                onValueChangedData: "pair(6, _isTurnedOn)"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Common/Switch.yaml;~res:/UI/Styles/BackgroundStyles.yaml;~res:/UI/Styles/ControlSoundStyles.yaml;~res:/UI/Screens/Common/Styles/Switch.style.yaml"
+                                        bindings:
+                                        - ["enabled", "primaryOptions.socialNetworks[6].enabled"]
+                                        - ["isTurnedOn", "not primaryOptions.socialNetworks[6].switchLeft"]
+                                        children: []
+                                -   prototype: "SocialNetworks/SocialNetworkCell"
+                                    name: "GameCenter"
+                                    bindings:
+                                    - ["visible", "not app.constants.nsb"]
+                                    - ["classes", "when primaryOptions.socialNetworks[1].enabled -> \"social-item\", \"social-item disabled\""]
+                                    children:
+                                    -   path: "Content/icon"
+                                        components:
+                                            Background: {}
+                                        bindings:
+                                        - ["Background.frame", "primaryOptions.socialNetworks[1].icon"]
+                                    -   path: "Content/serviceName"
+                                        components:
+                                            UITextComponent: {}
+                                        bindings:
+                                        - ["UITextComponent.text", "localize(primaryOptions.socialNetworks[1].name)"]
+                                    -   path: "switch"
+                                        components:
+                                            UIInputEventComponent:
+                                                onValueChangedData: "pair(1, _isTurnedOn)"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Common/Switch.yaml;~res:/UI/Styles/BackgroundStyles.yaml;~res:/UI/Styles/ControlSoundStyles.yaml;~res:/UI/Screens/Common/Styles/Switch.style.yaml"
+                                        bindings:
+                                        - ["enabled", "primaryOptions.socialNetworks[1].enabled"]
+                                        - ["isTurnedOn", "not primaryOptions.socialNetworks[1].switchLeft"]
+                                        children: []
+                                -   prototype: "SocialNetworks/SocialNetworkCell"
+                                    name: "GoogleGames"
+                                    bindings:
+                                    - ["visible", "not app.constants.nsb"]
+                                    - ["classes", "when primaryOptions.socialNetworks[2].enabled -> \"social-item\", \"social-item disabled\""]
+                                    children:
+                                    -   path: "Content/icon"
+                                        components:
+                                            Background: {}
+                                        bindings:
+                                        - ["Background.frame", "primaryOptions.socialNetworks[2].icon"]
+                                    -   path: "Content/serviceName"
+                                        components:
+                                            UITextComponent: {}
+                                        bindings:
+                                        - ["UITextComponent.text", "localize(primaryOptions.socialNetworks[2].name)"]
+                                    -   path: "switch"
+                                        components:
+                                            UIInputEventComponent:
+                                                onValueChangedData: "pair(2, _isTurnedOn)"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Common/Switch.yaml;~res:/UI/Styles/BackgroundStyles.yaml;~res:/UI/Styles/ControlSoundStyles.yaml;~res:/UI/Screens/Common/Styles/Switch.style.yaml"
+                                        bindings:
+                                        - ["enabled", "primaryOptions.socialNetworks[2].enabled"]
+                                        - ["isTurnedOn", "not primaryOptions.socialNetworks[2].switchLeft"]
+                                        children: []
+                                -   prototype: "SocialNetworks/SocialNetworkCell"
+                                    name: "Steam"
+                                    bindings:
+                                    - ["visible", "not app.constants.nsb and not app.constants.ruby"]
+                                    - ["classes", "when primaryOptions.socialNetworks[4].enabled -> \"social-item\", \"social-item disabled\""]
+                                    children:
+                                    -   path: "Content/icon"
+                                        components:
+                                            Background: {}
+                                        bindings:
+                                        - ["Background.frame", "primaryOptions.socialNetworks[4].icon"]
+                                    -   path: "Content/serviceName"
+                                        components:
+                                            UITextComponent: {}
+                                        bindings:
+                                        - ["UITextComponent.text", "localize(primaryOptions.socialNetworks[4].name)"]
+                                    -   path: "switch"
+                                        position: [263.000000, 15.000000]
+                                        components:
+                                            UIInputEventComponent:
+                                                onValueChangedData: "pair(4, _isTurnedOn)"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Common/Switch.yaml;~res:/UI/Styles/BackgroundStyles.yaml;~res:/UI/Styles/ControlSoundStyles.yaml;~res:/UI/Screens/Common/Styles/Switch.style.yaml"
+                                        bindings:
+                                        - ["enabled", "primaryOptions.socialNetworks[4].enabled"]
+                                        - ["isTurnedOn", "not primaryOptions.socialNetworks[4].switchLeft"]
+                                        children: []
+                            -   class: "UIControl"
+                                name: "Right"
+                                input: false
+                                components:
+                                    LinearLayout:
+                                        orientation: "TopDown"
+                                        spacing: 1.000000
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "PercentOfChildrenSum"
+                                bindings:
+                                - ["visible", "not app.constants.nsb"]
+                                children:
+                                -   prototype: "SocialNetworks/SocialNetworkCell"
+                                    name: "Facebook"
+                                    bindings:
+                                    - ["visible", "not app.constants.ruby"]
+                                    - ["classes", "when primaryOptions.socialNetworks[0].enabled -> \"social-item\", \"social-item disabled\""]
+                                    children:
+                                    -   path: "Content/icon"
+                                        components:
+                                            Background: {}
+                                        bindings:
+                                        - ["Background.frame", "primaryOptions.socialNetworks[0].icon"]
+                                    -   path: "Content/serviceName"
+                                        components:
+                                            UITextComponent: {}
+                                        bindings:
+                                        - ["UITextComponent.text", "localize(primaryOptions.socialNetworks[0].name)"]
+                                    -   path: "switch"
+                                        components:
+                                            UIInputEventComponent:
+                                                onValueChangedData: "pair(0, _isTurnedOn)"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Common/Switch.yaml;~res:/UI/Styles/BackgroundStyles.yaml;~res:/UI/Styles/ControlSoundStyles.yaml;~res:/UI/Screens/Common/Styles/Switch.style.yaml"
+                                        bindings:
+                                        - ["enabled", "primaryOptions.socialNetworks[0].enabled"]
+                                        - ["isTurnedOn", "not primaryOptions.socialNetworks[0].switchLeft"]
+                                        children: []
+                                -   prototype: "SocialNetworks/SocialNetworkCell"
+                                    name: "Live"
+                                    bindings:
+                                    - ["visible", "not app.constants.ruby"]
+                                    - ["classes", "when primaryOptions.socialNetworks[3].enabled -> \"social-item\", \"social-item disabled\""]
+                                    children:
+                                    -   path: "Content/icon"
+                                        components:
+                                            Background: {}
+                                        bindings:
+                                        - ["Background.frame", "primaryOptions.socialNetworks[3].icon"]
+                                    -   path: "Content/serviceName"
+                                        components:
+                                            UITextComponent: {}
+                                        bindings:
+                                        - ["UITextComponent.text", "localize(primaryOptions.socialNetworks[3].name)"]
+                                    -   path: "switch"
+                                        components:
+                                            UIInputEventComponent:
+                                                onValueChangedData: "pair(3, _isTurnedOn)"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Common/Switch.yaml;~res:/UI/Styles/BackgroundStyles.yaml;~res:/UI/Styles/ControlSoundStyles.yaml;~res:/UI/Screens/Common/Styles/Switch.style.yaml"
+                                        bindings:
+                                        - ["enabled", "primaryOptions.socialNetworks[3].enabled"]
+                                        - ["isTurnedOn", "not primaryOptions.socialNetworks[3].switchLeft"]
+                                        children: []
+                                -   prototype: "SocialNetworks/SocialNetworkCell"
+                                    name: "AppleLogin"
+                                    bindings:
+                                    - ["classes", "when primaryOptions.socialNetworks[5].enabled -> \"social-item\", \"social-item disabled\""]
+                                    children:
+                                    -   path: "Content/icon"
+                                        components:
+                                            Background:
+                                                sprite: "~res:/Gfx/Lobby/icons/icon_apple_m"
+                                    -   path: "Content/serviceName"
+                                        components:
+                                            UITextComponent: {}
+                                        bindings:
+                                        - ["UITextComponent.text", "localize(primaryOptions.socialNetworks[5].name)"]
+                                    -   path: "switch"
+                                        components:
+                                            UIInputEventComponent:
+                                                onValueChangedData: "pair(5, _isTurnedOn)"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Common/Switch.yaml;~res:/UI/Styles/BackgroundStyles.yaml;~res:/UI/Styles/ControlSoundStyles.yaml;~res:/UI/Screens/Common/Styles/Switch.style.yaml"
+                                        bindings:
+                                        - ["enabled", "primaryOptions.socialNetworks[5].enabled"]
+                                        - ["isTurnedOn", "not primaryOptions.socialNetworks[5].switchLeft"]
+                                        children: []
+                                -   prototype: "SocialNetworks/SocialNetworkCell"
+                                    name: "Xbox"
+                                    bindings:
+                                    - ["visible", "app.constants.xbox"]
+                                    - ["classes", "when primaryOptions.socialNetworks[7].enabled -> \"social-item\", \"social-item disabled\""]
+                                    children:
+                                    -   path: "Content/icon"
+                                        components:
+                                            Background:
+                                                sprite: "~res:/Gfx/Lobby/icons/icon_xbox_m"
+                                    -   path: "Content/serviceName"
+                                        components:
+                                            UITextComponent: {}
+                                        bindings:
+                                        - ["UITextComponent.text", "localize(primaryOptions.socialNetworks[7].name)"]
+                                    -   path: "switch"
+                                        components:
+                                            UIInputEventComponent:
+                                                onValueChangedData: "pair(7, _isTurnedOn)"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Common/Switch.yaml;~res:/UI/Styles/BackgroundStyles.yaml;~res:/UI/Styles/ControlSoundStyles.yaml;~res:/UI/Screens/Common/Styles/Switch.style.yaml"
+                                        bindings:
+                                        - ["enabled", "primaryOptions.socialNetworks[7].enabled"]
+                                        - ["isTurnedOn", "not primaryOptions.socialNetworks[7].switchLeft"]
+                                        children: []
+                    -   class: "UIControl"
+                        name: "CurrencyBlock"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfMaxChild"
+                        bindings:
+                        - ["visible", "session.realm == eRealm.Asia and not app.netease.neteaseAvailable"]
+                        children:
+                        -   class: "UIControl"
+                            name: "Content"
+                            input: false
+                            components:
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 1.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfChildrenSum"
+                            children:
+                            -   prototype: "PrimaryOptionsPagePrototypes/CurrencyRow"
+                                name: "Purchased"
+                                children:
+                                -   path: "Label"
+                                    position: [16.000000, 12.000000]
+                                -   path: "Gold/Value"
+                                    components:
+                                        UITextComponent: {}
+                                    bindings:
+                                    - ["UITextComponent.text", "str1000Separated(session.stats.purchasedGold)"]
+                                -   path: "Silver/Value"
+                                    components:
+                                        UITextComponent: {}
+                                    bindings:
+                                    - ["UITextComponent.text", "str1000Separated(session.stats.purchasedCredits)"]
+                            -   prototype: "PrimaryOptionsPagePrototypes/CurrencyRow"
+                                name: "Received"
+                                children:
+                                -   path: "Label"
+                                    components:
+                                        UITextComponent:
+                                            text: "#account:CurrencyInfo/Received"
+                                -   path: "Gold/Value"
+                                    components:
+                                        UITextComponent: {}
+                                    bindings:
+                                    - ["UITextComponent.text", "str1000Separated(session.stats.gold.quantity - session.stats.purchasedGold)"]
+                                -   path: "Silver"
+                                    position: [543.000000, 8.000000]
+                                    children: []
+                                -   path: "Silver/Value"
+                                    components:
+                                        UITextComponent: {}
+                                    bindings:
+                                    - ["UITextComponent.text", "str1000Separated(session.stats.credits.quantity - session.stats.purchasedCredits)"]
+                            -   prototype: "PrimaryOptionsPagePrototypes/CurrencyRow"
+                                name: "Total"
+                                children:
+                                -   path: "Label"
+                                    components:
+                                        UITextComponent:
+                                            text: "#account:CurrencyInfo/Total"
+                                -   path: "Gold/Value"
+                                    components:
+                                        UITextComponent: {}
+                                    bindings:
+                                    - ["UITextComponent.text", "str1000Separated(session.stats.gold.quantity)"]
+                                -   path: "Silver/Value"
+                                    components:
+                                        UITextComponent: {}
+                                    bindings:
+                                    - ["UITextComponent.text", "str1000Separated(session.stats.credits.quantity)"]
+                    -   class: "UIControl"
+                        name: "AccountInfo"
+                        position: [0.000000, 646.000000]
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 48.000000
+                        children:
+                        -   class: "UIControl"
+                            name: "Bg"
+                            input: false
+                            classes: "white-bg-05"
+                            components:
+                                Background: {}
+                                IgnoreLayout: {}
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfParent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Styles/BackgroundStyles.yaml"
+                        -   class: "UIControl"
+                            name: "Value"
+                            input: false
+                            classes: "text2-small text-color-blue"
+                            components:
+                                UITextComponent: {}
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                    vCenterAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfContent"
+                                    verticalPolicy: "PercentOfContent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Fonts.yaml"
+                            bindings:
+                            - ["UITextComponent.text", "primaryOptions.creationDateText"]
+                    -   class: "UIControl"
+                        name: "ParentalControl"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 48.000000
+                        bindings:
+                        - ["visible", "primaryOptions.parentalControlIsEnabled"]
+                        children:
+                        -   class: "UIControl"
+                            name: "Bg"
+                            input: false
+                            classes: "white-bg-05"
+                            components:
+                                Background: {}
+                                IgnoreLayout: {}
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfParent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Styles/BackgroundStyles.yaml"
+                        -   class: "UIControl"
+                            name: "Value"
+                            input: false
+                            classes: "text2-small text-color-blue"
+                            components:
+                                UITextComponent:
+                                    text: "profile/parental_control_enabled"
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                    vCenterAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfContent"
+                                    verticalPolicy: "PercentOfContent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Fonts.yaml"
+                    -   class: "UIControl"
+                        name: "NetEaseText"
+                        input: false
+                        classes: "netease-content"
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "Formula"
+                                verticalFormula: "maxChild + 27"
+                            StyleSheet:
+                                styles: "~res:/UI/Styles/NetEaseStyles.yaml"
+                        children:
+                        -   class: "UIControl"
+                            name: "Bg"
+                            input: false
+                            classes: "white-bg-05"
+                            components:
+                                Background: {}
+                                IgnoreLayout: {}
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfParent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Styles/BackgroundStyles.yaml"
+                        -   class: "UIControl"
+                            name: "Value"
+                            input: false
+                            classes: "text2-small text-color-blue"
+                            components:
+                                UITextComponent:
+                                    text: "China/Account/ManagementInfo"
+                                    multiline: "MULTILINE_ENABLED"
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                    vCenterAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "Formula"
+                                    horizontalFormula: "parent - 24"
+                                    verticalPolicy: "PercentOfContent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Fonts.yaml"
+                    -   class: "UIControl"
+                        name: "Spacer_1"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 8.000000
+                -   class: "UIControl"
+                    name: "Spacer"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 8.000000
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "Right"
+                    position: [736.000000, 0.000000]
+                    input: false
+                    components:
+                        LinearLayout:
+                            orientation: "TopDown"
+                            spacing: 8.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfChildrenSum"
+                    children:
+                    -   class: "UIControl"
+                        name: "Spacer"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 8.000000
+                    -   class: "UIControl"
+                        name: "Logo"
+                        input: false
+                        classes: "netease-content"
+                        components:
+                            LinearLayout:
+                                orientation: "TopDown"
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfMaxChild"
+                            StyleSheet:
+                                styles: "~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/PrimaryOptionsPageStyles.yaml"
+                        children:
+                        -   class: "UIControl"
+                            name: "DefaultLogo"
+                            input: false
+                            components:
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfChildrenSum"
+                            children:
+                            -   class: "UIControl"
+                                name: "Spacer"
+                                input: false
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 8.000000
+                            -   class: "UIControl"
+                                name: "Control"
+                                input: false
+                                components:
+                                    Background:
+                                        drawType: "DRAW_SCALE_PROPORTIONAL"
+                                        sprite: "~res:/Gfx/UI/SettingsScreen/PrimaryTab/Wg_logo.psd"
+                                        perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 164.000000
+                            -   class: "UIControl"
+                                name: "Spacer_1"
+                                input: false
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                        -   class: "UIControl"
+                            name: "NeteaseLogo"
+                            components:
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: -8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfChildrenSum"
+                            children:
+                            -   class: "UIControl"
+                                name: "Logo"
+                                input: false
+                                components:
+                                    Background:
+                                        drawType: "DRAW_SCALE_PROPORTIONAL"
+                                        sprite: "~res:/Gfx/UI/LobbyCommon/BlitzLogo.psd"
+                                        perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                                    Anchor:
+                                        leftAnchorEnabled: true
+                                        leftAnchor: 16.000000
+                                        rightAnchorEnabled: true
+                                        rightAnchor: 16.000000
+                                    SizePolicy:
+                                        verticalPolicy: "PercentOfContent"
+                            -   class: "UIControl"
+                                name: "LogoUrl"
+                                input: false
+                                classes: "china-logo-url"
+                                components:
+                                    Background:
+                                        sprite: "~res:/Gfx/UI/LobbyCommon/BlitzLogo_url.psd"
+                                        perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "PercentOfContent"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Styles/NetEaseStyles.yaml"
+                            -   class: "UIControl"
+                                name: "margin-buttom"
+                                input: false
+                                components:
+                                    SizePolicy:
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 8.000000
+                    -   class: "UIControl"
+                        name: "ServerInfo"
+                        input: false
+                        components:
+                            LinearLayout:
+                                orientation: "TopDown"
+                                padding: "16"
+                                spacing: 16.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfChildrenSum"
+                        children:
+                        -   class: "UIControl"
+                            name: "Bg"
+                            input: false
+                            classes: "pane-bg"
+                            components:
+                                Background: {}
+                                IgnoreLayout: {}
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfParent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Styles/BackgroundStyles.yaml"
+                        -   class: "UIControl"
+                            name: "DataContainer"
+                            input: false
+                            components:
+                                LinearLayout:
+                                    padding: "20"
+                                    spacing: 8.000000
+                                    dynamicSpacing: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfMaxChild"
+                            children:
+                            -   class: "UIControl"
+                                name: "Info"
+                                input: false
+                                components:
+                                    LinearLayout:
+                                        orientation: "TopDown"
+                                        spacing: 6.000000
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "PercentOfChildrenSum"
+                                children:
+                                -   class: "UIControl"
+                                    name: "Server"
+                                    input: false
+                                    classes: "custom-spacing"
+                                    components:
+                                        LinearLayout:
+                                            useRtl: true
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfParent"
+                                            verticalPolicy: "PercentOfMaxChild"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/PrimaryOptionsPageStyles.yaml"
+                                    children:
+                                    -   class: "UIControl"
+                                        name: "Label"
+                                        input: false
+                                        classes: "header3 text-color-white"
+                                        components:
+                                            UITextComponent:
+                                                text: "#hangar:regionInfo/serverName"
+                                            SizePolicy:
+                                                horizontalPolicy: "PercentOfContent"
+                                                verticalPolicy: "PercentOfContent"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Fonts.yaml"
+                                    -   class: "UIControl"
+                                        name: "ServerName"
+                                        input: false
+                                        classes: "header3 text-color-white"
+                                        components:
+                                            UITextComponent:
+                                                fitting: "FITTING_POINTS"
+                                                align: ["LEFT", "VCENTER"]
+                                            SizePolicy:
+                                                horizontalPolicy: "Formula"
+                                                horizontalFormula: "min(parentRest, content)"
+                                                verticalPolicy: "PercentOfContent"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Fonts.yaml"
+                                        bindings:
+                                        - ["UITextComponent.text", "primaryOptions.serverName"]
+                                -   class: "UIControl"
+                                    name: "PlayersCount"
+                                    input: false
+                                    components:
+                                        LinearLayout:
+                                            spacing: 3.000000
+                                            useRtl: true
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfChildrenSum"
+                                            verticalPolicy: "PercentOfMaxChild"
+                                    children:
+                                    -   class: "UIControl"
+                                        name: "Label"
+                                        input: false
+                                        classes: "fs-17 regular text-color-blue"
+                                        components:
+                                            UITextComponent:
+                                                text: "#hangar:regionInfo/playersOnline"
+                                            SizePolicy:
+                                                horizontalPolicy: "PercentOfContent"
+                                                verticalPolicy: "PercentOfContent"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/FontsFs.yaml"
+                                    -   class: "UIControl"
+                                        name: "Count"
+                                        input: false
+                                        classes: "fs-17 bold text-color-white"
+                                        components:
+                                            UITextComponent: {}
+                                            SizePolicy:
+                                                horizontalPolicy: "PercentOfContent"
+                                                verticalPolicy: "PercentOfContent"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/FontsFs.yaml"
+                                        bindings:
+                                        - ["UITextComponent.text", "serverPlayers"]
+                            -   class: "UIControl"
+                                name: "RegionFlag"
+                                input: false
+                                classes: "region-flag"
+                                components:
+                                    Background:
+                                        drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+                                    Anchor:
+                                        topAnchorEnabled: true
+                                        topAnchor: 2.000000
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 36.000000
+                                        verticalPolicy: "PercentOfContent"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/PrimaryOptionsPageStyles.yaml;~res:/UI/Styles/NetEaseStyles.yaml"
+                                bindings:
+                                - ["Background.frame", "primaryOptions.flagFrame"]
+                        -   class: "UIControl"
+                            name: "bf_cluster_row"
+                            visible: false
+                            components:
+                                LinearLayout:
+                                    padding: "10"
+                                    spacing: 4.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfMaxChild"
+                            children:
+                            -   prototype: "StyledButton/StyledButton"
+                                name: "bf_cluster_auto"
+                                classes: "button button-color-gray button-ok-sound"
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 62.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 50.000000
+                                children:
+                                -   path: "Caption"
+                                    classes: "header5 text-color-white"
+                                    components:
+                                        UITextComponent:
+                                            text: "AUTO"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens/Fonts.yaml"
+                            -   prototype: "StyledButton/StyledButton"
+                                name: "bf_cluster_0"
+                                classes: "button button-color-gray button-ok-sound"
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 52.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 50.000000
+                                children:
+                                -   path: "Caption"
+                                    classes: "header5 text-color-white"
+                                    components:
+                                        UITextComponent:
+                                            text: "C0"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens/Fonts.yaml"
+                            -   prototype: "StyledButton/StyledButton"
+                                name: "bf_cluster_1"
+                                classes: "button button-color-gray button-ok-sound"
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 52.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 50.000000
+                                children:
+                                -   path: "Caption"
+                                    classes: "header5 text-color-white"
+                                    components:
+                                        UITextComponent:
+                                            text: "C1"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens/Fonts.yaml"
+                            -   prototype: "StyledButton/StyledButton"
+                                name: "bf_cluster_2"
+                                classes: "button button-color-gray button-ok-sound"
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 52.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 50.000000
+                                children:
+                                -   path: "Caption"
+                                    classes: "header5 text-color-white"
+                                    components:
+                                        UITextComponent:
+                                            text: "C2"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens/Fonts.yaml"
+                            -   prototype: "StyledButton/StyledButton"
+                                name: "bf_cluster_3"
+                                classes: "button button-color-gray button-ok-sound"
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 52.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 50.000000
+                                children:
+                                -   path: "Caption"
+                                    classes: "header5 text-color-white"
+                                    components:
+                                        UITextComponent:
+                                            text: "C3"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens/Fonts.yaml"
+                            -   prototype: "StyledButton/StyledButton"
+                                name: "bf_cluster_4"
+                                classes: "button button-color-gray button-ok-sound"
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 52.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 50.000000
+                                children:
+                                -   path: "Caption"
+                                    classes: "header5 text-color-white"
+                                    components:
+                                        UITextComponent:
+                                            text: "C4"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens/Fonts.yaml"
+                        -   prototype: "StyledButton/StyledButton"
+                            name: "DisconnectButton"
+                            classes: "button button-color-red button-ok-sound"
+                            components:
+                                Anchor:
+                                    leftAnchorEnabled: true
+                                    leftAnchor: 20.000000
+                                    rightAnchorEnabled: true
+                                    rightAnchor: 20.000000
+                                SizePolicy:
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 50.000000
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_DISCONNECT"
+                            children:
+                            -   path: "Caption"
+                                classes: "header5 text-color-white"
+                                components:
+                                    UITextComponent:
+                                        text: "hangar menu logout"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens/Fonts.yaml"
+                    -   class: "UIControl"
+                        name: "Links"
+                        input: false
+                        components:
+                            LinearLayout:
+                                orientation: "TopDown"
+                                spacing: 1.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfChildrenSum"
+                        children:
+                        -   class: "UIControl"
+                            name: "UserCenter"
+                            input: true
+                            classes: "pane-bg touchable settings-button button-open-sound"
+                            components:
+                                Background: {}
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 56.000000
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_USER_CENTER"
+                                UIDataSourceComponent0:
+                                    source: "~res:/UI/Examples/Model/Login/UserCenterButton.model"
+                                Sound: {}
+                                StyleSheet:
+                                    styles: "~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                            bindings:
+                            - ["visible", "isUserCenterSupported"]
+                            - ["enabled", "app.netease.isLoggedIn"]
+                            children:
+                            -   class: "UIControl"
+                                name: "TextContainer"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    Background: {}
+                                    LinearLayout:
+                                        padding: "20"
+                                        dynamicSpacing: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "PercentOfParent"
+                                children:
+                                -   class: "UIControl"
+                                    name: "ValueContainer"
+                                    input: false
+                                    components:
+                                        Anchor:
+                                            vCenterAnchorEnabled: true
+                                        LinearLayout:
+                                            spacing: 5.000000
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfChildrenSum"
+                                            verticalPolicy: "PercentOfFirstChild"
+                                    children:
+                                    -   class: "UIControl"
+                                        name: "Value"
+                                        input: false
+                                        classes: "text2 text-color-white"
+                                        components:
+                                            UITextComponent:
+                                                text: "#account:Blocks/NetEase/UserCenter"
+                                                colorInheritType: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                            Anchor:
+                                                vCenterAnchorEnabled: true
+                                            SizePolicy:
+                                                horizontalPolicy: "PercentOfContent"
+                                                verticalPolicy: "PercentOfContent"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Fonts.yaml"
+                                    -   class: "UIControl"
+                                        name: "Badge"
+                                        input: false
+                                        classes: "unread-icon-bg"
+                                        components:
+                                            Background:
+                                                drawType: "DRAW_SCALE_PROPORTIONAL"
+                                                sprite: "~res:/Gfx/UI/CommonUIElements/WhiteCircle.psd"
+                                            SizePolicy:
+                                                horizontalPolicy: "FixedSize"
+                                                horizontalValue: 12.000000
+                                                verticalPolicy: "FixedSize"
+                                                verticalValue: 12.000000
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens/Common/UnreadIcon.yaml"
+                                        bindings:
+                                        - ["visible", "app.netease.hasNewMessages and not account.tutorialData.isTutorialActive"]
+                                -   class: "UIControl"
+                                    name: "Icon"
+                                    input: false
+                                    components:
+                                        Background:
+                                            sprite: "~res:/Gfx/UI/LobbyCommon/IconsSmall.psd"
+                                            frame: 43
+                                        Anchor:
+                                            vCenterAnchorEnabled: true
+                                        SizePolicy:
+                                            horizontalPolicy: "FixedSize"
+                                            horizontalValue: 24.000000
+                                            verticalPolicy: "FixedSize"
+                                            verticalValue: 24.000000
+                        -   prototype: "LinkRow/LinkRow"
+                            name: "AccountManagement"
+                            classes: "pane-bg touchable settings-button link-row button-open-sound external-link"
+                            components:
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_ACCOUNT_MANAGEMENT"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                            bindings:
+                            - ["visible", "isAccountManagementVisible"]
+                        -   prototype: "LinkRow/LinkRow"
+                            name: "Support"
+                            classes: "pane-bg touchable settings-button link-row button-open-sound external-link"
+                            components:
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_SUPPORT"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                            bindings:
+                            - ["visible", "primaryOptions.supportIsVisible"]
+                            children:
+                            -   path: "TextContainer/Value"
+                                components:
+                                    UITextComponent:
+                                        text: "hangar menu support"
+                        -   prototype: "LinkRow/LinkRow"
+                            name: "License"
+                            components:
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_LICENSE"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                            bindings:
+                            - ["visible", "not app.netease.neteaseAvailable"]
+                            children:
+                            -   path: "TextContainer/Value"
+                                components:
+                                    UITextComponent:
+                                        text: "legalFooter/Subpoint/Eula"
+                        -   prototype: "LinkRow/LinkRow"
+                            name: "LegalNotices"
+                            components:
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_LEGAL_NOTICES"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                            bindings:
+                            - ["visible", "not app.netease.neteaseAvailable"]
+                            children:
+                            -   path: "TextContainer/Value"
+                                components:
+                                    UITextComponent:
+                                        text: "legalFooter/Subpoint/LegalNotices"
+                        -   prototype: "LinkRow/LinkRow"
+                            name: "PrivacyPolicy"
+                            components:
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_PRIVACY_POLICY"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                            bindings:
+                            - ["visible", "not app.netease.neteaseAvailable"]
+                            children:
+                            -   path: "TextContainer/Value"
+                                position: [20.000000, 16.000000]
+                                components:
+                                    UITextComponent:
+                                        text: "legalFooter/Subpoint/PrivacyPolicy"
+                        -   class: "UIControl"
+                            name: "Netease"
+                            input: false
+                            components:
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 1.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfChildrenSum"
+                            bindings:
+                            - ["visible", "app.netease.neteaseAvailable"]
+                            children:
+                            -   prototype: "LinkRow/LinkRow"
+                                name: "PersonalInfo"
+                                components:
+                                    UIInputEventComponent:
+                                        onTouchUpInside: "ON_PERSONAL_INFO"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                                bindings:
+                                - ["visible", "isNeteasePersonalInfoAvailable"]
+                                children:
+                                -   path: "TextContainer/Value"
+                                    components:
+                                        UITextComponent:
+                                            text: "settings/general/china/PersonalInfo"
+                            -   prototype: "LinkRow/LinkRow"
+                                name: "TermsAndAgreement"
+                                components:
+                                    UIInputEventComponent:
+                                        onTouchUpInside: "ON_TERMS_AND_AGREEMENT"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                                children:
+                                -   path: "TextContainer/Value"
+                                    components:
+                                        UITextComponent:
+                                            text: "settings/general/china/TermsAndAgreement"
+                            -   prototype: "LinkRow/LinkRow"
+                                name: "SharedPersonalInfo"
+                                components:
+                                    UIInputEventComponent:
+                                        onTouchUpInside: "ON_SHARED_PERSONAL_INFO"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                                children:
+                                -   path: "TextContainer/Value"
+                                    components:
+                                        UITextComponent:
+                                            text: "settings/general/china/ThirdPartySharedPersonalInfo"
+                            -   prototype: "LinkRow/LinkRow"
+                                name: "NeteasePrivacyPolicy"
+                                components:
+                                    UIInputEventComponent:
+                                        onTouchUpInside: "ON_NETEASE_PRIVACY_POLICY"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                                children:
+                                -   path: "TextContainer/Value"
+                                    components:
+                                        UITextComponent:
+                                            text: "settings/general/china/PrivacyPolicy"
+                        -   prototype: "LinkRow/LinkRow"
+                            name: "BonusCode"
+                            components:
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_BONUS_CODE"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                            bindings:
+                            - ["visible", "primaryOptions.bonusCodeIsVisible"]
+                            - ["enabled", "not account.tutorialData.isTutorialActive"]
+                            - ["classes", "when not account.tutorialData.isTutorialActive -> \"pane-bg touchable settings-button link-row button-open-sound\", \"pane-bg touchable settings-button link-row disabled button-open-sound\""]
+                            children:
+                            -   path: "TextContainer/Value"
+                                position: [20.000000, 16.000000]
+                                components:
+                                    UITextComponent:
+                                        text: "#bonus_code:Profile_Update_Dialog/Activate"
+                        -   prototype: "LinkRow/LinkRow"
+                            name: "ReportPlayer"
+                            components:
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_REPORT_PLAYER"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                            bindings:
+                            - ["visible", "bShowReportPlayerButton"]
+                            children:
+                            -   path: "TextContainer/Value"
+                                position: [20.000000, 16.000000]
+                                components:
+                                    UITextComponent:
+                                        text: "Lobby/ReportPlayer/Title"
+                        -   prototype: "LinkRow/LinkRow"
+                            name: "AccountMigration"
+                            components:
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_MIGRATION_ACCOUNT"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml;~res:/UI/Screens/Common/Settings/PrimaryTab/Styles/LinkRowStyles.yaml;~res:/UI/Styles/ButtonSoundStyles.yaml;~res:/UI/Screens3/Background.style.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                            bindings:
+                            - ["visible", "migrationVisible"]
+                            children:
+                            -   path: "TextContainer/Value"
+                                position: [20.000000, 16.000000]
+                                components:
+                                    UITextComponent:
+                                        text: "settings/general/china/accountmigration"
+                -   class: "UIControl"
+                    name: "SafeAreaInsetRight"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "safeAreaInsets.right"
+                            verticalPolicy: "PercentOfParent"
+        -   prototype: "ScrollBar/VerticalScrollBar"
+            name: "VerticalScrollBar"
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                UIAnchorSafeAreaComponent:
+                    rightSafeInset: "INSET_ONLY_IF_NOTCH"
+                UIScrollBarComponent:
+                    delegate: "../ScrollArea"

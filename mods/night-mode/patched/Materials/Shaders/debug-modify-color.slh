@@ -1,0 +1,69 @@
+#if !defined(COMMON_INCLUDED)
+#error "Include common.slh"
+#endif
+
+// Not every material family declares the highlight switches. DAVA's shader
+// preprocessor requires its own ensuredefined directive here; a C-style
+// defined(...) guard does not publish the fallback to later expressions.
+#ensuredefined HIGHLIGHT_COLOR 0
+#ensuredefined HIGHLIGHT_WAVE_ANIM 0
+
+#if (VIEW_MODE_OVERDRAW_HEAT || DEBUG_UNLIT) && !DRAW_DEPTH_ONLY
+    output.color *= float4(0.0f, 0.0f, 0.0f, 0.0f);
+
+    #if DEBUG_UNLIT
+        output.color += debugFlatColor;
+    #elif VIEW_MODE_OVERDRAW_HEAT
+        #if ALPHABLEND
+            output.color.r += 0.1f;
+        #endif
+        #if ALPHATEST
+            output.color.g += 0.1f;
+        #endif
+    #endif
+#endif
+
+// MOD: night mode.
+//
+// This header is included at the end of every 3d scene fragment shader, so
+// grading here reaches landscape, tanks, sky, water, vegetation and particles
+// from a single place. The 2d/UI shaders include colorblind-mode.slh instead
+// and are deliberately left alone, which is what keeps the interface readable.
+//
+// The identical curve is applied to every surface, so relative contrast stays
+// as it is in vanilla: the world gets darker to look at, nothing becomes
+// easier to pick out than it already was.
+//
+// Keep this block in sync with debug-modify-color-half.slh, which is what the
+// PBR path (tanks on ULTRA) goes through.
+// Gameplay overlays are authored as diagnostic/highlight passes. Grading
+// DEBUG_UNLIT made the red/green armour surface in sniper mode nearly black;
+// grading HIGHLIGHT_* similarly erased the stock target outline. Preserve
+// those passes verbatim and grade only the underlying 3D scene.
+#if !DRAW_DEPTH_ONLY && !VIEW_MODE_OVERDRAW_HEAT && !DEBUG_UNLIT && !HIGHLIGHT_COLOR && !HIGHLIGHT_WAVE_ANIM
+    {
+        float3 nightSrc  = float3(output.color.rgb);
+        float  nightLuma = dot(nightSrc, float3(0.2126f, 0.7152f, 0.0722f));
+
+        // Scotopic vision: colour drains out of the darks and survives only
+        // where a surface is actually lit.
+        float  nightSat = lerp(0.10f, 0.62f, saturate(nightLuma * 2.5f));
+        float3 nightRgb = lerp(float3(nightLuma, nightLuma, nightLuma), nightSrc, nightSat);
+
+        // S-curve on luminance: sink the midtones, leave speculars and light
+        // sources alive so the frame keeps some depth.
+        float  nightCurve = nightLuma * nightLuma * (3.0f - 2.0f * nightLuma);
+
+        // Split tone. One flat multiplier over the whole image is exactly what
+        // makes a grade look like the map was repainted blue, so the shadows
+        // and the highlights get different tints instead.
+        float3 nightShadowTint = float3(0.090f, 0.130f, 0.260f);
+        float3 nightHighTint   = float3(0.340f, 0.400f, 0.520f);
+        nightRgb *= lerp(nightShadowTint, nightHighTint, saturate(nightCurve * 1.30f));
+
+        // Ambient floor, so shadows read as dark rather than as holes.
+        nightRgb += float3(0.004f, 0.006f, 0.013f);
+
+        output.color.rgb = nightRgb;
+    }
+#endif

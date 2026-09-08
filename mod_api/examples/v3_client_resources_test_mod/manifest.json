@@ -1,0 +1,48 @@
+{
+  "manifest_version": 1,
+  "type": "native",
+  "id": "examples.v3.client_resources",
+  "name": "V3 Client Resources Gameplay Probe",
+  "version": "1.0.0",
+  "developer": "WotbMod SDK",
+  "api": {
+    "wotbmod.ui": ">=2 <3",
+    "wotbmod.resources": ">=1 <2",
+    "wotbmod.render": ">=1 <2",
+    "wotbmod.render.native": ">=1 <2",
+    "wotbmod.camera": ">=1 <2",
+    "wotbmod.scene": ">=1 <2",
+    "wotbmod.audio": ">=2 <3",
+    "wotbmod.vehicle.visual": ">=1 <2",
+    "wotbmod.gameplay.camera": ">=1 <2",
+    "wotbmod.gameplay.hud": ">=1 <2",
+    "wotbmod.gameplay.hangar": ">=1 <2",
+    "wotbmod.gameplay.replay": ">=1 <2",
+    "wotbmod.entity.public": ">=1 <2",
+    "wotbmod.bigworld.rpc": ">=1 <2",
+    "wotbmod.projectile": ">=1 <2",
+    "wotbmod.client": ">=1 <2",
+    "wotbmod.client.device": ">=1 <2"
+  },
+  "entrypoints": {
+    "windows-x86": "bin/windows-x86/v3_client_resources_test_mod.dll"
+  },
+  "permissions": [
+    "ui.modify.game",
+    "resources",
+    "resources.overlay.game",
+    "audio.custom",
+    "audio.events",
+    "render.callbacks",
+    "render.native",
+    "camera.battle.read",
+    "gameplay.tweak.camera",
+    "gameplay.tweak.hud",
+    "gameplay.tweak.hangar",
+    "game.entity.public",
+    "visible.projectile.events",
+    "bigworld.observe",
+    "bigworld.rpc.metadata",
+    "client.leave_to_hangar"
+  ]
+}

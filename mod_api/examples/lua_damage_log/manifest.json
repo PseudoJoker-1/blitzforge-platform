@@ -1,0 +1,17 @@
+{
+  "id": "example.lua_damage_log",
+  "name": "Lua Damage Log",
+  "version": "1.0.0",
+  "entrypoint": "main.lua",
+  "permissions": [
+    "core",
+    "events.public",
+    "storage",
+    "entity.public.visible",
+    "game.entity.public",
+    "ui.create",
+    "ui.modify.own",
+    "ui.modify.game",
+    "battle.ui"
+  ]
+}

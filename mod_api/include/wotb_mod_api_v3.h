@@ -1,0 +1,65 @@
+#pragma once
+
+#include "wotbmod/base.h"
+#include "wotbmod/interface_ids.h"
+#include "wotbmod/bootstrap.h"
+#include "wotbmod/core_v1.h"
+#include "wotbmod/capabilities_v1.h"
+#include "wotbmod/permissions_v1.h"
+#include "wotbmod/handles_v1.h"
+#include "wotbmod/lifecycle_v1.h"
+#include "wotbmod/hooks_v1.h"
+#include "wotbmod/unsafe_native_v1.h"
+#include "wotbmod/events_v1.h"
+#include "wotbmod/settings_v1.h"
+#include "wotbmod/storage_v1.h"
+#include "wotbmod/input_v1.h"
+#include "wotbmod/vfs_v1.h"
+#include "wotbmod/vfs_v2.h"
+#include "wotbmod/resources_v1.h"
+#include "wotbmod/yaml_v1.h"
+#include "wotbmod/archive_v1.h"
+#include "wotbmod/loaders_v1.h"
+#include "wotbmod/ui_v3.h"
+#include "wotbmod/scene_v1.h"
+#include "wotbmod/render_v1.h"
+#include "wotbmod/camera_v1.h"
+#include "wotbmod/audio_v2.h"
+#include "wotbmod/vehicle_visual_v2.h"
+#include "wotbmod/gameplay_camera_v1.h"
+#include "wotbmod/gameplay_hud_v1.h"
+#include "wotbmod/gameplay_hangar_v1.h"
+#include "wotbmod/gameplay_replay_v1.h"
+#include "wotbmod/entity_public_v1.h"
+#include "wotbmod/bigworld_rpc_v1.h"
+#include "wotbmod/projectile_v1.h"
+#include "wotbmod/projectile_v2.h"
+#include "wotbmod/async_v1.h"
+#include "wotbmod/http_v1.h"
+#include "wotbmod/intermod_v1.h"
+#include "wotbmod/manifest_v1.h"
+#include "wotbmod/catalog_v1.h"
+#include "wotbmod/content_v1.h"
+#include "wotbmod/client_v1.h"
+#include "wotbmod/device_v1.h"
+#include "wotbmod/diagnostics_v1.h"
+#include "wotbmod/diagnostics_v2.h"
+#include "wotbmod/devtools_v1.h"
+#include "wotbmod/devtools_v3.h"
+
+/*
+ * Post-RC1 release contract, 2026-08-16. Five new versioned tables published
+ * alongside the frozen ones rather than widening them. Every slot below
+ * currently answers WOTBMOD_V3_E_NOT_SUPPORTED until its backend lands, and
+ * each interface is registered UNAVAILABLE with a reason. They are included
+ * here so the aggregate header stays the single translation unit that sees
+ * every published type -- a struct declared in include/wotbmod but not
+ * reachable from here is a type the generated marshalling code cannot see.
+ */
+#include "wotbmod/ui_v4.h"
+#include "wotbmod/camera_v2.h"
+#include "wotbmod/audio_v3.h"
+#include "wotbmod/scene_v2.h"
+#include "wotbmod/tracer_v1.h"
+#include "wotbmod/ges_v1.h"
+#include "wotbmod/session_cluster_v1.h"

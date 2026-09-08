@@ -1,0 +1,11 @@
+id: custom-audio-api-test
+name: Custom Audio API Test
+version: 1.2.0
+author: BlitzForge SDK
+description: Полный тест custom WAV и Audio API 2.x
+type: native
+long: |
+  Сам генерирует двухсекундный WAV в data directory мода, монтирует его и
+  проверяет audio_clip_load, typed resource_load, reload/release, loop,
+  start-paused, play, pause, resume, stop, state, volume, pitch и pan.
+  В лог выводятся отдельные PASS/FAIL и итоговый SUMMARY.
