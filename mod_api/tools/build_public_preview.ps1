@@ -90,6 +90,34 @@ $payloadKey = Join-Path $trustPayload ($KeyId + '.p256')
     -KeyName $KeyName
 if ($LASTEXITCODE -ne 0) { throw 'Release signing failed.' }
 
+# The in-game catalogue (examples\catalog) travels as a signed Lua package
+# and is installed by install.ps1 through the CLI, so it lands in the ledger
+# like any portal mod and updates from the portal afterwards.
+# Two packages: the Lua mod (examples\catalog) and the stock-screen resource
+# package it drives (examples\catalog_ui). Staged under wotbmod\setup\packages,
+# never under mods\: an archive in mods\ is what the loader and the CLI both
+# read as an installed package, and the CLI would then say "already installed
+# with the same hash" instead of installing it.
+$stagedPackages = Join-Path $payloadRoot 'wotbmod\setup\packages'
+[System.IO.Directory]::CreateDirectory($stagedPackages) | Out-Null
+$stagedCatalog = @()
+foreach ($catalogProject in @('catalog', 'catalog_ui')) {
+    $catalogRelease = Join-Path $buildRoot ($catalogProject + '_release')
+    if (Test-Path -LiteralPath $catalogRelease) { Remove-Item -LiteralPath $catalogRelease -Recurse -Force }
+    & python (Join-Path $repoRoot 'tools\wotbmod.py') release (Join-Path $repoRoot ('examples\' + $catalogProject)) `
+        -o $catalogRelease --sign --key-id $KeyId --key-name $KeyName
+    if ($LASTEXITCODE -ne 0) { throw "Catalogue release failed: $catalogProject" }
+    $catalogArtifact = @(Get-ChildItem -LiteralPath $catalogRelease -Filter 'blitzforge.catalog*.wotbmod')[0]
+    if ($null -eq $catalogArtifact) { throw "Catalogue artifact is missing: $catalogProject" }
+    $catalogSignature = $catalogArtifact.FullName + '.sig'
+    if (-not (Test-Path -LiteralPath $catalogSignature -PathType Leaf)) { throw "Catalogue signature is missing: $catalogProject" }
+    $stagedName = ($catalogArtifact.Name -replace '-[0-9][^-]*\.wotbmod$', '.wotbmod')
+    $staged = Join-Path $stagedPackages $stagedName
+    Copy-Item -LiteralPath $catalogArtifact.FullName -Destination $staged -Force
+    Copy-Item -LiteralPath $catalogSignature -Destination ($staged + '.sig') -Force
+    $stagedCatalog += $stagedName
+}
+
 # The player's tools, installed next to the game as <game>\wotbmod\: the CLI
 # (install/update/rollback/list/info/quarantine/report-crash/verify) and the
 # wotbmod:// launcher the portal's install button talks to. Plain Python
@@ -207,6 +235,14 @@ $payload = @(
         sha256 = Get-WotbModSha256 $payloadKey
     }
 )
+foreach ($stagedName in $stagedCatalog) {
+    foreach ($suffix in @('', '.sig')) {
+        $payload += [ordered]@{
+            source = "payload/wotbmod/setup/packages/$stagedName$suffix"; target = "wotbmod/setup/packages/$stagedName$suffix"
+            sha256 = Get-WotbModSha256 (Join-Path $stagedPackages ($stagedName + $suffix))
+        }
+    }
+}
 foreach ($name in $sdkFiles) {
     $payload += [ordered]@{
         source = "payload/wotbmod/$name"; target = "wotbmod/$name"

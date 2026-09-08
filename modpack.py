@@ -39,6 +39,35 @@ from pathlib import Path, PurePosixPath
 import patch_dvpl
 from dvpl import unpack
 
+
+def read_manifest(path: Path) -> dict:
+    """Deliberately tiny parser: key: value plus one `long: |` block.
+
+    Pulling in PyYAML would mean every user of the toolchain needs it, and the
+    manifest format is fixed and flat by design. (Lived in build_catalog.py
+    until the YAML-era catalogue was removed; the artifact format still reads
+    the same manifest.yaml.)
+    """
+    data, key, block = {}, None, []
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        if key:                                   # inside a `|` block
+            if raw.startswith(("  ", "\t")) or not raw.strip():
+                block.append(raw.strip())
+                continue
+            data[key] = "\n".join(block).strip()
+            key, block = None, []
+        if not raw.strip() or raw.lstrip().startswith("#"):
+            continue
+        name, _, value = raw.partition(":")
+        name, value = name.strip(), value.strip()
+        if value == "|":
+            key = name
+        else:
+            data[name] = value
+    if key:
+        data[key] = "\n".join(block).strip()
+    return data
+
 HERE = Path(__file__).resolve().parent
 SCHEMA = 1
 # Suffix given to a file that had to be pushed aside because it was in use.
@@ -222,7 +251,6 @@ def build(source_dir: Path, out_path: Path) -> None:
     if not manifest_path.exists():
         raise SystemExit(f"no manifest.yaml in {source_dir}")
 
-    from build_catalog import read_manifest
     manifest = read_manifest(manifest_path)
 
     patches, files, native = [], [], []

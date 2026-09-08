@@ -164,6 +164,7 @@
     "native.memory_patch": "UNSAFE",
     "network.http": "REVIEWED",
     "network.http.allowlisted": "SAFE",
+    "packages.manage": "REVIEWED",
     "render.callbacks": "REVIEWED",
     "render.native": "UNSAFE",
     "resources": "SAFE",

@@ -35,6 +35,7 @@ binding pack `111900834`.
 | Хуки `BEFORE` и 20 целей без описания сигнатуры | `hooks.create_symbol` → `NOT_SUPPORTED` | Только `OBSERVE`/`AFTER` на 22 описанных целях; `wotbmod.hooks` — DEGRADED по замыслу |
 | Трассеры от своих выстрелов | `tracer.requested/style` — `NOT_SUPPORTED` по замыслу; события `tracer.*` от одиночного выстрела в пустой комнате не пришли | Ждать боя с трассерами других игроков |
 | Сырой `wotb.ui` открывается только всей семьёй прав | без `ui.modify.game`+`ui.create`+`ui.modify.own`+`battle.ui` любой вызов → `permission denied: ui.modify.game` | Просить все четыре, если нужен сырой доступ; фасадам `wotb.screen`/`wotb.panel` хватает своего набора |
+| Именной grant `network:https://<host>` не открывает `wotb.http` в Lua | таблица `wotb.http` закрыта правом `network.http`; скрипт только с именным grant получает `permission denied: network.http` | Просить `network.http` (REVIEWED) и держать хосты в коде; именной grant остаётся правилом для native-модов |
 | Мастер preview.N ставится только на «свою» сборку клиента | после патча Blitz: `Installed client executable does not match this release` | Ждать набор под новую сборку; порядок — `docs/CLIENT_PATCH_PLAYBOOK_RU.md` |
 
 
@@ -151,6 +152,22 @@ binding pack `111900834`.
   таймаут 60 с честно дал `FAILED` и снял флаг ручного выбора. Строка
   `refuse_outside_hangar` (отказ из боя) — `LIVE_TEST_PENDING`. Spec:
   `superpowers/specs/2026-09-07-cluster-picker-design.md`.
+  **Каталог модов в игре LIVE PASS 8 сентября 2026 (`blitzforge.catalog` 1.0.0 +
+  `blitzforge.catalog.ui` 1.0.0):** иконка в левой колонке ангара открывает штатный экран
+  (ресурсный пакет вклеивает `ModCatalogScreen` в `Hangar.yaml`, генератор
+  `tools/build_catalog_ui.py`); вкладка «Каталог» показала три портальных мода с состоянием
+  из `wotbmod list --json`, вкладка «Кастомные моды» — восемь своих; из экрана прошли
+  `uninstall` и `launcher-open` (`blitzforge.night_mode` снят и поставлен заново с портала),
+  `disable`/`enable` (`example.lua_facade_tour`, `mods.ini` переключился) и
+  `restart-client` (клиент закрылся за 4 с, маркер сессии заархивирован, перезапуск через
+  Steam, ангар через 40–64 с без safe mode; повторный перезапуск из клиента, запущенного
+  Steam, тоже прошёл — помощник отсоединяется от job-объекта Steam). Бит `MOD_SCREEN`
+  поднимается на время открытого экрана через флаг ввода `ModCatalogStateMarker`
+  (`control_set_interactable`). Мост `wotb.packages` (loader-private, право
+  `packages.manage`) и хост-тесты — `tests/lua_host_tests.cpp`. Что выяснилось: свойства
+  `Anchor` в YAML должны быть на уровень глубже ключа, иначе контрол теряет привязку молча;
+  `wotb.timer.now_ms()` — `nil`, пока нет живого таймера (дебаунс кликов — по кадрам);
+  именной grant `network:https://…` не открывает `wotb.http` в Lua (см. таблицу выше).
   **Мод `blitzforge.cluster_picker` LIVE PASS 8 сентября 2026 (прогоны 23–25):** строка
   «AUTO | C0 | C3 | C4» в штатных настройках (ресурсный пакет `…cluster_picker.ui` 1.0.1,
   6 кнопок `StyledButton` со статическими подписями), текущий кластер выключен,

@@ -1,0 +1,21 @@
+{
+  "id": "blitzforge.catalog",
+  "name": "Каталог модов",
+  "version": "1.0.0",
+  "developer": "pseud",
+  "description": "Каталог BlitzForge в ангаре: моды с портала и свои в одном окне, установка, обновление, удаление и выключение из игры.",
+  "entrypoint": "main.lua",
+  "client": { "builds": ["11.20.0.887"] },
+  "permissions": [
+    "core",
+    "events.public",
+    "storage",
+    "ui",
+    "ui.create",
+    "ui.modify.own",
+    "ui.modify.game",
+    "battle.ui",
+    "network.http",
+    "packages.manage"
+  ]
+}

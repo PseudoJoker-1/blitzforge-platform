@@ -2209,6 +2209,7 @@ void RegisterAll(lua_State* state, const WotbModV3Bootstrap* bootstrap,
     RegisterEvents(state, events_api, core_api, mod, script);
     RegisterGes(state, ges_api, events_api, core_api, mod, script);
     RegisterUi(state, ui_api, mod, script);
+    RegisterPackages(state, core_api, mod, script);
     RegisterGeneratedBindings(state, bootstrap, mod, script);
     RegisterInputExtensions(state, script);
     RegisterDavaExtensions(state, script, vfs_api, mod);

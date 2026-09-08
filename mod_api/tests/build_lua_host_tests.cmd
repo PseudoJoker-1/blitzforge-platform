@@ -67,6 +67,7 @@ cl /nologo /std:c++17 /O2 /MD /EHsc /W4 /WX /permissive- /LD ^
     loader\lua\lua_bind_events.cpp ^
     loader\lua\lua_bind_ges.cpp ^
     loader\lua\lua_bind_ui.cpp ^
+    loader\lua\lua_bind_packages.cpp ^
     build\lua_generated_bindings.cpp ^
     loader\lua\lua_watcher.cpp ^
     "build\lua54.lib" ^
@@ -74,6 +75,14 @@ cl /nologo /std:c++17 /O2 /MD /EHsc /W4 /WX /permissive- /LD ^
     /Fo"build\lua_host\\" ^
     /link /OUT:"build\wotbmod_lua_host.dll" ^
     /IMPLIB:"build\wotbmod_lua_host.lib"
+if not "%errorlevel%"=="0" goto :failed
+
+rem The stand-in for wotbmod.exe that the wotb.packages tests point
+rem WOTBMOD_PACKAGES_EXE at: it echoes its arguments and environment.
+cl /nologo /std:c++17 /O2 /MD /EHsc /W4 /WX /permissive- ^
+    tests\packages_stub.cpp ^
+    /Fo"build\lua_host_tests\\" ^
+    /link /OUT:"build\packages_stub.exe"
 if not "%errorlevel%"=="0" goto :failed
 
 cl /nologo /std:c++17 /O2 /MD /EHsc /W4 /WX /permissive- ^
@@ -139,6 +148,7 @@ cl /nologo /std:c++17 /O2 /MD /EHsc /W4 /WX /permissive- /LD ^
     loader\lua\lua_bind_events.cpp ^
     loader\lua\lua_bind_ges.cpp ^
     loader\lua\lua_bind_ui.cpp ^
+    loader\lua\lua_bind_packages.cpp ^
     build\lua_generated_bindings.cpp ^
     loader\lua\lua_watcher.cpp ^
     "build\lua54.lib" ^

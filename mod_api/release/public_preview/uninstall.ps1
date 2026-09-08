@@ -36,6 +36,28 @@ foreach ($entry in @($state.files)) {
     }
 }
 
+# The catalogue was installed through the CLI, so the CLI takes it out again
+# (ledger entry, Lua folder, cached archive). Not fatal: a player who already
+# removed it by hand, or whose tools are gone, still gets the files restored.
+$cliExe = Join-Path $gameRootPath 'wotbmod\wotbmod.exe'
+$cliScript = Join-Path $gameRootPath 'wotbmod\wotbmod.py'
+$ledgerPath = Join-Path $cacheRoot 'wotbmod_installs.json'
+$ledger = $null
+if (Test-Path -LiteralPath $ledgerPath -PathType Leaf) {
+    try { $ledger = Get-Content -LiteralPath $ledgerPath -Raw | ConvertFrom-Json } catch { $ledger = $null }
+}
+foreach ($catalogId in @('blitzforge.catalog', 'blitzforge.catalog.ui')) {
+    $entry = if ($null -ne $ledger) { $ledger.packages.$catalogId } else { $null }
+    if ($null -eq $entry -or $entry.state -ne 'installed') { continue }
+    if (Test-Path -LiteralPath $cliExe -PathType Leaf) {
+        & $cliExe uninstall $catalogId --game-root $gameRootPath --yes | Out-Host
+    } else {
+        $python = Get-Command python -ErrorAction SilentlyContinue
+        if ($null -ne $python) { & $python.Source $cliScript uninstall $catalogId --game-root $gameRootPath --yes | Out-Host }
+    }
+    if ($LASTEXITCODE -ne 0) { Write-Warning "$catalogId could not be uninstalled through wotbmod; run `wotbmod uninstall $catalogId` by hand." }
+}
+
 $transactionParent = Join-Path $cacheRoot 'install_transactions'
 [System.IO.Directory]::CreateDirectory($transactionParent) | Out-Null
 $transactionRoot = Assert-WotbModChildPath -Root $transactionParent -Path (Join-Path $transactionParent ([Guid]::NewGuid().ToString('N')))

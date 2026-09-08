@@ -190,6 +190,10 @@ const PermissionDefinition kPermissions[] = {
     {"ges.publish", WOTBMOD_V3_PERMISSION_REVIEWED},
     {"session.cluster.read", WOTBMOD_V3_PERMISSION_SAFE},
     {"session.cluster.change", WOTBMOD_V3_PERMISSION_REVIEWED},
+    // Drives wotbmod.exe from inside the game (install, uninstall, enable,
+    // disable, restart): the in-game catalogue's right, reviewed like any
+    // other change to what the client runs.
+    {"packages.manage", WOTBMOD_V3_PERMISSION_REVIEWED},
     {"game.entity.public", WOTBMOD_V3_PERMISSION_REVIEWED},
     {"bigworld.observe", WOTBMOD_V3_PERMISSION_REVIEWED},
     {"bigworld.rpc.observe", WOTBMOD_V3_PERMISSION_REVIEWED},

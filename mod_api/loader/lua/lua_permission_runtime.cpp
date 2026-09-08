@@ -79,9 +79,10 @@ constexpr NamedPermission kKnownPermissions[] = {
     {"ges.publish", UINT64_C(1) << 53},
     {"session.cluster.read", UINT64_C(1) << 54},
     {"session.cluster.change", UINT64_C(1) << 55},
+    {"packages.manage", UINT64_C(1) << 56},
 };
 
-static_assert(sizeof(kKnownPermissions) / sizeof(kKnownPermissions[0]) == 56u,
+static_assert(sizeof(kKnownPermissions) / sizeof(kKnownPermissions[0]) == 57u,
               "the Lua permission vocabulary must match the runtime");
 
 // No fallback ceiling. If the client cannot be measured, doubt denies rather

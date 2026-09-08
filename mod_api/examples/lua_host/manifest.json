@@ -58,6 +58,7 @@
     "ges.observe",
     "ges.publish",
     "session.cluster.read",
-    "session.cluster.change"
+    "session.cluster.change",
+    "packages.manage"
   ]
 }

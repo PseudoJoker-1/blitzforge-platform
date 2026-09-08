@@ -5,6 +5,8 @@
 | Пример | Что показывает |
 | --- | --- |
 | [`api_selftest_mod`](https://github.com/PseudoJoker-1/wotb-mod-api/tree/main/mod_api/examples/api_selftest_mod) |  |
+| [`catalog`](https://github.com/PseudoJoker-1/wotb-mod-api/tree/main/mod_api/examples/catalog) | Иконка в левой колонке ангара открывает штатный экран каталога с двумя |
+| [`catalog_ui`](https://github.com/PseudoJoker-1/wotb-mod-api/tree/main/mod_api/examples/catalog_ui) | Штатная половина каталога модов. Пакет подменяет |
 | [`cluster_picker`](https://github.com/PseudoJoker-1/wotb-mod-api/tree/main/mod_api/examples/cluster_picker) | Пара пакетов: |
 | [`cluster_picker_ui`](https://github.com/PseudoJoker-1/wotb-mod-api/tree/main/mod_api/examples/cluster_picker_ui) | Импортировано командой `wotbmod import` из `mirror`: 1 файл(ов) игры. |
 | [`custom_audio_test_mod`](https://github.com/PseudoJoker-1/wotb-mod-api/tree/main/mod_api/examples/custom_audio_test_mod) |  |

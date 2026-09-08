@@ -100,6 +100,7 @@ GAMEPLAY_TWEAK_PERMISSIONS = {
 REVIEWED_PERMISSIONS = {
     "ges.publish",
     "session.cluster.change",
+    "packages.manage",
     "battle.ui",
     "battle.render.overlay",
     "camera.battle.read",

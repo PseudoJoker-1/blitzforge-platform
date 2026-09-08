@@ -1,0 +1,25 @@
+{
+  "client": {
+    "builds": [
+      "11.20.0.887"
+    ]
+  },
+  "description": "Каталог модов в ангаре: иконка в левой колонке и экран на штатных стилях (скрыт без Lua-пакета blitzforge.catalog).",
+  "developer": "pseud",
+  "files": [
+    {
+      "sha256": "1fc0c8cd49a539fef80c2b6c9c32acf8a3c74a6c8b679654c6b9d55a2327e950",
+      "source": "files/UI/Screens3/Lobby/Hangar/Hangar.yaml",
+      "stock_sha256": "56f4c64e7ee2d593c30ad755b04b7b89c44389d12f273903e384e088bc5e5808",
+      "target": "UI/Screens3/Lobby/Hangar/Hangar.yaml"
+    }
+  ],
+  "id": "blitzforge.catalog.ui",
+  "manifest_version": 1,
+  "name": "Каталог модов: экран в ангаре",
+  "permissions": [
+    "resources.overlay.game"
+  ],
+  "type": "resource",
+  "version": "1.0.0"
+}

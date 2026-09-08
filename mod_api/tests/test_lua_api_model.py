@@ -1014,7 +1014,7 @@ class LuaApiModelTests(unittest.TestCase):
             REGISTERED_PERMISSIONS - UNSAFE_PERMISSIONS,
             set(manifest["permissions"]),
         )
-        self.assertEqual(50, len(manifest["permissions"]))
+        self.assertEqual(51, len(manifest["permissions"]))
 
     def test_ui_framework_example_is_installable_and_distributed(self):
         example = MOD_API / "examples" / "lua_ui_framework"

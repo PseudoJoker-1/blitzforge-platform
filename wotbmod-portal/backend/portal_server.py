@@ -668,7 +668,7 @@ class Portal:
         return result
 
     def legacy_mods(self, db: sqlite3.Connection) -> dict[str, Any]:
-        """The shape `_mod_tools/registry.py` (in-hangar catalogue) reads from /api/mods."""
+        """The legacy /api/mods shape kept for old clients; the in-game catalogue reads /api/v1/index.json."""
         mods = []
         for mod_id, entry in self.index(db)["packages"].items():
             latest = entry["versions"][entry["latest"]]

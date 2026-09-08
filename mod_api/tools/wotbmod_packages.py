@@ -41,6 +41,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -2237,6 +2238,173 @@ def _quarantined(mods_root: Path) -> str | None:
     return ModsIni(quarantine).get("auto_disable", "id") or None
 
 
+LUA_HOST_ID = "wotbmod.lua_host"
+
+
+def _set_enabled(args: argparse.Namespace, enabled: bool) -> int:
+    """`wotbmod enable/disable <id>`: the [mods] <id>=1|0 switch in mods.ini.
+
+    The loader reads the key for native archives and the Lua host reads it for
+    installed Lua folders, both at client start, so the answer says so. A
+    resource package has nothing to switch off - its files are already in
+    Data/ - and is pointed at `uninstall` instead of being silently marked.
+    """
+    game_root = Path(args.game_root).expanduser()
+    mods_root = game_root / "mods"
+    installed = scan_installed(mods_root)
+    package = installed.get(args.id)
+    _require(package is not None, f"{args.id} is not installed")
+    assert package is not None
+    _require(args.id.lower() != LUA_HOST_ID,
+             f"{LUA_HOST_ID} runs every Lua mod; disable those one by one instead")
+    if not enabled:
+        _require(package.kind != "resource",
+                 f"{args.id} replaces game files; there is nothing to switch off - "
+                 f"use `wotbmod uninstall {args.id}` to restore the originals")
+    ini = ModsIni(mods_root / "mods.ini")
+    ini.set("mods", args.id, "1" if enabled else "0")
+    ini.save()
+    word = "Enabled" if enabled else "Disabled"
+    print(f"{word}: {args.id} (mods.ini [mods] {args.id}={'1' if enabled else '0'}); "
+          "takes effect at the next client start")
+    return 0
+
+
+STEAM_APP_ID = "444200"
+CLIENT_IMAGE = "wotblitz.exe"
+_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+
+
+def _startfile(target: str) -> None:
+    # os.startfile hands a steam:// URL to the shell directly; `cmd /c start`
+    # would flash a console over the game.
+    os.startfile(target)  # type: ignore[attr-defined]
+
+
+def _client_running(image: str = CLIENT_IMAGE) -> bool:
+    result = subprocess.run(["tasklist", "/FI", f"IMAGENAME eq {image}", "/NH"],
+                            capture_output=True, check=False, creationflags=_NO_WINDOW)
+    # Byte match on purpose: tasklist prints in the OEM code page and the
+    # image name is ASCII either way.
+    return image.encode("ascii") in result.stdout.lower()
+
+
+def _stop_client(graceful_seconds: float, forced_seconds: float = 10.0) -> str:
+    """Close the client, politely first (a WM_CLOSE it acts on itself), then /F."""
+    if not _client_running():
+        return "not-running"
+    subprocess.run(["taskkill", "/IM", CLIENT_IMAGE], capture_output=True, check=False, creationflags=_NO_WINDOW)
+    deadline = time.monotonic() + graceful_seconds
+    while time.monotonic() < deadline:
+        if not _client_running():
+            return "graceful"
+        time.sleep(0.2)
+    subprocess.run(["taskkill", "/IM", CLIENT_IMAGE, "/F"], capture_output=True, check=False, creationflags=_NO_WINDOW)
+    deadline = time.monotonic() + forced_seconds
+    while time.monotonic() < deadline and _client_running():
+        time.sleep(0.2)
+    return "forced"
+
+
+def _reconcile_session_marker(mods_root: Path) -> str:
+    """Keep the next launch out of safe mode after a deliberate shutdown.
+
+    The loader removes mods/cache/runtime_session.marker only on an orderly
+    teardown, which a taskkill never reaches, and the next launch reads a
+    surviving marker as a crash. A crash dump written since the marker is the
+    honest signal; without one the marker is archived, not deleted, so the
+    loader's last state stays readable.
+    """
+    marker = mods_root / "cache" / "runtime_session.marker"
+    if not marker.is_file():
+        return "absent"
+    stamp = marker.stat().st_mtime
+    dumps = [path for path in mods_root.parent.glob("*.dmp") if path.stat().st_mtime >= stamp - 5]
+    if dumps:
+        return f"kept ({dumps[0].name} says the session crashed)"
+    backup = marker.with_name(marker.name + time.strftime(".ended-%Y%m%d-%H%M%S"))
+    marker.replace(backup)
+    return f"archived as {backup.name}"
+
+
+def _launch_client(game_root: Path) -> str:
+    try:
+        _startfile(f"steam://rungameid/{STEAM_APP_ID}")
+        return "steam"
+    except OSError:
+        subprocess.Popen([str(game_root / CLIENT_IMAGE)], cwd=str(game_root), creationflags=_NO_WINDOW)
+        return "direct"
+
+
+def _restart_log(mods_root: Path, line: str) -> None:
+    """Append one step to mods/cache/restart-client.log.
+
+    The helper runs detached, without a console and after the process that
+    started it is gone, so this file is the only place its steps can be read.
+    """
+    try:
+        path = mods_root / "cache" / "restart-client.log"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("a", encoding="utf-8") as handle:
+            handle.write(f"{_now()} pid={os.getpid()} {line}\n")
+    except OSError:
+        pass
+
+
+def command_restart_client(args: argparse.Namespace) -> int:
+    """`wotbmod restart-client`: close the game, reconcile the marker, relaunch.
+
+    Called from inside the game (the in-game catalogue spawns the frozen exe),
+    the process would die with its parent, so the frozen build first hands
+    over to a detached copy of itself and returns at once. The helper is
+    started with CREATE_BREAKAWAY_FROM_JOB as well: a client launched by
+    Steam lives in Steam's job object, and a helper left inside that job is
+    killed with the game before it can relaunch anything.
+    """
+    game_root = Path(args.game_root).expanduser()
+    mods_root = game_root / "mods"
+    if not args.detached and getattr(sys, "frozen", False):
+        flags = _NO_WINDOW | getattr(subprocess, "DETACHED_PROCESS", 0)
+        breakaway = 0x01000000  # CREATE_BREAKAWAY_FROM_JOB
+        argv = [sys.executable, *sys.argv[1:], "--detached"]
+        # A fresh one-file bootstrap: the PyInstaller variables of this process
+        # (_MEIPASS*, _PYI_*) would make the child reuse this process's
+        # extraction and parent level, and it dies when this process exits.
+        env = {key: value for key, value in os.environ.items()
+               if not key.startswith(("_MEIPASS", "_PYI_"))}
+        common = dict(close_fds=True, env=env, stdin=subprocess.DEVNULL,
+                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        try:
+            child = subprocess.Popen(argv, creationflags=flags | breakaway, **common)
+            how = "breakaway"
+        except OSError:
+            child = subprocess.Popen(argv, creationflags=flags, **common)
+            how = "no-breakaway"
+        # Give the helper's bootstrap a moment before this process goes away.
+        time.sleep(2.0)
+        alive = child.poll() is None
+        _restart_log(mods_root, f"handed over to a detached helper ({how}, pid={child.pid}, alive={alive})")
+        print(f"restart-client: handed over to a detached helper ({how})")
+        return 0
+    _restart_log(mods_root, f"helper start detached={args.detached} no_launch={args.no_launch}")
+    outcome = _stop_client(args.graceful_seconds)
+    _restart_log(mods_root, f"shutdown={outcome}")
+    marker = _reconcile_session_marker(mods_root)
+    _restart_log(mods_root, f"marker={marker}")
+    launched = "skipped" if args.no_launch else _launch_client(game_root)
+    _restart_log(mods_root, f"launch={launched}")
+    print(f"restart-client: shutdown={outcome} marker={marker} launch={launched}")
+    return 0
+
+
+def command_enable(args: argparse.Namespace) -> int:
+    return _set_enabled(args, True)
+
+
+def command_disable(args: argparse.Namespace) -> int:
+    return _set_enabled(args, False)
+
+
 def command_list(args: argparse.Namespace) -> int:
     game_root = Path(args.game_root).expanduser()
     mods_root = game_root / "mods"
@@ -2273,6 +2441,11 @@ def command_list(args: argparse.Namespace) -> int:
             "managed": entry.get("state") == "installed",
             "backups": len(entry.get("history", [])),
             "dependencies": item.view.manifest.get("dependencies") or {},
+            # Where the bytes came from: the in-game catalogue splits its tabs on
+            # `catalog` (a portal base URL means "portal mod", anything else is
+            # the player's own), so both travel with the row.
+            "source": entry.get("source"),
+            "catalog": entry.get("catalog"),
         })
     result = {
         "mods_root": str(mods_root),
@@ -2991,6 +3164,22 @@ def register(subparsers: Any, cli: Any) -> None:
     uninstall.add_argument("--yes", "-y", action="store_true")
     uninstall.add_argument("--force", action="store_true", help="remove even when other packages require it")
     uninstall.set_defaults(handler=command_uninstall)
+
+    for name, handler, text in (("enable", command_enable, "switch an installed mod on (mods.ini [mods] <id>=1)"),
+                                ("disable", command_disable, "switch an installed mod off (mods.ini [mods] <id>=0)")):
+        switch = subparsers.add_parser(name, help=text)
+        switch.add_argument("id")
+        _add_game_root(switch)
+        switch.set_defaults(handler=handler)
+
+    restart = subparsers.add_parser("restart-client",
+                                    help="close the game client, keep the next start out of safe mode, relaunch it through Steam")
+    _add_game_root(restart)
+    restart.add_argument("--graceful-seconds", type=float, default=10.0,
+                         help="how long the client gets to close itself before taskkill /F")
+    restart.add_argument("--no-launch", action="store_true", help="only close the client")
+    restart.add_argument("--detached", action="store_true", help=argparse.SUPPRESS)
+    restart.set_defaults(handler=command_restart_client)
 
     update = subparsers.add_parser("update", help="install newer versions from a catalog")
     update.add_argument("id", nargs="?")

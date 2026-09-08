@@ -15,7 +15,7 @@
 | `mod_api/include` | Публичный C ABI (`WotbModV3*`), заморожен как API 1.1 |
 | `mod_api/src`, `mod_api/loader` | Runtime и загрузчик (MinHook-детуры, fingerprint клиента, DAVA-бэкенд, Lua-хост) |
 | `mod_api/tools` | Команда `wotbmod` (пакеты, подписи, каталог, `sync`), launcher `wotbmod://`, генераторы Lua-биндингов и документации |
-| `mod_api/examples` | Примеры: `lua_facade_tour`, `cluster_picker` (+ `cluster_picker_ui`), `night_mode`, validation-мод |
+| `mod_api/examples` | Примеры: `lua_facade_tour`, `cluster_picker` (+ `cluster_picker_ui`), `night_mode`, validation-мод; `catalog` + `catalog_ui` — каталог модов в ангаре (штатный экран в `Hangar.yaml`, генератор `tools/build_catalog_ui.py`) |
 | `mod_api/docs` | Документация на русском: статус API, известные ограничения, первый мод за 15 минут, правила модерации, playbook патча клиента |
 | `mod_api/tests` | Тесты runtime, CLI, launcher, портала (`build.cmd` собирает и прогоняет всё) |
 | `wotbmod-portal` | Портал каталога: backend на `http.server` + SQLite, шаблоны, деплой |
@@ -45,5 +45,9 @@ tools\build_public_preview.ps1 -SkipBuild -Version 0.1.0-preview.N   # набо�
 
 ## Статус
 
-`0.1.0-alpha.1`. Все интерфейсы API проверены на живом клиенте, кроме
-перечисленных в `mod_api/docs/KNOWN_LIMITATIONS_RU.md`.
+`0.1.0-alpha.2`: каталог модов в игре (иконка в ангаре, штатный экран,
+установка/обновление/удаление и выключение модов из клиента, перезапуск
+клиента), `wotbmod enable/disable/restart-client`, мост `wotb.packages`.
+Мастер установки ставит каталог вместе с Lua-хостом. Все интерфейсы API
+проверены на живом клиенте, кроме перечисленных в
+`mod_api/docs/KNOWN_LIMITATIONS_RU.md`.

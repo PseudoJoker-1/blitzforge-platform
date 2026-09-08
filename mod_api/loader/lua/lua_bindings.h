@@ -114,6 +114,15 @@ void RegisterGes(lua_State* state, const WotbModV3GesApiV1* api,
 void RegisterUi(lua_State* state, const WotbModV3UiApiV2* api,
                 WotbModV3Handle mod, LuaScript* script);
 
+// wotb.packages: the loader-private bridge from a script to <game>\wotbmod\
+// wotbmod.exe (list, info, uninstall, enable, disable, launcher-open,
+// restart-client, sync), guarded by packages.manage. Not part of the frozen
+// C ABI: it spawns the player's own tool, hidden, and hands the exit code and
+// output back through poll(). core is needed for the game directory; a null
+// core still defines the table, whose run() then answers with an error.
+void RegisterPackages(lua_State* state, const WotbModV3CoreApiV1* core,
+                      WotbModV3Handle mod, LuaScript* script);
+
 // wotbmod.core, or null if this client does not offer it.
 //
 // Exists for the one caller that needs the log outside any script's state: the

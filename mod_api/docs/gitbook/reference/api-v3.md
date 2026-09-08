@@ -3020,6 +3020,13 @@ Backend: детур `LoginManager::OnHostChosen` (`0x1D08FF0`) — единст�
 `+188`: имя `+0`, url `+24`, id `+120`). Права: `session.cluster.read` (SAFE),
 `session.cluster.change` (REVIEWED — мод меняет цель сетевого подключения).
 Lua: `wotb.session_cluster` (raw), фасад `wotb.session`.
+
+Право `packages.manage` (REVIEWED, добавлено 8 сентября 2026) не имеет
+C-интерфейса: его держит только loader-private библиотека Lua-хоста
+`wotb.packages`, которая запускает `<игра>\wotbmod\wotbmod.exe` с закрытым
+списком команд (см. `LUA_MODS_RU.md`, раздел `wotb.packages`). Native-мод с
+этим правом ничего дополнительного не получает.
+
 Судья `CONNECTED`: контекст `HANGAR` вернулся после не-ангара и держится не меньше
 500 мс (`kHangarSettleMs`) — обработчики события не попадают на кадр, в котором клиент
 ещё разрушает старую сцену; loader во время переключения (`SessionClusterChangeInFlight()`)

@@ -54,4 +54,20 @@ $state = Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json
 if ($state.release_id -ne $manifest.release_id -or $state.version -ne $manifest.version) {
     throw 'Installer state belongs to another release.'
 }
+# The catalogue rides in the payload as a staged archive; installed means a
+# ledger entry the CLI wrote, not merely the staged bytes.
+$stagedEntries = @($manifest.payload | Where-Object { $_.target -like 'wotbmod/setup/packages/*.wotbmod' })
+if ($stagedEntries.Count -gt 0) {
+    $ledgerPath = Join-Path $gameRootPath 'mods\cache\wotbmod_installs.json'
+    if (-not (Test-Path -LiteralPath $ledgerPath -PathType Leaf)) { throw 'Install ledger is missing; the in-game catalogue was not installed.' }
+    $ledger = Get-Content -LiteralPath $ledgerPath -Raw | ConvertFrom-Json
+    foreach ($entry in $stagedEntries) {
+        $catalogId = [System.IO.Path]::GetFileNameWithoutExtension([string]$entry.target)
+        $catalogLedger = $ledger.packages.$catalogId
+        if ($null -eq $catalogLedger -or $catalogLedger.state -ne 'installed') { throw "$catalogId is not installed in the ledger." }
+    }
+    if (-not (Test-Path -LiteralPath (Join-Path $gameRootPath 'mods\lua\blitzforge.catalog\main.lua') -PathType Leaf)) {
+        throw 'blitzforge.catalog folder is missing under mods\lua.'
+    }
+}
 Write-Host "PASS: BlitzForge API $($manifest.version) payload, signature, client fingerprint, and configuration are valid."

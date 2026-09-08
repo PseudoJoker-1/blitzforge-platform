@@ -2587,7 +2587,8 @@ bool RegisteredManifestPermission(const std::string& permission) {
         "native.memory", "native.memory_patch", "native.hook.address",
         "native.hooks", "render.native", "bigworld.rpc.modify",
         "ges.observe", "ges.publish",
-        "session.cluster.read", "session.cluster.change"
+        "session.cluster.read", "session.cluster.change",
+        "packages.manage"
     };
     return permissions.find(permission) != permissions.end();
 }

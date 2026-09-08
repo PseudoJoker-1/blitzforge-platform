@@ -28,7 +28,7 @@ bigworld.rpc.modify
 | --- | --- |
 | `SAFE` | `core`, `ui`, `ui.create`, `ui.modify.own`, `localization`, `audio`, `audio.custom`, `audio.events`, `resources`, `resources.mod`, `filesystem.mod_data`, `input`, `input.actions`, `settings`, `storage`, `events.public`, `entity.public.visible`, `hangar.scene`, `vehicle.local.cosmetic`, `camera.hangar`, `camera.replay`, `network.http.allowlisted`, `content` |
 | `GAMEPLAY_TWEAK` | `gameplay.tweak.camera`, `gameplay.tweak.hud`, `gameplay.tweak.hangar`, `gameplay.tweak.replay`, `gameplay.tweak.cosmetic`, `gameplay.tweak.vehicle`, `gameplay.tweak.projectile_visual`, `gameplay.tweak.freecam` |
-| `REVIEWED` | `battle.ui`, `battle.render.overlay`, `camera.battle.read`, `visible.projectile.events`, `game.entity.public`, `ui.modify.game`, `resources.overlay.game`, `hooks.symbol`, `render.callbacks`, `bigworld.observe`, `bigworld.rpc.observe`, `bigworld.rpc.metadata`, `client.leave_to_hangar`, `network.http` |
+| `REVIEWED` | `battle.ui`, `battle.render.overlay`, `camera.battle.read`, `visible.projectile.events`, `game.entity.public`, `ui.modify.game`, `resources.overlay.game`, `hooks.symbol`, `render.callbacks`, `bigworld.observe`, `bigworld.rpc.observe`, `bigworld.rpc.metadata`, `client.leave_to_hangar`, `network.http`, `packages.manage` |
 | `UNSAFE` | `native.memory`, `native.memory_patch`, `native.hook.address`, `native.hooks`, `render.native`, `bigworld.rpc.modify` |
 
 Чтобы один script permission не мог «одолжить» другой grant общего native

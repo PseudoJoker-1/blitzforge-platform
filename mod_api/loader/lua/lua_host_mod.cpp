@@ -21,6 +21,7 @@ extern "C" {
 #include <map>
 #include <memory>
 #include <mutex>
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -776,9 +777,70 @@ void LoadInstalledOne(const std::wstring& directory,
     }
 }
 
+// mods.ini [mods] <id>=0 is the CLI's off switch (`wotbmod disable`), the same
+// key the loader reads for native archives. The file is read once per scan;
+// anything unparsable counts as enabled, so a damaged ini can never hide every
+// mod at once. Ids fold like the folder rule does, so `wotbmod disable My.Mod`
+// switches off the folder called my.mod.
+std::set<std::string> DisabledIdsFromIni(const std::wstring& mods_root) noexcept {
+    std::set<std::string> out;
+    try {
+        std::string text;
+        if (!wotbmod::lua::ReadWholeFile(
+                wotbmod::lua::JoinPath(mods_root, L"mods.ini"), &text)) {
+            return out;
+        }
+        const auto trim = [](std::string value) {
+            while (!value.empty() &&
+                   (value.back() == '\r' || value.back() == ' ' ||
+                    value.back() == '\t')) {
+                value.pop_back();
+            }
+            size_t start = 0u;
+            while (start < value.size() &&
+                   (value[start] == ' ' || value[start] == '\t')) {
+                ++start;
+            }
+            return value.substr(start);
+        };
+        bool in_mods = false;
+        size_t position = 0u;
+        while (position <= text.size()) {
+            const size_t end = text.find('\n', position);
+            const std::string line = trim(text.substr(
+                position, end == std::string::npos ? std::string::npos
+                                                   : end - position));
+            position = end == std::string::npos ? text.size() + 1u : end + 1u;
+            if (line.empty() || line[0] == ';' || line[0] == '#') continue;
+            if (line[0] == '[') {
+                in_mods = (line == "[mods]");
+                continue;
+            }
+            if (!in_mods) continue;
+            const size_t equals = line.find('=');
+            if (equals == std::string::npos) continue;
+            if (trim(line.substr(equals + 1u)) == "0") {
+                out.insert(FoldIdKey(trim(line.substr(0u, equals))));
+            }
+        }
+    } catch (...) {
+        out.clear();
+    }
+    return out;
+}
+
 void LoadInstalledFolder(const std::wstring& folder) noexcept {
     HANDLE search = INVALID_HANDLE_VALUE;
     try {
+        std::set<std::string> disabled;
+        {
+            std::wstring mods_root = folder;
+            const size_t slash = mods_root.find_last_of(L"\\/");
+            if (slash != std::wstring::npos) {
+                mods_root.resize(slash);
+                disabled = DisabledIdsFromIni(mods_root);
+            }
+        }
         WIN32_FIND_DATAW found = {};
         search = FindFirstFileW(
             wotbmod::lua::JoinPath(folder, L"*").c_str(), &found);
@@ -797,6 +859,12 @@ void LoadInstalledFolder(const std::wstring& folder) noexcept {
         search = INVALID_HANDLE_VALUE;
         std::sort(directories.begin(), directories.end());
         for (const std::wstring& name : directories) {
+            if (disabled.count(FoldIdKey(Narrow(name))) != 0u) {
+                HostLog(WOTBMOD_V3_LOG_INFO,
+                        Narrow(name) + ": disabled by mods.ini ([mods] " +
+                            Narrow(name) + "=0)");
+                continue;
+            }
             LoadInstalledOne(wotbmod::lua::JoinPath(folder, name), name);
         }
     } catch (...) {
@@ -1356,6 +1424,15 @@ WotbLuaHost_RunScriptWithPermissionsForTests(
     }
     delete script;
     return 0u;
+}
+
+// Exported for host tests only: the mods.ini off switch as the installed-folder
+// scan sees it. 1 = [mods] <id>=0 hides the folder, 0 = it loads.
+extern "C" WOTBMOD_V3_EXPORT uint32_t WOTBMOD_V3_CALL
+WotbLuaHost_DisabledByIniForTests(const wchar_t* mods_root, const wchar_t* id) {
+    if (!mods_root || !id) return 0u;
+    const std::set<std::string> disabled = DisabledIdsFromIni(mods_root);
+    return disabled.count(FoldIdKey(Narrow(id))) != 0u ? 1u : 0u;
 }
 
 // Exported for host tests only: WotbLuaHost_CreateScriptForTests, with the

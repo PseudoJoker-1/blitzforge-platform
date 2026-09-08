@@ -186,6 +186,31 @@ try {
     Set-WotbModIniValue -Path $iniPath -Section 'mods' -Key 'wotbmod.lua_host' -Value '1'
     Set-WotbModIniValue -Path $iniPath -Section 'permissions' -Key 'wotbmod.lua_host' -Value '3'
 
+    # The in-game catalogue is a Lua package installed through the CLI, so it
+    # sits in the ledger with its signature and updates from the portal like
+    # any other mod. The staged archive (under wotbmod\setup\packages, never
+    # under mods\, where it would already count as installed) was just copied
+    # and hash-checked above; --require-signature makes the trust key (also
+    # just copied) load-bearing.
+    $stagedPackages = Join-Path $gameRootPath 'wotbmod\setup\packages'
+    if (Test-Path -LiteralPath $stagedPackages -PathType Container) {
+        $cliExe = Join-Path $gameRootPath 'wotbmod\wotbmod.exe'
+        $cliScript = Join-Path $gameRootPath 'wotbmod\wotbmod.py'
+        $python = $null
+        if (-not (Test-Path -LiteralPath $cliExe -PathType Leaf)) {
+            $python = Get-Command python -ErrorAction SilentlyContinue
+            if ($null -eq $python) { throw 'python is not on PATH and the bundle has no wotbmod.exe; the catalogue cannot be installed.' }
+        }
+        foreach ($staged in @(Get-ChildItem -LiteralPath $stagedPackages -Filter '*.wotbmod' | Sort-Object Name)) {
+            if ($null -eq $python) {
+                & $cliExe install $staged.FullName --game-root $gameRootPath --yes --require-signature | Out-Host
+            } else {
+                & $python.Source $cliScript install $staged.FullName --game-root $gameRootPath --yes --require-signature | Out-Host
+            }
+            if ($LASTEXITCODE -ne 0) { throw "The in-game catalogue failed to install ($($staged.Name), wotbmod exit code $LASTEXITCODE)." }
+        }
+    }
+
     $state = [ordered]@{
         schema = 1
         release_id = [string]$manifest.release_id

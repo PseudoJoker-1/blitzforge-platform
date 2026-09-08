@@ -8351,6 +8351,39 @@ int main(int argc, char** argv) {
         Check(resolved() == expected,
               "clearing installed-root overrides returns to the package layout");
     }
+    // mods.ini [mods] <id>=0 (what `wotbmod disable` writes) keeps an installed
+    // folder out of the scan; a missing key, a damaged file, or a value other
+    // than 0 all mean enabled, and ids fold like the folder rule.
+    using DisabledByIniFn =
+        uint32_t(WOTBMOD_V3_CALL*)(const wchar_t*, const wchar_t*);
+    const auto disabled_by_ini = reinterpret_cast<DisabledByIniFn>(
+        GetProcAddress(module, "WotbLuaHost_DisabledByIniForTests"));
+    Check(disabled_by_ini != nullptr, "the mods.ini off-switch probe is exported");
+    if (disabled_by_ini) {
+        const std::wstring root = MakeTempFolder(L"ini");
+        Check(!root.empty(), "a temp folder for the mods.ini off switch");
+        if (!root.empty()) {
+            Check(disabled_by_ini(root.c_str(), L"my.off") == 0u,
+                  "no mods.ini at all means every folder loads");
+            Check(WriteTextFile(root + L"\\mods.ini",
+                                "; comment\r\n[mods]\r\nmy.off = 0\r\nmy.on=1\r\n"
+                                "my.odd=zero\r\n[permissions]\r\nmy.perm=0\r\n"),
+                  "mods.ini written");
+            Check(disabled_by_ini(root.c_str(), L"my.off") == 1u,
+                  "[mods] my.off=0 disables an installed Lua folder");
+            Check(disabled_by_ini(root.c_str(), L"MY.OFF") == 1u,
+                  "ids fold case like the folder rule, so My.Off is my.off");
+            Check(disabled_by_ini(root.c_str(), L"my.on") == 0u,
+                  "[mods] my.on=1 keeps it enabled");
+            Check(disabled_by_ini(root.c_str(), L"my.absent") == 0u,
+                  "a missing key means enabled");
+            Check(disabled_by_ini(root.c_str(), L"my.odd") == 0u,
+                  "only the literal 0 switches a folder off");
+            Check(disabled_by_ini(root.c_str(), L"my.perm") == 0u,
+                  "a 0 under [permissions] is a tier, not a switch");
+            RemoveTempFolder(root);
+        }
+    }
 
     // ---- per-script permissions: the fence --------------------------------
     //
@@ -8377,6 +8410,99 @@ int main(int argc, char** argv) {
           "the permission test entry point is exported");
     Check(manifest_allows != nullptr,
           "and the one that asks a manifest a question by name");
+
+    // wotb.packages, the bridge to wotbmod.exe. Fenced by packages.manage;
+    // verbs come from a closed list, arguments from a small alphabet, and the
+    // command line is assembled by the bridge. build\packages_stub.exe stands
+    // in for the CLI and echoes what it was given, so the test reads the
+    // assembled line, the launcher variables, the exit code and stderr back
+    // through poll(). WOTBMOD_PACKAGES_EXE is the test-only override.
+    if (run_with_permissions) {
+        char message[2048] = {};
+        Check(run_with_permissions(
+                  "{\"permissions\":[\"core\"]}",
+                  "local job, err = wotb.packages.run('list', {})\n"
+                  "assert(job == nil and err:find('permission denied: "
+                  "packages.manage', 1, true), tostring(err))",
+                  message, sizeof(message)) == 0u,
+              "wotb.packages refuses a script without packages.manage");
+        wchar_t host_path[MAX_PATH] = {};
+        GetModuleFileNameW(module, host_path, MAX_PATH);
+        std::wstring stub = host_path;
+        const size_t slash = stub.find_last_of(L"\\/");
+        stub = (slash == std::wstring::npos ? std::wstring(L".")
+                                            : stub.substr(0, slash)) +
+               L"\\packages_stub.exe";
+        Check(GetFileAttributesW(stub.c_str()) != INVALID_FILE_ATTRIBUTES,
+              "build\\packages_stub.exe was compiled beside the host DLL");
+        SetEnvironmentVariableW(L"WOTBMOD_PACKAGES_EXE", stub.c_str());
+        std::memset(message, 0, sizeof(message));
+        // The ceiling is what the synthetic client granted the host; a script
+        // is cut down to it, so packages.manage has to be granted to the host
+        // first and the host re-measured.
+        MockAbi::SetHostPermissions(
+            {"core", "events.public", "storage", "ui.modify.game",
+             "ui.create", "ui.modify.own", "battle.ui", "input",
+             "packages.manage"});
+        Check(entry(&bootstrap, 1u, &info) == WOTBMOD_V3_OK,
+              "the host re-measures its ceiling with packages.manage granted");
+        const char* bridge_script = R"(
+            local p = wotb.packages
+            assert(p.run("format", {}) == nil, "an unknown verb is refused")
+            assert(p.run("list", {"x"}) == nil, "list takes no argument")
+            assert(p.run("uninstall", {}) == nil, "uninstall needs an id")
+            assert(p.run("uninstall", {"my mod"}) == nil, "a space is refused")
+            assert(p.run("uninstall", {'a"b'}) == nil, "a quote is refused")
+            assert(p.run("launcher-open", {"https://evil"}) == nil,
+                   "only wotbmod:// links open the launcher")
+            local exe, exe_err = p.executable()
+            assert(exe, "executable: " .. tostring(exe_err))
+            assert(exe:find("packages_stub.exe", 1, true), exe)
+            local job, job_err = p.run("list", {})
+            assert(job, "run list: " .. tostring(job_err))
+            local busy, why = p.run("list", {})
+            assert(busy == nil and why == "busy", tostring(why))
+            local state = p.poll(job, 5000)
+            assert(not state.running, "the stub finishes within the wait")
+            assert(state.exit_code == 0, tostring(state.exit_code))
+            assert(state.stdout:find("arg:list\r\n", 1, true), state.stdout)
+            assert(state.stdout:find("arg:--json\r\n", 1, true), state.stdout)
+            assert(state.stdout:find("arg:--game-root\r\n", 1, true), state.stdout)
+            assert(not state.stdout:find("arg:--yes", 1, true), state.stdout)
+            assert(state.stdout:find("env:WOTBMOD_LAUNCHER_YES=1\r\n", 1, true), state.stdout)
+            assert(state.stdout:find("env:WOTBMOD_LAUNCHER_NO_PAUSE=1\r\n", 1, true), state.stdout)
+            local gone, gone_why = p.poll(job)
+            assert(gone == nil and gone_why == "unknown job", tostring(gone_why))
+            local failing = assert(p.run("uninstall", {"fail"}))
+            local done = p.poll(failing, 5000)
+            assert(done.exit_code == 3, tostring(done.exit_code))
+            assert(done.stdout:find("arg:uninstall\r\narg:fail\r\narg:--yes\r\n", 1, true), done.stdout)
+            assert(done.stderr:find("told to fail", 1, true), done.stderr)
+            local link = assert(p.run("launcher-open",
+                {"wotbmod://install/a.b@1.0.0?source=https%3A%2F%2Fblitz-forge.org%2Fapi%2Fv1"}))
+            local opened = p.poll(link, 5000)
+            assert(opened.exit_code == 0, tostring(opened.exit_code))
+            assert(opened.stdout:find("arg:launcher\r\narg:open\r\narg:wotbmod://install/a.b@1.0.0?source=", 1, true), opened.stdout)
+            assert(not opened.stdout:find("--game-root", 1, true), "the launcher finds the game itself")
+            assert(p.cancel(999) == false, "cancelling an unknown job is false")
+            local slow = assert(p.run("list", {}))
+            assert(p.cancel(slow) == true, "a live or finished job can be cancelled")
+            assert(p.poll(slow) == nil, "and is gone afterwards")
+        )";
+        const uint32_t bridge_result = run_with_permissions(
+            "{\"permissions\":[\"core\",\"packages.manage\"]}",
+            bridge_script, message, sizeof(message));
+        std::string bridge_label =
+            "wotb.packages runs the stub and reports back (code " +
+            std::to_string(bridge_result) + "): " + message;
+        Check(bridge_result == 0u, bridge_label.c_str());
+        SetEnvironmentVariableW(L"WOTBMOD_PACKAGES_EXE", nullptr);
+        MockAbi::SetHostPermissions(
+            {"core", "events.public", "storage", "ui.modify.game",
+             "ui.create", "ui.modify.own", "battle.ui", "input"});
+        Check(entry(&bootstrap, 1u, &info) == WOTBMOD_V3_OK,
+              "the packages test restores the default permission ceiling");
+    }
     Check(create_with_permissions != nullptr,
           "and the one that makes a restricted script that outlives the call");
 
@@ -8805,10 +8931,11 @@ int main(int argc, char** argv) {
             "network.http", "native.memory", "native.memory_patch",
             "native.hook.address", "native.hooks", "render.native",
             "bigworld.rpc.modify", "ges.observe", "ges.publish",
-            "session.cluster.read", "session.cluster.change"};
+            "session.cluster.read", "session.cluster.change",
+            "packages.manage"};
         static_assert(sizeof(all_permission_names) /
                               sizeof(all_permission_names[0]) ==
-                          55u,
+                          56u,
                       "permission vocabulary count");
         std::vector<std::string> all_permissions(
             std::begin(all_permission_names), std::end(all_permission_names));

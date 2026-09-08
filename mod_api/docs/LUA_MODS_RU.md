@@ -1460,6 +1460,60 @@ wotb.keys.bind("notify", { key = "F7" })
 wotb.keys.on_pressed("notify", function() wotb.screen.notify("F7") end)
 ```
 
+### `wotb.packages`: мост к `wotbmod.exe` (loader-private)
+
+Не часть замороженного C ABI: библиотека Lua-хоста, которая запускает
+`<игра>\wotbmod\wotbmod.exe` скрытым процессом и отдаёт результат. Так
+каталог в игре (`examples/catalog`) ставит, удаляет и выключает моды тем же
+кодом, что и команда `wotbmod`: подписи, леджер, отзыв релизов и `sync`
+остаются в одном месте. Право `packages.manage` (REVIEWED); без него любой
+вызов отвечает `nil, "permission denied: packages.manage"`.
+
+| Имя | Значение |
+| --- | --- |
+| `packages.run(verb [, args])` | номер задачи либо `nil, message` |
+| `packages.poll(job [, wait_ms])` | `{ running = true }`, либо `{ exit_code, stdout, stderr }` (один раз, после ответа задача забыта), либо `nil, message` |
+| `packages.cancel(job)` | `true`/`false`; живой процесс завершается |
+| `packages.executable()` | путь к `wotbmod.exe` либо `nil, message` |
+| `packages.MAX_OUTPUT`, `packages.MAX_POLL_WAIT_MS` | 256 КБ на поток вывода, 5000 мс ожидания в `poll` |
+
+`verb` — только из списка, и у каждого своё число аргументов:
+
+| verb | args | что запускается |
+| --- | --- | --- |
+| `"list"` | — | `wotbmod list --json --game-root <игра>` |
+| `"info"` | `{id}` | `wotbmod info <id> --json …` |
+| `"uninstall"` | `{id}` | `wotbmod uninstall <id> --yes …` |
+| `"enable"` / `"disable"` | `{id}` | `wotbmod enable|disable <id> …` (`[mods] <id>=1|0`) |
+| `"launcher-open"` | `{"wotbmod://install/<id>@<v>?source=<url>"}` | `wotbmod launcher open <link>` — установка с каталога |
+| `"restart-client"` | — | `wotbmod restart-client …`, отсоединённый процесс; задача сразу завершена |
+| `"sync"` | — | `wotbmod sync --yes …` |
+
+Аргумент — строка из `[A-Za-z0-9._@:/%?=-]` не длиннее 512 байт; всё другое —
+`nil, "argument refused"`. Командную строку собирает мост, а не скрипт, и
+одновременно у мода живёт одна задача (`nil, "busy"`). В окружение потомка
+добавляются `WOTBMOD_LAUNCHER_YES=1` и `WOTBMOD_LAUNCHER_NO_PAUSE=1`, чтобы
+launcher не ждал клавиши. `poll` без `wait_ms` не блокирует: опрашивайте из
+`on_frame` или таймера. Задачи, не опрошенные к `on_disable`, завершаются
+вместе со скриптом.
+
+```lua
+local job = assert(wotb.packages.run("list", {}))
+wotb.timer.every(250, function(id)
+  local state = wotb.packages.poll(job)
+  if state and not state.running then
+    wotb.timer.cancel(id)
+    local rows = wotb.json.decode(state.stdout).packages
+    print(#rows .. " packages installed, exit " .. state.exit_code)
+  end
+end)
+```
+
+Установленные Lua-папки хост читает один раз при включении, ресурсные
+пакеты меняют файлы, поэтому после успешной команды нужен перезапуск
+клиента — `restart-client` делает это сам (закрывает клиент, убирает маркер
+сессии, чтобы не попасть в safe mode, запускает через Steam).
+
 ### `wotb.store`: типизированные значения
 
 Поверх `wotb.storage` и `wotb.json`: `set(key, value)` кодирует таблицу,
@@ -1768,7 +1822,7 @@ bigworld.rpc.modify
 | --- | --- |
 | `SAFE` | `core`, `ui`, `ui.create`, `ui.modify.own`, `localization`, `audio`, `audio.custom`, `audio.events`, `resources`, `resources.mod`, `filesystem.mod_data`, `input`, `input.actions`, `settings`, `storage`, `events.public`, `entity.public.visible`, `hangar.scene`, `vehicle.local.cosmetic`, `camera.hangar`, `camera.replay`, `network.http.allowlisted`, `content` |
 | `GAMEPLAY_TWEAK` | `gameplay.tweak.camera`, `gameplay.tweak.hud`, `gameplay.tweak.hangar`, `gameplay.tweak.replay`, `gameplay.tweak.cosmetic`, `gameplay.tweak.vehicle`, `gameplay.tweak.projectile_visual`, `gameplay.tweak.freecam` |
-| `REVIEWED` | `battle.ui`, `battle.render.overlay`, `camera.battle.read`, `visible.projectile.events`, `game.entity.public`, `ui.modify.game`, `resources.overlay.game`, `hooks.symbol`, `render.callbacks`, `bigworld.observe`, `bigworld.rpc.observe`, `bigworld.rpc.metadata`, `client.leave_to_hangar`, `network.http` |
+| `REVIEWED` | `battle.ui`, `battle.render.overlay`, `camera.battle.read`, `visible.projectile.events`, `game.entity.public`, `ui.modify.game`, `resources.overlay.game`, `hooks.symbol`, `render.callbacks`, `bigworld.observe`, `bigworld.rpc.observe`, `bigworld.rpc.metadata`, `client.leave_to_hangar`, `network.http`, `packages.manage` |
 | `UNSAFE` | `native.memory`, `native.memory_patch`, `native.hook.address`, `native.hooks`, `render.native`, `bigworld.rpc.modify` |
 
 Чтобы один script permission не мог «одолжить» другой grant общего native

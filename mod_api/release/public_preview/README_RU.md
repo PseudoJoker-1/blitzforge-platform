@@ -73,6 +73,14 @@ Lua-мод является каталогом `mods\lua\<id>` с `manifest.json
 каталогов в bundle уже точно совпадают с их `manifest.id` (`example.lua_*`);
 переименовывать их не нужно.
 
+Вместе с host мастер ставит через `wotbmod install` два пакета из
+`wotbmod\setup\packages`: Lua-мод `blitzforge.catalog` (`mods\lua\…`, запись
+в леджере) и ресурсный `blitzforge.catalog.ui` (штатный экран в
+`Hangar.yaml`): иконка в левой колонке ангара открывает каталог портала и
+список своих модов с установкой, удалением и выключением из игры. Оба
+удаляются вместе с набором (`uninstall.ps1`) или командой
+`wotbmod uninstall <id>`.
+
 В preview доступны runtime UI, типизированные события, snapshots публично
 видимых игроков, input, camera/gameplay helpers и остальные reviewed V3
 интерфейсы, перечисленные в `LUA_MODS_RU.md` внутри host package. Каждый Lua

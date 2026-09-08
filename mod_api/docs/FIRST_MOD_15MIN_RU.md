@@ -112,6 +112,10 @@ wotbmod publish release\my.hello-1.0.0.release.json --to https://blitz-forge.org
 
 ## Что дальше
 
+- Ваш мод виден игрокам в каталоге прямо в ангаре: иконка в левой колонке
+  открывает штатный экран `blitzforge.catalog` (ставится мастером), вкладка
+  «Каталог» предлагает установку одной кнопкой, вкладка «Кастомные моды»
+  показывает и вашу папку из `mods\lua`, пока вы её отлаживаете.
 - Справочник фасадов и событий: `docs/LUA_MODS_RU.md` и
   https://pd0-2.gitbook.io/blitzforge.
 - Примеры: `examples/lua_facade_tour` (все фасады), `examples/cluster_picker`

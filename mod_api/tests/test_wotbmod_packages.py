@@ -328,6 +328,81 @@ class InstallTests(unittest.TestCase):
     def ledger(self) -> dict:
         return json.loads((self.mods / "cache" / packages.LEDGER_NAME).read_text(encoding="utf-8"))
 
+    def test_restart_client_stops_the_game_archives_the_marker_and_launches_through_steam(self) -> None:
+        marker = self.mods / "cache" / "runtime_session.marker"
+        marker.parent.mkdir(parents=True, exist_ok=True)
+        marker.write_text("pid=1\n", encoding="utf-8")
+        calls: list[list[str]] = []
+        running = [True, False]  # running before taskkill, gone at the first check after it
+
+        def fake_run(argv, **_kwargs):
+            calls.append(list(argv))
+            return mock.Mock(returncode=0, stdout=b"")
+
+        with mock.patch.object(packages, "_client_running", side_effect=lambda *_: running.pop(0)), \
+                mock.patch.object(packages.subprocess, "run", side_effect=fake_run), \
+                mock.patch.object(packages, "_startfile") as startfile:
+            code, out, err = run(["restart-client", "--game-root", str(self.game), "--graceful-seconds", "0.1"], self.game)
+        self.assertEqual(code, 0, err)
+        self.assertEqual(calls[0][:3], ["taskkill", "/IM", "wotblitz.exe"])
+        self.assertEqual(len(calls), 1, "a client that closed itself is never killed with /F")
+        self.assertFalse(marker.exists())
+        self.assertTrue(any(p.name.startswith("runtime_session.marker.ended-") for p in marker.parent.iterdir()))
+        startfile.assert_called_once_with("steam://rungameid/444200")
+        self.assertIn("shutdown=graceful", out)
+        self.assertIn("launch=steam", out)
+
+        # A crash dump newer than the marker keeps it: the next launch must go to safe mode.
+        marker.write_text("pid=2\n", encoding="utf-8")
+        (self.game / "crash.dmp").write_bytes(b"MDMP")
+        with mock.patch.object(packages, "_client_running", return_value=False), \
+                mock.patch.object(packages, "_startfile"):
+            code, out, err = run(["restart-client", "--game-root", str(self.game), "--no-launch"], self.game)
+        self.assertEqual(code, 0, err)
+        self.assertTrue(marker.exists())
+        self.assertIn("marker=kept", out)
+        self.assertIn("launch=skipped", out)
+
+    def test_list_json_reports_source_and_catalog_and_enable_disable_write_the_ini(self) -> None:
+        artifact = pack(self.project("tests.alpha", "1.0.0"), self.dist)
+        sign(artifact)
+        code, _out, err = self.install(artifact, "--catalog", "https://blitz-forge.org/api/v1")
+        self.assertEqual(code, 0, err)
+
+        def row() -> dict:
+            code, out, err = run(["list", "--game-root", str(self.game), "--json"], self.game)
+            self.assertEqual(code, 0, err)
+            return [r for r in json.loads(out)["packages"] if r["id"] == "tests.alpha"][0]
+
+        first = row()
+        self.assertEqual(first["catalog"], "https://blitz-forge.org/api/v1")
+        self.assertEqual(first["source"], str(artifact))
+        self.assertTrue(first["enabled"])
+        code, out, err = run(["disable", "tests.alpha", "--game-root", str(self.game)], self.game)
+        self.assertEqual(code, 0, err)
+        self.assertIn("next client start", out)
+        self.assertIn("tests.alpha=0", (self.mods / "mods.ini").read_text(encoding="utf-8"))
+        self.assertFalse(row()["enabled"])
+        code, _out, err = run(["enable", "tests.alpha", "--game-root", str(self.game)], self.game)
+        self.assertEqual(code, 0, err)
+        self.assertIn("tests.alpha=1", (self.mods / "mods.ini").read_text(encoding="utf-8"))
+        self.assertTrue(row()["enabled"])
+        code, _out, err = run(["disable", "tests.missing", "--game-root", str(self.game)], self.game)
+        self.assertEqual(code, 2)
+        self.assertIn("not installed", err)
+        # The host itself is never a switch: disabling it would hide every Lua mod at once.
+        # A resource package has nothing to switch off either; it is sent to uninstall.
+        fake = {"wotbmod.lua_host": mock.Mock(kind="archive"), "tests.skin": mock.Mock(kind="resource")}
+        with mock.patch.object(packages, "scan_installed", return_value=fake):
+            code, _out, err = run(["disable", "wotbmod.lua_host", "--game-root", str(self.game)], self.game)
+            self.assertEqual(code, 2)
+            self.assertIn("runs every Lua mod", err)
+            code, _out, err = run(["disable", "tests.skin", "--game-root", str(self.game)], self.game)
+            self.assertEqual(code, 2)
+            self.assertIn("wotbmod uninstall tests.skin", err)
+            code, _out, err = run(["enable", "tests.skin", "--game-root", str(self.game)], self.game)
+            self.assertEqual(code, 0, err)
+
     def test_install_shows_hash_and_permissions_then_installs_signed_package(self) -> None:
         artifact = pack(self.project("tests.alpha", "1.0.0"), self.dist)
         sign(artifact)
