@@ -27,3 +27,4 @@ analysis/
 backup/
 work/
 .omx/
+*.dll
