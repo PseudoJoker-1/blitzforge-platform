@@ -988,7 +988,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                       nav_home=current("/"), nav_compat=current("/compat"), nav_docs=current("/docs"),
                       nav_download=current("/download"),
                       nav_user=nav_user, body=body, version=PORTAL_VERSION, client_build=self.portal.client_build,
-                      asset_v=asset_version())
+                      base_url=self.portal.base_url, asset_v=asset_version())
         self._send(status, page.encode("utf-8"), extra=headers)
 
     def _require_user(self, minimum_role: str = "user") -> sqlite3.Row:
@@ -1091,7 +1091,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
     def get_favicon(self, db: sqlite3.Connection) -> None:
         # The tab icon: browsers ask for /favicon.ico even with a <link rel="icon">.
-        self.get_static(db, "logo.svg")
+        self.get_static(db, "favicon.ico")
 
     def get_docs(self, db: sqlite3.Connection) -> None:
         self._page("Как это работает", render("docs", base_url=self.portal.base_url))

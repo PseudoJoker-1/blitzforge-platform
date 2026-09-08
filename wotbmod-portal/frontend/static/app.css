@@ -76,7 +76,8 @@ ul { padding-left: 1.2em; }
 /* ---- shell ------------------------------------------------------------------ */
 .topbar { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
 .topbar-inner { max-width: var(--max); margin: 0 auto; padding: 0 20px; height: 60px; display: flex; align-items: center; gap: 20px; }
-.brand { font-weight: 700; font-size: 16px; color: var(--text); letter-spacing: -0.01em; }
+.brand { font-weight: 700; font-size: 16px; color: var(--text); letter-spacing: -0.01em; display: inline-flex; align-items: center; gap: 9px; }
+.brand-logo { width: 30px; height: 30px; display: block; }
 .brand:hover { text-decoration: none; color: var(--text); }
 .topnav { display: flex; gap: 2px; margin-left: auto; align-items: center; }
 .topnav a, .topnav button {

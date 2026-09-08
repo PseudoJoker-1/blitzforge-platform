@@ -6,12 +6,19 @@
 <title>{{title}} · BlitzForge</title>
 <meta name="description" content="{{description}}">
 <link rel="stylesheet" href="/static/app.css?v={{asset_v}}">
-<link rel="icon" href="/static/logo.svg" type="image/svg+xml">
+<link rel="icon" href="/static/favicon.ico" sizes="16x16 32x32 48x48 64x64">
+<link rel="icon" href="/static/logo.png" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+<meta property="og:site_name" content="BlitzForge">
+<meta property="og:title" content="{{title}} · BlitzForge">
+<meta property="og:description" content="{{description}}">
+<meta property="og:image" content="{{base_url}}/static/banner.png">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="{{body_class}}" data-csrf="{{csrf}}" data-flash="{{flash}}" data-flash-kind="{{flash_kind}}">
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="/">BlitzForge</a>
+    <a class="brand" href="/"><img class="brand-logo" src="/static/logo.png" alt="" width="30" height="30">BlitzForge</a>
     <form class="topsearch" action="/" method="get" role="search">
       <input type="search" name="q" placeholder="Поиск по каталогу" value="{{q}}" aria-label="Поиск модов">
     </form>
@@ -36,6 +43,7 @@
     <a href="/api/v1/index.json">index.json</a>
     <a href="/docs#api">API</a>
     <a href="/docs#security">Безопасность</a>
+    <a href="https://t.me/pseudojoker" rel="noopener" title="Автор в Telegram">Telegram</a>
   </div>
 </footer>
 <script src="/static/app.js?v={{asset_v}}" defer></script>
